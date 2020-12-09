@@ -1,0 +1,47 @@
+%===============================================================================
+% Preamble
+%===============================================================================
+\documentclass[
+  a4paper,
+  cleardoublepage=empty,
+  headings=twolinechapter,
+  numbers=autoenddot,
+]{book}
+\usepackage[italian]{babel}
+\usepackage[signatures,swapnames,sans]{frontespizio}
+\usepackage{color}
+
+\usepackage[italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{lmodern}
+%===============================================================================
+% Document
+%===============================================================================
+% !TeX spellcheck = it_IT
+\begin{document}
+
+\frontmatter
+
+%\include{chapters-extra/contents}
+
+\mainmatter
+
+\include{chapters/iterazione0}
+%\include{chapters/05-primo-capitolo}
+%\include{chapters/06-secondo-capitolo}
+%\include{chapters/07-terzo-capitolo}
+%\include{chapters/08-quarto-capitolo}
+
+
+%\include{chapters/99-conclusioni}
+
+\appendix
+
+\backmatter
+
+%\include{chapters-extra/bibliography}
+%\include{chapters-extra/acknowledgements}
+
+\end{document}
