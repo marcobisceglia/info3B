@@ -3,9 +3,9 @@
 %===============================================================================
 \documentclass[
   a4paper,
-  cleardoublepage=empty,
-  headings=twolinechapter,
-  numbers=autoenddot,
+  %cleardoublepage=empty,
+  % headings=twolinechapter,
+  %numbers=autoenddot,
 ]{book}
 \usepackage[italian]{babel}
 \usepackage[signatures,swapnames,sans]{frontespizio}
@@ -16,6 +16,9 @@
 \usepackage[utf8]{inputenc}
 \usepackage{microtype}
 \usepackage{lmodern}
+
+\usepackage{graphicx}
+\graphicspath{ {./asserts/images/} }
 %===============================================================================
 % Document
 %===============================================================================
@@ -29,10 +32,7 @@
 \mainmatter
 
 \include{chapters/iterazione0}
-%\include{chapters/05-primo-capitolo}
-%\include{chapters/06-secondo-capitolo}
-%\include{chapters/07-terzo-capitolo}
-%\include{chapters/08-quarto-capitolo}
+\include{chapters/iterazione1}
 
 
 %\include{chapters/99-conclusioni}
