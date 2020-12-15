@@ -1,14 +1,15 @@
 \chapter{Iterazione 1}
 
 \section{Introduzione}
-Nella prima iterazione sono stati scelti i seguenti casi d'uso:
+Nella prima iterazione si è scelto di implementare i seguenti casi d'uso:
 
 \begin{itemize}
     \item Gestione barche [Proprietario]
     \item Calendario delle uscite [Proprietario]
     \item Registrazione [Utente]
+    \item Login [Utente]
 \end{itemize}
-Dopo averli descritti in maniera testuale, prima di implementarli si è passati alla realizzazione del diagramma dei componenti e del deployment diagram.
+Dopo averli descritti in maniera testuale si è passati alla realizzazione del diagramma dei componenti e del deployment diagram. Infine il codice è stato implementato sulla base di questi documentii.
 
 \section{UC1: Gestione barche}
 Il proprietario del diving center deve avere una visione completa e generale delle sue barche.
@@ -38,7 +39,36 @@ L'applicazione deve poter semplificare la gestione e l'organizzazione delle usci
 \end{itemize}
 
 \section{UC3: Registrazione dell'utente}
-Linda
+\emph{Breve descrizione}: L'utente compila il form per la registrazione all'app e, se non si è già registrato, viene aggiunto al database.\\\\
+\emph{Attori coinvolti}: Utente, Sistema?\\\\
+\emph{Trigger}: L'utente preme su "Registrazione"\\\\
+\emph{Postcondizione}: L'utente è stato inserito nel database e ha ricevuto la conferma dell'operazione.\\\\
+\emph{Procedimento}:
+\begin{enumerate}
+	\item Utente preme su "Registrazione" nella pagina iniziale dell'app
+	\item Utente fornisce Nome, username, indirizzo email e password nel form di registrazione
+	\item Il sistema verifica se esiste già un utente con quella mail:
+		\begin{enumerate}
+		     \item se esiste già, il sistema lo comunica all'utente
+		     \item se non esiste allora il sistema aggiunge l'utente nel database
+		\end{enumerate}
+\end{enumerate}
+
+\section{UC4: Login dell'utente}
+\emph{Breve descrizione}: L'utente (utente normale o il proprietario) compila il form per il login e se le credenziali sono giuste il sistema gli consente l'accesso.\\\\
+\emph{Attori coinvolti}: Utente/Proprietario, Sistema?\\\\
+\emph{Trigger}: L'utente preme su "Login"\\\\
+\emph{Postcondizione}: L'utente ha accesso alla vista del suo profilo.\\\\
+\emph{Procedimento}:
+\begin{enumerate}
+	\item Utente preme su "Login" nella pagina iniziale dell'app
+	\item Utente fornisce username e password nel form di registrazione
+	\item Il sistema controlla le credenziali inserite:
+		\begin{enumerate}
+		     \item se sono corrette, il sistema invia una conferma di accesso all'utente
+		     \item se sono errate, il sistema lo comunica all'utente
+		\end{enumerate}
+\end{enumerate}
 
 \section{UML Component diagram}
 I casi d'uso scelti in questa prima iterazione vengono rappresentati sottoforma di componenti nel diagramma in Figura~\ref{fig:componentDiagram}.
