@@ -48,13 +48,13 @@ tutte le barche inserite, il secondo per aggiungerne una nuova.\\\\
     \item Sistema mostra la pagina iniziale che comprende un button \textit{Visualizza barche} e un button \textit{Aggiungi barca} con cui il proprietario può concretamente gestire le sue barche.
 \end{enumerate}
 
-\section{UC1.1 Visualizzazione barche}
+\subsection{UC1.1 Visualizzazione barche}
 
-\emph{Breve descrizione:} Il proprietario visualizza le barche inserite nel sistema e le relative caratteristiche.\\\\
-\emph{Attori coinvolti:} Proprietario, Sistema.\\\\
-\emph{Trigger:} Il proprietario clicca il button \textit{Visualizza barche}.\\\\
-\emph{Postcondizione:} Il sistema mostra una vista con l'elenco delle barche.\\\\
-\emph{Procedimento}
+\emph{Breve descrizione}: Il proprietario visualizza le barche inserite nel sistema e le relative caratteristiche.\\\\
+\emph{Attori coinvolti}: Proprietario, Sistema.\\\\
+\emph{Trigger}: Il proprietario clicca il button \textit{Visualizza barche}.\\\\
+\emph{Postcondizione}: Il sistema mostra una vista con l'elenco delle barche.\\\\
+\emph{Procedimento}:
 
 \begin{enumerate}
     \item Proprietario effettua il login
@@ -69,7 +69,7 @@ tutte le barche inserite, il secondo per aggiungerne una nuova.\\\\
     \item Per ogni item dell'elenco il proprietario può cliccare su \textit{Modifica barca} o \textit{Elimina barca} per modificare o eliminare una barca.
 \end{enumerate}
 
-\section{UC1.2 Inserimento barca}
+\subsection{UC1.2 Inserimento barca}
 
 \emph{Breve descrizione}: Il proprietario aggiunge una barca nel sistema. Questo viene fatto principalmente nella fase iniziale in cui il proprietario deve inserire
 tutte le sue barche all'interno dell'applicazione e poi in seguito all'acquisto di nuove barche.\\\\
@@ -86,7 +86,7 @@ tutte le sue barche all'interno dell'applicazione e poi in seguito all'acquisto 
     \item Il sistema mostra la nuova barca all'interno della pagina di visualizzazione delle barche.
 \end{enumerate}
 
-\section{UC1.3 Modifica barca}
+\subsection{UC1.3 Modifica barca}
 
 \emph{Breve descrizione}: Il proprietario si trova sulla pagina di visualizzazione delle barche e clicca su un button o un'icona di modifica di una delle barche.
 Tale modifica può essere dovuta a cambiamenti strutturali della barca, per esempio la riduzione del numero di posti disponibili.
@@ -104,7 +104,7 @@ Tale modifica può essere dovuta a cambiamenti strutturali della barca, per esem
     \item Il sistema mostra la barca aggiornata all'interno della pagina di visualizzazione delle barche.
 \end{enumerate}
 
-\section{UC1.4 Eliminazione barca}
+\subsection{UC1.4 Eliminazione barca}
 
 \emph{Breve descrizione}: Il proprietario si trova sulla pagina di visualizzazione delle barche e clicca su un button o un'icona di eliminazione di una delle barche.
 L'eliminazione può essere definitiva o temporanea. L'eliminazione è definitiva se la barca non è più agibile o perché viene sostituita da un'altra;
@@ -119,20 +119,93 @@ L'eliminazione può essere definitiva o temporanea. L'eliminazione è definitiva
           scegliere se l'eliminazione è temporanea o definitiva.
     \item Sistema mostra un alert che avvisa il proprietario che l'azione è irreversibile.
     \item Il proprietario può scegliere se confermare l'eliminazione cliccando su \textit{Conferma} o annullare l'azione cliccando su \textit{Annulla}.
-    \item Il sistema mostra la pagina di visualizzazione delle barche in cui non comparirà la barca eliminata se il proprietario ha scelto di eliminarla in maniera definitiva.
-          Se la barca è stata eliminata temporaneamente sarà sempre visibile nella pagina di visualizzazione delle barche, ma segnalando al proprietario che il sistema organizzerà
+    \item Il sistema mostra la pagina di visualizzazione delle barche in cui non comparirà la barca eliminata se il proprietario ha scelto di eliminarla in maniera non temporanea.
+          Se invece, la barca è stata eliminata temporaneamente, essa sarà sempre visibile nella pagina di visualizzazione delle barche, ma segnalando al proprietario che il sistema organizzerà
           le uscite senza tenere conto di quella barca.
 \end{enumerate}
 
-\section{UC2: Calendario delle uscite}
+\section{UC2: Gestione calendario delle uscite}
 L'applicazione deve poter semplificare la gestione e l'organizzazione delle uscite al proprietario del diving center.
-\\Da questo punto di vista l'applicazione deve fungere da calendario, mettendo a disposizione le seguenti funzionalità:
+L'applicazione deve fungere da calendario, mettendo a disposizione le seguenti funzionalità:
 
 \begin{itemize}
-    \item L'inserimento di una data in cui si rende disponibile la prenotazione di uscite, indicando i turni con i relativi orari e durate.
-    \item Visualizzazione di tutte le date e turni messi a disposizione.
-    \item La modifica o la cancellazione delle date e dei turni, in seguito a cambiamenti climatici o altri imprevisti.
+    \item UC2.1 Visualizzazione uscite
+    \item UC2.2 Inserimento uscita
+    \item UC2.3 Modifica uscita
+    \item UC2.4 Eliminazione uscita
 \end{itemize}
+
+\subsection{UC2.1 Visualizzazione uscite}
+
+\emph{Breve descrizione}: Il proprietario visualizza le date e i turni in cui gli utenti possono prenotarsi.\\\\
+\emph{Attori coinvolti}: Proprietario, Sistema.\\\\
+\emph{Trigger}: Il proprietario clicca il button \textit{Visualizza uscite}.\\\\
+\emph{Postcondizione}: Il sistema mostra una vista con l'elenco delle uscite.\\\\
+\emph{Procedimento}:
+
+\begin{enumerate}
+    \item Proprietario effettua il login.
+    \item Proprietario clicca il button \textit{Visualizza uscite} presente nella home page.
+    \item Sistema mostra l'elenco delle uscite rese disponibili con le seguenti informazioni:
+          \begin{itemize}
+              \item Data dell'uscita.
+              \item Orario di inizio uscita.
+              \item Orario di fine uscita.
+              \item Altro TODO
+          \end{itemize}
+    \item Per ogni data presente nell'elenco il proprietario può cliccare su \textit{Modifica uscita} o \textit{Elimina uscita} per modificare o eliminare un'uscita.
+\end{enumerate}
+
+\subsection{UC2.2 Inserimento uscita}
+
+\emph{Breve descrizione}: Il proprietario aggiunge un'uscita al calendario indicandone data e orari in cui verranno rese disponibili le prenotazioni.\\\\
+\emph{Attori coinvolti}: Proprietario, Sistema.\\\\
+\emph{Trigger}: Il proprietario clicca il button \textit{Inserisci uscita}.\\\\
+\emph{Postcondizione}: Il sistema mostra la nuova uscita all'interno della pagina di visualizzazione delle uscite.\\\\
+\emph{Procedimento}:
+
+\begin{enumerate}
+    \item Il proprietario si trova sulla home page e clicca il button \textit{Inserisci uscita}.
+    \item Sistema mostra un form in cui è possibile inserire i dati relativi all'uscita.
+    \item Proprietario riempie il form.
+    \item Proprietario clicca su \textit{Conferma} per inserire l'uscita nel sistema.
+    \item Il sistema mostra la nuova uscita all'interno della pagina di visualizzazione delle uscite.
+\end{enumerate}
+
+%Modifica uscita
+\subsection{UC2.3 Modifica uscita}
+
+\emph{Breve descrizione}: Il proprietario si trova sulla pagina di visualizzazione delle uscite e clicca su un button o un'icona di modifica di una delle uscite.
+Tale modifica può essere dovuta a cambiamenti climatici o ad altri imprevisti.
+\\\\
+\emph{Attori coinvolti}: Proprietario, Sistema.\\\\
+\emph{Trigger}: Il proprietario clicca il button o l'icona \textit{Modifica uscita}.\\\\
+\emph{Postcondizione}: Il sistema mostra l'uscita modificata all'interno della pagina di visualizzazione delle uscite.\\\\
+\emph{Procedimento}:
+
+\begin{enumerate}
+    \item Il proprietario si trova sulla pagina di visualizzazione delle uscite e clicca su un button o un'icona di modifica di una delle uscite.
+    \item Sistema mostra una vista in cui è possibile modificare i dati relativi all'uscita.
+    \item Proprietario modifica i dati.
+    \item Proprietario clicca su \textit{Conferma} per modificare i dati dell'uscita.
+    \item Il sistema mostra l'uscita aggiornata all'interno della pagina di visualizzazione delle uscite.
+\end{enumerate}
+
+%Eliminazione uscita
+\subsection{UC2.4 Eliminazione uscita}
+
+\emph{Breve descrizione}: Il proprietario si trova sulla pagina di visualizzazione delle uscite e clicca su un button o un'icona di eliminazione di una delle uscite.\\\\
+\emph{Attori coinvolti}: Proprietario, Sistema.\\\\
+\emph{Trigger}: Il proprietario clicca il button o l'icona \textit{Elimina uscita}.\\\\
+\emph{Postcondizione}: Il sistema mostra la pagina di visualizzazione delle uscite in cui non comparirà l'uscita eliminata.\\\\
+\emph{Procedimento}:
+
+\begin{enumerate}
+    \item Il proprietario si trova sulla pagina di visualizzazione delle uscite e clicca su un button o un'icona di eliminazione di una delle uscite.
+    \item Sistema mostra un alert che avvisa il proprietario che l'azione è irreversibile.
+    \item Il proprietario può scegliere se confermare l'eliminazione cliccando su \textit{Conferma} o annullare l'azione cliccando su \textit{Annulla}.
+    \item Il sistema mostra la pagina di visualizzazione delle uscite in cui non comparirà l'uscita eliminata.
+\end{enumerate}
 
 \section{UC3: Registrazione dell'utente}
 \emph{Breve descrizione}: L'utente compila il form per la registrazione all'app e, se non si è già registrato, viene aggiunto al database.\\\\
