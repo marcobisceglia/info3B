@@ -4,29 +4,125 @@
 Nella prima iterazione si è scelto di implementare i seguenti casi d'uso:
 
 \begin{itemize}
-    \item Gestione barche [Proprietario]
-    \item Calendario delle uscite [Proprietario]
-    \item Registrazione [Utente]
-    \item Login [Utente]
+    \item UC1: Gestione barche \textit{[Astratto]}
+          \begin{itemize}
+              \item UC1.1 Visualizzazione barche
+              \item UC1.2 Inserimento barca
+              \item UC1.3 Modifica barca
+              \item UC1.4 Eliminazione barca
+          \end{itemize}
+    \item UC2: Calendario uscite \textit{[Astratto]}
+          \begin{itemize}
+              \item UC2.1 Visualizzazione uscite
+              \item UC2.2 Inserimento uscita
+              \item UC2.3 Modifica uscita
+              \item UC2.4 Eliminazione uscita
+          \end{itemize}
+    \item UC3: Registrazione utente
+    \item UC4: Login utente
 \end{itemize}
-Dopo averli descritti in maniera testuale si è passati alla realizzazione del diagramma dei componenti e del deployment diagram. Infine il codice è stato implementato sulla base di questi documentii.
+Dopo averli descritti in maniera testuale si è passati alla realizzazione del diagramma dei componenti e del deployment diagram.
+Infine il codice è stato implementato sulla base di questi documenti.
 
 \section{UC1: Gestione barche}
-Il proprietario del diving center deve avere una visione completa e generale delle sue barche.
-Accedendo all'applicazione deve poter visualizzare tutte le barche presenti e per ognuna queste caratteristiche:
+
+\emph{Breve descrizione}: il proprietario del diving center deve avere una visione generale e un controllo completo delle sue barche all'interno dell'applicazione.
+Oltre alla visualizzazione, il proprietario deve poter modificare ed eliminare le imbarcazioni già presenti nel sistema e poter aggiungerne di nuove.
+La gestione delle barche è quindi suddivisa in 4 casi d'uso concreti:
 
 \begin{itemize}
-    \item Nome della barca
-    \item Modello della barca
-    \item Numero posti disponibili sulla barca
-    \item Altre caratteristiche TODO
+    \item UC1.1 Visualizzazione barche
+    \item UC1.2 Inserimento barca
+    \item UC1.3 Modifica barca
+    \item UC1.4 Eliminazione barca
 \end{itemize}
+~\\
+\emph{Attori coinvolti}: Proprietario, Sistema.\\\\
+\emph{Trigger}: login del proprietario avvenuto con successo.\\\\
+\emph{Postcondizione}: il proprietario dopo il login, viene indirizzato alla home page e può scegliere se cliccare uno dei button: \textit{Visualizza barche} o \textit{Aggiungi barca}. Il primo per visualizzare
+tutte le barche inserite, il secondo per aggiungerne una nuova.\\\\
+\emph{Procedimento}:
 
-Oltre alla visualizzazione, il proprietario deve poter modificare le imbarcazioni già presenti nel sistema.
-Tali modifiche possono essere dovute a cambiamenti strutturali della barca, per esempio la riduzione del numero di posti disponibili
-o all'eliminazione di una barca dal sistema.
-Quest'ultima può essere definitiva o temporanea. L'eliminazione è definitiva se la barca non è più agibile o perché viene sostituita da un'altra;
-è temporanea nel caso in cui sia necessaria attività di manutenzione.
+\begin{enumerate}
+    \item Proprietario effettua il login.
+    \item Sistema mostra la pagina iniziale che comprende un button \textit{Visualizza barche} e un button \textit{Aggiungi barca} con cui il proprietario può concretamente gestire le sue barche.
+\end{enumerate}
+
+\section{UC1.1 Visualizzazione barche}
+
+\emph{Breve descrizione:} Il proprietario visualizza le barche inserite nel sistema e le relative caratteristiche.\\\\
+\emph{Attori coinvolti:} Proprietario, Sistema.\\\\
+\emph{Trigger:} Il proprietario clicca il button \textit{Visualizza barche}.\\\\
+\emph{Postcondizione:} Il sistema mostra una vista con l'elenco delle barche.\\\\
+\emph{Procedimento}
+
+\begin{enumerate}
+    \item Proprietario effettua il login
+    \item Proprietario clicca il button \textit{Visualizza barche} presente nella home page.
+    \item Sistema mostra l'elenco delle barche presenti nel database con le seguenti informazioni:
+          \begin{itemize}
+              \item Nome della barca
+              \item Modello della barca
+              \item Numero posti disponibili sulla barca
+              \item Altre caratteristiche TODO
+          \end{itemize}
+    \item Per ogni item dell'elenco il proprietario può cliccare su \textit{Modifica barca} o \textit{Elimina barca} per modificare o eliminare una barca.
+\end{enumerate}
+
+\section{UC1.2 Inserimento barca}
+
+\emph{Breve descrizione}: Il proprietario aggiunge una barca nel sistema. Questo viene fatto principalmente nella fase iniziale in cui il proprietario deve inserire
+tutte le sue barche all'interno dell'applicazione e poi in seguito all'acquisto di nuove barche.\\\\
+\emph{Attori coinvolti}: Proprietario, Sistema.\\\\
+\emph{Trigger}: Il proprietario clicca il button \textit{Inserisci barca}.\\\\
+\emph{Postcondizione}: Il sistema mostra la nuova barca all'interno della pagina di visualizzazione delle barche.\\\\
+\emph{Procedimento}:
+
+\begin{enumerate}
+    \item Il proprietario si trova sulla home page e clicca il button \textit{Inserisci barca}.
+    \item Sistema mostra un form in cui è possibile inserire i dati relativi alla barca.
+    \item Proprietario riempie il form.
+    \item Proprietario clicca su \textit{Conferma} per inserire la barca nel sistema.
+    \item Il sistema mostra la nuova barca all'interno della pagina di visualizzazione delle barche.
+\end{enumerate}
+
+\section{UC1.3 Modifica barca}
+
+\emph{Breve descrizione}: Il proprietario si trova sulla pagina di visualizzazione delle barche e clicca su un button o un'icona di modifica di una delle barche.
+Tale modifica può essere dovuta a cambiamenti strutturali della barca, per esempio la riduzione del numero di posti disponibili.
+\\\\
+\emph{Attori coinvolti}: Proprietario, Sistema.\\\\
+\emph{Trigger}: Il proprietario clicca il button o l'icona \textit{Modifica barca}.\\\\
+\emph{Postcondizione}: Il sistema mostra la barca modificata all'interno della pagina di visualizzazione delle barche.\\\\
+\emph{Procedimento}:
+
+\begin{enumerate}
+    \item Il proprietario si trova sulla pagina di visualizzazione delle barche e clicca su un button o un'icona di modifica di una delle barche.
+    \item Sistema mostra una vista in cui è possibile modificare i dati relativi alla barca.
+    \item Proprietario modifica i dati.
+    \item Proprietario clicca su \textit{Conferma} per modificare i dati della barca.
+    \item Il sistema mostra la barca aggiornata all'interno della pagina di visualizzazione delle barche.
+\end{enumerate}
+
+\section{UC1.4 Elimina barche}
+
+\emph{Breve descrizione}: Il proprietario si trova sulla pagina di visualizzazione delle barche e clicca su un button o un'icona di eliminazione di una delle barche.
+L'eliminazione può essere definitiva o temporanea. L'eliminazione è definitiva se la barca non è più agibile o perché viene sostituita da un'altra;
+è temporanea nel caso in cui sia necessaria attività di manutenzione.\\\\
+\emph{Attori coinvolti}: Proprietario, Sistema.\\\\
+\emph{Trigger}: Il proprietario clicca il button o l'icona \textit{Elimina barca}.\\\\
+\emph{Postcondizione}: Il sistema mostra la pagina di visualizzazione delle barche in cui non comparirà la barca eliminata.\\\\
+\emph{Procedimento}:
+
+\begin{enumerate}
+    \item Il proprietario si trova sulla pagina di visualizzazione delle barche e clicca su un button o un'icona di eliminazione di una delle barche. Il proprietario deve inoltre
+          scegliere se l'eliminazione è temporanea o definitiva.
+    \item Sistema mostra un alert che avvisa il proprietario che l'azione è irreversibile.
+    \item Il proprietario può scegliere se confermare l'eliminazione cliccando su \textit{Conferma} o annullare l'azione cliccando su \textit{Annulla}.
+    \item Il sistema mostra la pagina di visualizzazione delle barche in cui non comparirà la barca eliminata se il proprietario ha scelto di eliminarla in maniera definitiva.
+          Se la barca è stata eliminata temporaneamente sarà sempre visibile nella pagina di visualizzazione delle barche, ma segnalando al proprietario che il sistema organizzerà
+          le uscite senza tenere conto di quella barca.
+\end{enumerate}
 
 \section{UC2: Calendario delle uscite}
 L'applicazione deve poter semplificare la gestione e l'organizzazione delle uscite al proprietario del diving center.
@@ -45,13 +141,13 @@ L'applicazione deve poter semplificare la gestione e l'organizzazione delle usci
 \emph{Postcondizione}: L'utente è stato inserito nel database e ha ricevuto la conferma dell'operazione.\\\\
 \emph{Procedimento}:
 \begin{enumerate}
-	\item Utente preme su "Registrazione" nella pagina iniziale dell'app
-	\item Utente fornisce Nome, username, indirizzo email e password nel form di registrazione
-	\item Il sistema verifica se esiste già un utente con quella mail:
-		\begin{enumerate}
-		     \item se esiste già, il sistema lo comunica all'utente
-		     \item se non esiste allora il sistema aggiunge l'utente nel database
-		\end{enumerate}
+    \item Utente preme su "Registrazione" nella pagina iniziale dell'app
+    \item Utente fornisce Nome, username, indirizzo email e password nel form di registrazione
+    \item Il sistema verifica se esiste già un utente con quella mail:
+          \begin{enumerate}
+              \item se esiste già, il sistema lo comunica all'utente
+              \item se non esiste allora il sistema aggiunge l'utente nel database
+          \end{enumerate}
 \end{enumerate}
 
 \section{UC4: Login dell'utente}
@@ -61,13 +157,13 @@ L'applicazione deve poter semplificare la gestione e l'organizzazione delle usci
 \emph{Postcondizione}: L'utente ha accesso alla vista del suo profilo.\\\\
 \emph{Procedimento}:
 \begin{enumerate}
-	\item Utente preme su "Login" nella pagina iniziale dell'app
-	\item Utente fornisce username e password nel form di registrazione
-	\item Il sistema controlla le credenziali inserite:
-		\begin{enumerate}
-		     \item se sono corrette, il sistema invia una conferma di accesso all'utente
-		     \item se sono errate, il sistema lo comunica all'utente
-		\end{enumerate}
+    \item Utente preme su "Login" nella pagina iniziale dell'app
+    \item Utente fornisce username e password nel form di registrazione
+    \item Il sistema controlla le credenziali inserite:
+          \begin{enumerate}
+              \item se sono corrette, il sistema invia una conferma di accesso all'utente
+              \item se sono errate, il sistema lo comunica all'utente
+          \end{enumerate}
 \end{enumerate}
 
 \section{UML Component diagram}
