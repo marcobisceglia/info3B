@@ -11,7 +11,7 @@ Nella prima iterazione si è scelto di implementare i seguenti casi d'uso:
               \item UC1.3 Modifica barca
               \item UC1.4 Eliminazione barca
           \end{itemize}
-    \item UC2: Calendario uscite \textit{[Astratto]}
+    \item UC2: Gestione calendario uscite \textit{[Astratto]}
           \begin{itemize}
               \item UC2.1 Visualizzazione uscite
               \item UC2.2 Inserimento uscita
@@ -124,7 +124,7 @@ L'eliminazione può essere definitiva o temporanea. L'eliminazione è definitiva
           le uscite senza tenere conto di quella barca.
 \end{enumerate}
 
-\section{UC2: Gestione calendario delle uscite}
+\section{UC2: Gestione calendario uscite}
 L'applicazione deve poter semplificare la gestione e l'organizzazione delle uscite al proprietario del diving center.
 L'applicazione deve fungere da calendario, mettendo a disposizione le seguenti funzionalità:
 
@@ -172,7 +172,6 @@ L'applicazione deve fungere da calendario, mettendo a disposizione le seguenti f
     \item Il sistema mostra la nuova uscita all'interno della pagina di visualizzazione delle uscite.
 \end{enumerate}
 
-%Modifica uscita
 \subsection{UC2.3 Modifica uscita}
 
 \noindent \emph{Breve descrizione}: Il proprietario si trova sulla pagina di visualizzazione delle uscite e clicca su un button o un'icona di modifica di una delle uscite.
@@ -190,7 +189,6 @@ Tale modifica può essere dovuta a cambiamenti climatici o ad altri imprevisti.\
     \item Il sistema mostra l'uscita aggiornata all'interno della pagina di visualizzazione delle uscite.
 \end{enumerate}
 
-%Eliminazione uscita
 \subsection{UC2.4 Eliminazione uscita}
 
 \noindent \emph{Breve descrizione}: Il proprietario si trova sulla pagina di visualizzazione delle uscite e clicca su un button o un'icona di eliminazione di una delle uscite.\medbreak
@@ -238,6 +236,8 @@ Tale modifica può essere dovuta a cambiamenti climatici o ad altri imprevisti.\
           \end{enumerate}
 \end{enumerate}
 
+\newpage
+
 \section{UML Component diagram}
 I casi d'uso scelti in questa prima iterazione vengono rappresentati sottoforma di componenti nel diagramma in Figura~\ref{fig:componentDiagram}.
 Si è scelto di suddividire i caso d'uso in componenti:
@@ -257,7 +257,7 @@ Si è scelto di suddividire i caso d'uso in componenti:
 \newpage
 
 \section{UML Class diagram per Interfacce}
-Il il diagramma in Figura ~\ref{fig:ClassDiagramInterfaces} serve a rappresentare le interfacce del sistema e le loro interazioni.
+Il diagramma in Figura ~\ref{fig:ClassDiagramInterfaces} serve a rappresentare le interfacce del sistema e le loro interazioni.
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.27]{ClassDiagramInterfaces_v2.png}
