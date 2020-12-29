@@ -11,12 +11,12 @@ Nella prima iterazione si è scelto di implementare i seguenti casi d'uso:
               \item UC1.3 Modifica barca
               \item UC1.4 Eliminazione barca
           \end{itemize}
-    \item UC2: Gestione calendario uscite \textit{[Astratto]}
+    \item UC2: Gestione escursioni \textit{[Astratto]}
           \begin{itemize}
-              \item UC2.1 Visualizzazione uscite
-              \item UC2.2 Inserimento uscita
-              \item UC2.3 Modifica uscita
-              \item UC2.4 Eliminazione uscita
+              \item UC2.1 Visualizzazione escursioni
+              \item UC2.2 Inserimento escursione
+              \item UC2.3 Modifica escursione
+              \item UC2.4 Eliminazione escursione
           \end{itemize}
     \item UC3: Registrazione utente
     \item UC4: Login utente
@@ -121,87 +121,87 @@ L'eliminazione può essere definitiva o temporanea. L'eliminazione è definitiva
     \item Il proprietario può scegliere se confermare l'eliminazione cliccando su \textit{Conferma} o annullare l'azione cliccando su \textit{Annulla}.
     \item Il sistema mostra la pagina di visualizzazione delle barche in cui non comparirà la barca eliminata se il proprietario ha scelto di eliminarla in maniera non temporanea.
           Se invece, la barca è stata eliminata temporaneamente, essa sarà sempre visibile nella pagina di visualizzazione delle barche, ma segnalando al proprietario che il sistema organizzerà
-          le uscite senza tenere conto di quella barca.
+          le escursioni senza tenere conto di quella barca.
 \end{enumerate}
 
-\section{UC2: Gestione calendario uscite}
-L'applicazione deve poter semplificare la gestione e l'organizzazione delle uscite al proprietario del diving center.
+\section{UC2: Gestione escursioni}
+L'applicazione deve poter semplificare la gestione e l'organizzazione delle escursioni al proprietario del diving center.
 L'applicazione deve fungere da calendario, mettendo a disposizione le seguenti funzionalità:
 
 \begin{itemize}
-    \item UC2.1 Visualizzazione uscite
-    \item UC2.2 Inserimento uscita
-    \item UC2.3 Modifica uscita
-    \item UC2.4 Eliminazione uscita
+    \item UC2.1 Visualizzazione escursioni
+    \item UC2.2 Inserimento escursione
+    \item UC2.3 Modifica escursione
+    \item UC2.4 Eliminazione escursione
 \end{itemize}
 
-\subsection{UC2.1 Visualizzazione uscite}
+\subsection{UC2.1 Visualizzazione escursioni}
 
 \noindent \emph{Breve descrizione}: Il proprietario visualizza le date e i turni in cui gli utenti possono prenotarsi.\medbreak
 \noindent \emph{Attori coinvolti}: Proprietario, Sistema.\medbreak
-\noindent \emph{Trigger}: Il proprietario clicca il button \textit{Visualizza uscite}.\medbreak
-\noindent \emph{Postcondizione}: Il sistema mostra una vista con l'elenco delle uscite.\medbreak
+\noindent \emph{Trigger}: Il proprietario clicca il button \textit{Visualizza escursioni}.\medbreak
+\noindent \emph{Postcondizione}: Il sistema mostra una vista con l'elenco delle escursioni.\medbreak
 \noindent \emph{Procedimento}:
 
 \begin{enumerate}
     \item Proprietario effettua il login.
-    \item Proprietario clicca il button \textit{Visualizza uscite} presente nella home page.
-    \item Sistema mostra l'elenco delle uscite rese disponibili con le seguenti informazioni:
+    \item Proprietario clicca il button \textit{Visualizza escursioni} presente nella home page.
+    \item Sistema mostra l'elenco delle escursioni rese disponibili con le seguenti informazioni:
           \begin{itemize}
-              \item Data dell'uscita.
-              \item Orario di inizio uscita.
-              \item Orario di fine uscita.
+              \item Data dell'escursione.
+              \item Orario di inizio escursione.
+              \item Orario di fine escursione.
               \item Altro TODO
           \end{itemize}
-    \item Per ogni data presente nell'elenco il proprietario può cliccare su \textit{Modifica uscita} o \textit{Elimina uscita} per modificare o eliminare un'uscita.
+    \item Per ogni data presente nell'elenco il proprietario può cliccare su \textit{Modifica escursione} o \textit{Elimina escursione} per modificare o eliminare un'escursione.
 \end{enumerate}
 
-\subsection{UC2.2 Inserimento uscita}
+\subsection{UC2.2 Inserimento escursione}
 
-\noindent \emph{Breve descrizione}: Il proprietario aggiunge un'uscita al calendario indicandone data e orari in cui verranno rese disponibili le prenotazioni.\medbreak
+\noindent \emph{Breve descrizione}: Il proprietario aggiunge un'escursione al calendario indicandone data e orari in cui verranno rese disponibili le prenotazioni.\medbreak
 \noindent \emph{Attori coinvolti}: Proprietario, Sistema.\medbreak
-\noindent \emph{Trigger}: Il proprietario clicca il button \textit{Inserisci uscita}.\medbreak
-\noindent \emph{Postcondizione}: Il sistema mostra la nuova uscita all'interno della pagina di visualizzazione delle uscite.\medbreak
+\noindent \emph{Trigger}: Il proprietario clicca il button \textit{Inserisci escursione}.\medbreak
+\noindent \emph{Postcondizione}: Il sistema mostra la nuova escursione all'interno della pagina di visualizzazione delle escursioni.\medbreak
 \noindent \emph{Procedimento}:
 
 \begin{enumerate}
-    \item Il proprietario si trova sulla home page e clicca il button \textit{Inserisci uscita}.
-    \item Sistema mostra un form in cui è possibile inserire i dati relativi all'uscita.
+    \item Il proprietario si trova sulla home page e clicca il button \textit{Inserisci escursione}.
+    \item Sistema mostra un form in cui è possibile inserire i dati relativi all'escursione.
     \item Proprietario riempie il form.
-    \item Proprietario clicca su \textit{Conferma} per inserire l'uscita nel sistema.
-    \item Il sistema mostra la nuova uscita all'interno della pagina di visualizzazione delle uscite.
+    \item Proprietario clicca su \textit{Conferma} per inserire l'escursione nel sistema.
+    \item Il sistema mostra la nuova escursione all'interno della pagina di visualizzazione delle escursioni.
 \end{enumerate}
 
-\subsection{UC2.3 Modifica uscita}
+\subsection{UC2.3 Modifica escursione}
 
-\noindent \emph{Breve descrizione}: Il proprietario si trova sulla pagina di visualizzazione delle uscite e clicca su un button o un'icona di modifica di una delle uscite.
+\noindent \emph{Breve descrizione}: Il proprietario si trova sulla pagina di visualizzazione delle escursioni e clicca su un button o un'icona di modifica di una delle escursioni.
 Tale modifica può essere dovuta a cambiamenti climatici o ad altri imprevisti.\medbreak
 \noindent \emph{Attori coinvolti}: Proprietario, Sistema.\medbreak
-\noindent \emph{Trigger}: Il proprietario clicca il button o l'icona \textit{Modifica uscita}.\medbreak
-\noindent \emph{Postcondizione}: Il sistema mostra l'uscita modificata all'interno della pagina di visualizzazione delle uscite.\medbreak
+\noindent \emph{Trigger}: Il proprietario clicca il button o l'icona \textit{Modifica escursione}.\medbreak
+\noindent \emph{Postcondizione}: Il sistema mostra l'escursione modificata all'interno della pagina di visualizzazione delle escursioni.\medbreak
 \noindent \emph{Procedimento}:
 
 \begin{enumerate}
-    \item Il proprietario si trova sulla pagina di visualizzazione delle uscite e clicca su un button o un'icona di modifica di una delle uscite.
-    \item Sistema mostra una vista in cui è possibile modificare i dati relativi all'uscita.
+    \item Il proprietario si trova sulla pagina di visualizzazione delle escursioni e clicca su un button o un'icona di modifica di una delle escursioni.
+    \item Sistema mostra una vista in cui è possibile modificare i dati relativi all'escursione.
     \item Proprietario modifica i dati.
-    \item Proprietario clicca su \textit{Conferma} per modificare i dati dell'uscita.
-    \item Il sistema mostra l'uscita aggiornata all'interno della pagina di visualizzazione delle uscite.
+    \item Proprietario clicca su \textit{Conferma} per modificare i dati dell'escursione.
+    \item Il sistema mostra l'escursione aggiornata all'interno della pagina di visualizzazione delle escursioni.
 \end{enumerate}
 
-\subsection{UC2.4 Eliminazione uscita}
+\subsection{UC2.4 Eliminazione escursione}
 
-\noindent \emph{Breve descrizione}: Il proprietario si trova sulla pagina di visualizzazione delle uscite e clicca su un button o un'icona di eliminazione di una delle uscite.\medbreak
+\noindent \emph{Breve descrizione}: Il proprietario si trova sulla pagina di visualizzazione delle escursioni e clicca su un button o un'icona di eliminazione di una delle escursioni.\medbreak
 \noindent \emph{Attori coinvolti}: Proprietario, Sistema.\medbreak
-\noindent \emph{Trigger}: Il proprietario clicca il button o l'icona \textit{Elimina uscita}.\medbreak
-\noindent \emph{Postcondizione}: Il sistema mostra la pagina di visualizzazione delle uscite in cui non comparirà l'uscita eliminata.\medbreak
+\noindent \emph{Trigger}: Il proprietario clicca il button o l'icona \textit{Elimina escursione}.\medbreak
+\noindent \emph{Postcondizione}: Il sistema mostra la pagina di visualizzazione delle escursioni in cui non comparirà l'escursione eliminata.\medbreak
 \noindent \emph{Procedimento}:
 
 \begin{enumerate}
-    \item Il proprietario si trova sulla pagina di visualizzazione delle uscite e clicca su un button o un'icona di eliminazione di una delle uscite.
+    \item Il proprietario si trova sulla pagina di visualizzazione delle escursioni e clicca su un button o un'icona di eliminazione di una delle escursioni.
     \item Sistema mostra un alert che avvisa il proprietario che l'azione è irreversibile.
     \item Il proprietario può scegliere se confermare l'eliminazione cliccando su \textit{Conferma} o annullare l'azione cliccando su \textit{Annulla}.
-    \item Il sistema mostra la pagina di visualizzazione delle uscite in cui non comparirà l'uscita eliminata.
+    \item Il sistema mostra la pagina di visualizzazione delle escursioni in cui non comparirà l'escursione eliminata.
 \end{enumerate}
 
 \section{UC3: Registrazione dell'utente}
@@ -243,7 +243,7 @@ Si è scelto di suddividire i caso d'uso in componenti:
 \begin{itemize}
     \item <<boundary>> rappresentati dai componenti lato front-end con cui gli attori si interfacciano direttamente. Tali componenti richiedono delle interfacce al back-end.
     \item <<control>> rappresentati dai componenti lato back-end che forniscono delle API al front-end, richiedonone a loro volta al database.
-    \item <<data>> rappresentato dal database in cui verranno memorizzati i dati delle barche, il calendario delle uscite e i dati dell'utente in occasione della registrazione.
+    \item <<data>> rappresentato dal database in cui verranno memorizzati i dati delle barche, il calendario delle escursioni e i dati dell'utente in occasione della registrazione.
 \end{itemize}
 
 \begin{figure}
@@ -255,28 +255,28 @@ Si è scelto di suddividire i caso d'uso in componenti:
 \newpage
 
 \section{UML Class diagram per Interfacce}
-Il diagramma in Figura ~\ref{fig:ClassDiagramInterfaces} serve a rappresentare le interfacce del sistema e le loro interazioni.
-\begin{figure}[hb]
+Il diagramma in Figura~\ref{fig:ClassDiagramInterfaces} serve a rappresentare le interfacce del sistema e le loro interazioni.
+\begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{ClassDiagramInterfaces_v2.png}
-    \caption{Diagramma dei componenti UML.}\label{fig:ClassDiagramInterfaces}
+    \includegraphics[width=\textwidth]{ClassDiagramInterfaces_v3.png}
+    \caption{Diagramma delle classi per interfacce UML.}\label{fig:ClassDiagramInterfaces}
 \end{figure}
 
 \newpage
 
 \section{UML Class diagram per tipi di dato}
-Il seguente diagramma serve ad esplicitare tipi di dato particolari e i loro legami.
-\begin{figure}[h]
+Il diagramma in Figura~\ref{fig:ClassDiagramTypes} serve ad esplicitare tipi di dato particolari e i loro legami.
+\begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{ClassDiagramTypes_v1.png}
-    \caption{Diagramma dei componenti UML.}\label{fig:ClassDiagramTypes}
+    \includegraphics[width=\textwidth]{ClassDiagramTypes_v2.png}
+    \caption{Diagramma delle classi per tipi di dato UML.}\label{fig:ClassDiagramTypes}
 \end{figure}
 
 \section{UML Deployment diagram}
 I componenti descritti precedentemente vengono istanziati nel Deployment diagram. In Figura~\ref{fig:DeploymentDiagram} vengono mostrati i componenti contenuti nei seguenti nodi:
 
 \begin{itemize}
-    \item Cellulare proprietario è il nodo su cui l'admin del sistema potrà gestire le barche e il calendario delle uscite.
+    \item Cellulare proprietario è il nodo su cui l'admin del sistema potrà gestire le barche e il calendario delle escursioni.
     \item Cellulare utente è il nodo su cui una persona potrà registrarsi alla piattaforma.
     \item Web server fornisce le API richieste dall'applicativo lato front-end.
     \item Database funge da storage dei dati.
