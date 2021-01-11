@@ -4,10 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-//import lombok.Data;
-
-//@Data
-
 @Entity
 public class Boat {
 	private @Id @GeneratedValue Long id;
@@ -47,13 +43,3 @@ public class Boat {
 	}
     
 }
-
-
-    
-//    // constructor
-//    public Boat(@JsonProperty("id") Long id, @JsonProperty("model") String model,
-//            @JsonProperty("numSeats") Integer numSeats) {
-//        this.id = id;
-//        this.model = model;
-//        this.numSeats = numSeats;
-//    }
