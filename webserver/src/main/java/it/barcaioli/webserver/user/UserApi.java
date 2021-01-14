@@ -1,4 +1,4 @@
-package it.barcaioli.webserver.customer;
+package it.barcaioli.webserver.user;
 
 import javax.validation.Valid;
 
@@ -11,37 +11,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class CustomerApi {
+public class UserApi {
 
-    private final CustomerService customerService;
+    private final UserService customerService;
     
     @Autowired
-    public CustomerApi(CustomerService customerService){
+    public UserApi(UserService customerService){
     	this.customerService = customerService;
     }
 
     @GetMapping("/customers")
-    public Iterable<Customer> getCustomers() {
+    public Iterable<User> getCustomers() {
         return customerService.getCustomers();
     }
     
     @GetMapping("/customers/{id}")
-    public Customer getCustomer(@PathVariable Long id) {
+    public User getCustomer(@PathVariable Long id) {
     	return customerService.getCustomer(id);
     }
     
     @PostMapping("/customers/signup")
-    public Customer signUp(@Valid @RequestBody Customer newCustomer) {
+    public User signUp(@Valid @RequestBody User newCustomer) {
     	return customerService.signUp(newCustomer); 
     }
     
     @PostMapping("/customers/login")
-    public Customer login(@Valid @RequestBody Customer customer) {
+    public User login(@Valid @RequestBody User customer) {
     	return customerService.login(customer);
     }
     
     @PostMapping("/customers/logout")
-    public Customer logout(@Valid @RequestBody Customer customer) {
+    public User logout(@Valid @RequestBody User customer) {
     	return customerService.logout(customer);
     }
     

@@ -1,15 +1,17 @@
-package it.barcaioli.webserver.customer;
+package it.barcaioli.webserver.user;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
-public class Customer {
+@Table(name="`user`")
+public class User {
 	
 	private @Id @GeneratedValue Long id;
 	private String name;
@@ -21,9 +23,9 @@ public class Customer {
 	private String license;
 	private boolean loggedIn;
 
-    Customer(){}
+    User(){}
      
-	public Customer(String name, String lastName, @NotBlank String email, @NotBlank String password, String license) {
+	public User(String name, String lastName, @NotBlank String email, @NotBlank String password, String license) {
 		super();
 		this.name = name;
 		this.lastName = lastName;
