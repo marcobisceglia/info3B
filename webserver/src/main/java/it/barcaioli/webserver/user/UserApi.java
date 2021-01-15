@@ -21,18 +21,18 @@ public class UserApi {
     }
 
     @GetMapping("/users")
-    public Iterable<User> getCustomers() {
-        return userService.getCustomers();
+    public Iterable<User> getUsers() {
+        return userService.getUsers();
     }
     
     @GetMapping("/users/{id}")
-    public User getCustomer(@PathVariable Long id) {
-    	return userService.getCustomer(id);
+    public User getUser(@PathVariable Long id) {
+    	return userService.getUser(id);
     }
     
     @PostMapping("/users/signup")
-    public User signUp(@Valid @RequestBody User newCustomer) {
-    	return userService.signUp(newCustomer); 
+    public User signUp(@Valid @RequestBody User newUser) {
+    	return userService.signUp(newUser); 
     }
     
     @PostMapping("/users/login")
@@ -46,7 +46,7 @@ public class UserApi {
     }
     
     @DeleteMapping("/users/{id}")
-    public void deleteCustomer(@PathVariable("id") Long id) {
-        userService.deleteCustomer(id);
+    public void deleteUser(@PathVariable("id") Long id) {
+        userService.deleteUser(id);
     }
 }
