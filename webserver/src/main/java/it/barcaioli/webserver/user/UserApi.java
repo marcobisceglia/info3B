@@ -13,40 +13,40 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserApi {
 
-    private final UserService customerService;
+    private final UserService userService;
     
     @Autowired
-    public UserApi(UserService customerService){
-    	this.customerService = customerService;
+    public UserApi(UserService userService){
+    	this.userService = userService;
     }
 
-    @GetMapping("/customers")
+    @GetMapping("/users")
     public Iterable<User> getCustomers() {
-        return customerService.getCustomers();
+        return userService.getCustomers();
     }
     
-    @GetMapping("/customers/{id}")
+    @GetMapping("/users/{id}")
     public User getCustomer(@PathVariable Long id) {
-    	return customerService.getCustomer(id);
+    	return userService.getCustomer(id);
     }
     
-    @PostMapping("/customers/signup")
+    @PostMapping("/users/signup")
     public User signUp(@Valid @RequestBody User newCustomer) {
-    	return customerService.signUp(newCustomer); 
+    	return userService.signUp(newCustomer); 
     }
     
-    @PostMapping("/customers/login")
-    public User login(@Valid @RequestBody User customer) {
-    	return customerService.login(customer);
+    @PostMapping("/users/login")
+    public User login(@Valid @RequestBody User user) {
+    	return userService.login(user);
     }
     
-    @PostMapping("/customers/logout")
-    public User logout(@Valid @RequestBody User customer) {
-    	return customerService.logout(customer);
+    @PostMapping("/users/logout")
+    public User logout(@Valid @RequestBody User user) {
+    	return userService.logout(user);
     }
     
-    @DeleteMapping("/customers/{id}")
+    @DeleteMapping("/users/{id}")
     public void deleteCustomer(@PathVariable("id") Long id) {
-        customerService.deleteCustomer(id);
+        userService.deleteCustomer(id);
     }
 }
