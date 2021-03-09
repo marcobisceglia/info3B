@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OwnerActivity">
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="62dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="50dp"
+                        android:text="OWNER" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/welcomeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/boatsButton"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Boats management" />
+                            <LinearLayout
+                                android:id="@+id/boatsLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:orientation="vertical">
+                                <Button
+                                    android:id="@+id/insertBoat"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Insert Boat" />
+
+                                  <Button
+                                    android:id="@+id/displayBoat"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Display Boat" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+                            <Button
+                                android:id="@+id/dateAndTimeButton"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Time and date management" />
+                            <LinearLayout
+                                android:id="@+id/timeAndDateLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:orientation="vertical">
+                                <Button
+                                    android:id="@+id/insertTimeAndDate"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Insert time and date" />
+
+                                <Button
+                                    android:id="@+id/displayTimeAndDate"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Display time and date" />
+
+                        </LinearLayout>
+                <Button
+                    android:id="@+id/equipmentButton"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Equipment management" />
+                <LinearLayout
+                    android:id="@+id/equipmentLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical">
+                    <Button
+                        android:id="@+id/insertEquipment"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Insert Equipment" />
+
+                    <Button
+                        android:id="@+id/displayEquipment"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Display Equipment" />
+
+                </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
