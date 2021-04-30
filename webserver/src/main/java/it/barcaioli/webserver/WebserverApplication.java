@@ -1,5 +1,7 @@
 package it.barcaioli.webserver;
 
+import java.util.List;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +14,9 @@ public class WebserverApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WebserverApplication.class, args);
 	}
-	
+
 	@GetMapping
-	public String printApis(){
-		return "Helloworld";
+	public List<String> helloworld() {
+		return List.of("Hello", "world");
 	}
 }
