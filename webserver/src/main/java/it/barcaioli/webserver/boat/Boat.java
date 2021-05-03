@@ -1,9 +1,14 @@
 package it.barcaioli.webserver.boat;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import it.barcaioli.webserver.booking.Booking;
 
 @Table(name = "Boat")
 @Entity
@@ -13,6 +18,13 @@ public class Boat {
 	private String model;
 	private Integer numSeats;
 
+	// 1 Boat can have MANY Bookings
+	// mappedBy Booking class private field
+	// Each operation on the boat will be propagated to the bookings
+	// Bookings are removed if boat is removed
+	@OneToMany(mappedBy = "boat", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Booking> bookings;
+
 	Boat() {
 	}
 
@@ -20,6 +32,7 @@ public class Boat {
 		super();
 		this.model = model;
 		this.numSeats = numSeats;
+		this.bookings = new ArrayList<>();
 	}
 
 	public Long getId() {
@@ -40,5 +53,13 @@ public class Boat {
 
 	public void setNumSeats(Integer numSeats) {
 		this.numSeats = numSeats;
+	}
+
+	public List<Booking> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
 	}
 }

@@ -1,19 +1,24 @@
 package it.barcaioli.webserver.user;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import it.barcaioli.webserver.booking.Booking;
 
 @Table(name = "`User`")
 @Entity
 public class User {
 
 	private @Id @GeneratedValue Long id;
-	private String name;
+	private String firstName;
 	private String lastName;
 	@NotBlank
 	private String email;
@@ -23,29 +28,37 @@ public class User {
 	private String license;
 	private boolean loggedIn;
 
+	// 1 User can do MANY Bookings
+	// mappedBy Booking class private field
+	// Each operation on the user will be propagated to the bookings
+	// Bookings are removed if user is removed
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Booking> bookings;
+
 	User() {
 	}
 
-	public User(String name, String lastName, @NotBlank String email, @NotBlank String password, String license) {
+	public User(String firstName, String lastName, @NotBlank String email, @NotBlank String password, String license) {
 		super();
-		this.name = name;
+		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
 		this.license = license;
 		this.loggedIn = false;
+		this.bookings = new ArrayList<>();
 	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public String getLastName() {
@@ -86,5 +99,13 @@ public class User {
 
 	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
+	}
+
+	public List<Booking> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
 	}
 }
