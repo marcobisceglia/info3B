@@ -2,7 +2,6 @@ package it.barcaioli.webserver.booking;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -12,9 +11,9 @@ import org.springframework.web.server.ResponseStatusException;
 @Service // A @Component more specific
 public class BookingService {
 
-  @Autowired
   private final BookingRepository bookingRepository;
 
+  @Autowired
   public BookingService(BookingRepository booking) {
     this.bookingRepository = booking;
   }
