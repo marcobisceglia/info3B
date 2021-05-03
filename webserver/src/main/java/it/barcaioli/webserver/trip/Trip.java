@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -18,7 +19,7 @@ import it.barcaioli.webserver.booking.Booking;
 @Entity
 public class Trip {
 
-	private @Id @GeneratedValue Long id;
+	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
 	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(pattern = "dd-MM-yyyy HH:mm", timezone = "Europe/Paris")
 	private Date dateTime;

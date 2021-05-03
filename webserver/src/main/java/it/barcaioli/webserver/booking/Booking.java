@@ -2,6 +2,7 @@ package it.barcaioli.webserver.booking;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,7 +15,7 @@ import it.barcaioli.webserver.user.User;
 @Entity
 public class Booking {
 
-	private @Id @GeneratedValue Long id;
+	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
 	private Integer numPeople;
 
 	@ManyToOne // many bookings in a boat
