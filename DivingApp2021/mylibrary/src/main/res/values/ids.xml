@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tag_item_id" type="id" />
+    <item name="tag_item_item" type="id" />
+    <item name="tag_item_position_absolute" type="id" />
+    <item name="tag_item_position_owner" type="id" />
+</resources>

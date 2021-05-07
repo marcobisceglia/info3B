@@ -1,0 +1,12 @@
+<resources>
+    <style name="DefaultPage">
+        <item name="android:background">@color/colorGrey0</item>
+    </style>
+    <style name="BoxContainerDefault">
+        <item name="android:background">@color/colorGrey0</item>
+    </style>
+    <style name="BoxContainerGrey">
+        <item name="android:background">@color/colorGrey10</item>
+    </style>
+
+</resources>

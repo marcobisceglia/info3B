@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextBox">
+        <item name="android:background">@drawable/textbox</item>
+        <item name="android:drawableTint">@color/colorGrey90</item>
+    </style>
+</resources>

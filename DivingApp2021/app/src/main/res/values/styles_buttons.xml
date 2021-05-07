@@ -1,0 +1,26 @@
+<resources>
+    <style name="HomePageButtonGrey">
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+        <item name="android:padding">25dp</item>
+        <item name="android:drawablePadding">25dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/colorGrey20</item>
+        <item name="android:background">@color/colorGrey60</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="MenuButtonGrey">
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+        <item name="android:padding">25dp</item>
+        <item name="android:drawablePadding">25dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/colorGrey20</item>
+        <item name="android:background">@color/colorGrey30</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+</resources>
