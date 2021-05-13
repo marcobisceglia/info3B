@@ -1,9 +1,14 @@
 package com.example.divingapp2021
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.divingapp2021.databinding.FragmentBoatBinding
 import java.util.*
 
@@ -11,6 +16,13 @@ class BoatFragment : NavigationFragment<FragmentBoatBinding>() {
     private val adapter by lazy { BoatAdapter(listener) }
     private val listener = ItemClickListener()
 
+    private val broadCastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(contxt: Context?, intent: Intent?) {
+            if (intent?.action == "UPDATE_BOAT") {
+                updateLayout()
+            }
+        }
+    }
     override fun buildBinding(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): FragmentBoatBinding {
         return FragmentBoatBinding.inflate(inflater, container, false)
     }
@@ -26,7 +38,17 @@ class BoatFragment : NavigationFragment<FragmentBoatBinding>() {
 
         this.binding.statusCBStatisticsRecyclerView.adapter = adapter
 
+        LocalBroadcastManager
+                .getInstance(requireContext())
+                .registerReceiver(broadCastReceiver, IntentFilter("UPDATE_BOAT"))
 
+        this.binding.buttonInsert.setOnClickListener {
+            FragmentHelper.addFragmentFromSide(
+                    requireActivity(),
+                    EditBoatFragment(insert = true),
+                    R.id.mainFrameLayout
+            )
+        }
         return rootview
     }
 
@@ -38,6 +60,8 @@ class BoatFragment : NavigationFragment<FragmentBoatBinding>() {
 
 
     private fun updateLayout() {
+        //TODO RICHIESTA AL DB DELLE BARCHE DISPONIBILI
+
         val items = ArrayList<Boat>()
         items.add(object : Boat() {
             init {
@@ -67,6 +91,83 @@ class BoatFragment : NavigationFragment<FragmentBoatBinding>() {
                 places = "10"
             }
         })
+ items.add(object : Boat() {
+            init {
+                name = "Boat 4"
+                model = "Model 1"
+                places = "10"
+            }
+        })
+ items.add(object : Boat() {
+            init {
+                name = "Boat 4"
+                model = "Model 1"
+                places = "10"
+            }
+        })
+ items.add(object : Boat() {
+            init {
+                name = "Boat 4"
+                model = "Model 1"
+                places = "10"
+            }
+        })
+ items.add(object : Boat() {
+            init {
+                name = "Boat 4"
+                model = "Model 1"
+                places = "10"
+            }
+        })
+ items.add(object : Boat() {
+            init {
+                name = "Boat 4"
+                model = "Model 1"
+                places = "10"
+            }
+        })
+ items.add(object : Boat() {
+            init {
+                name = "Boat 4"
+                model = "Model 1"
+                places = "10"
+            }
+        })
+ items.add(object : Boat() {
+            init {
+                name = "Boat 4"
+                model = "Model 1"
+                places = "10"
+            }
+        })
+ items.add(object : Boat() {
+            init {
+                name = "Boat 4"
+                model = "Model 1"
+                places = "10"
+            }
+        })
+ items.add(object : Boat() {
+            init {
+                name = "Boat 4"
+                model = "Model 1"
+                places = "10"
+            }
+        })
+ items.add(object : Boat() {
+            init {
+                name = "Boat 4"
+                model = "Model 1"
+                places = "10"
+            }
+        })
+ items.add(object : Boat() {
+            init {
+                name = "Boat 4"
+                model = "Model 1"
+                places = "10"
+            }
+        })
 
         adapter.submitList(items)
     }
@@ -76,7 +177,7 @@ class BoatFragment : NavigationFragment<FragmentBoatBinding>() {
             val item = v.getTag(R.id.tag_item_item) as Boat
             FragmentHelper.addFragmentFromSide(
                     requireActivity(),
-                    EditBoatFragment(item),
+                    EditBoatFragment(boat = item),
                     R.id.mainFrameLayout
             )
         }
