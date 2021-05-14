@@ -1,0 +1,2 @@
+include ':mylibrary', ':app'
+rootProject.name = "DivingApp2021"
