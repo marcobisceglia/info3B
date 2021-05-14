@@ -4,12 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import it.barcaioli.webserver.boat.Boat;
-import it.barcaioli.webserver.trip.Trip;
-import it.barcaioli.webserver.user.User;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Table(name = "Booking")
 @Entity
@@ -17,27 +14,19 @@ public class Booking {
 
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
 	private Integer numPeople;
-
-	@ManyToOne // many bookings in a boat
-	@JoinColumn(name = "boatId")
-	private Boat boat;
-
-	@ManyToOne // many bookings by a user
-	@JoinColumn(name = "userId")
-	private User user;
-
-	@ManyToOne // many bookings for a trip
-	@JoinColumn(name = "tripId")
-	private Trip trip;
+	private Long userId;
+	private Long tripId;
+	@JsonProperty(access = Access.READ_ONLY)
+	private Long boatId;
 
 	Booking() {
 	}
 
-	public Booking(Integer numPeople, Boat boat, User user, Trip trip) {
+	public Booking(Integer numPeople, Long userId, Long tripId, Long boatId) {
 		this.numPeople = numPeople;
-		this.boat = boat;
-		this.user = user;
-		this.trip = trip;
+		this.userId = userId;
+		this.tripId = tripId;
+		this.boatId = boatId;
 	}
 
 	public Long getId() {
@@ -52,27 +41,27 @@ public class Booking {
 		this.numPeople = numPeople;
 	}
 
-	public Boat getBoat() {
-		return boat;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setBoat(Boat boat) {
-		this.boat = boat;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
-	public User getUser() {
-		return user;
+	public Long getTripId() {
+		return tripId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setTripId(Long tripId) {
+		this.tripId = tripId;
 	}
 
-	public Trip getTrip() {
-		return trip;
+	public Long getBoatId() {
+		return boatId;
 	}
 
-	public void setTrip(Trip trip) {
-		this.trip = trip;
+	public void setBoatId(Long boatId) {
+		this.boatId = boatId;
 	}
 }

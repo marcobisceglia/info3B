@@ -14,35 +14,35 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "bookings")
 public class BookingController {
 
-  private final BookingService bookingService;
+	private final BookingService bookingService;
 
-  @Autowired
-  public BookingController(BookingService bookingService) {
-    this.bookingService = bookingService;
-  }
+	@Autowired
+	public BookingController(BookingService bookingService) {
+		this.bookingService = bookingService;
+	}
 
-  @GetMapping
-  public Iterable<Booking> getBookings() {
-    return bookingService.getBookings();
-  }
+	@GetMapping
+	public Iterable<Booking> getBookings() {
+		return bookingService.getBookings();
+	}
 
-  @GetMapping(path = "{bookingId}")
-  public Booking getBooking(@PathVariable Long bookingId) {
-    return bookingService.getBooking(bookingId);
-  }
+	@GetMapping(path = "{bookingId}")
+	public Booking getBooking(@PathVariable Long bookingId) {
+		return bookingService.getBooking(bookingId);
+	}
 
-  @PostMapping()
-  public Booking createBooking(@RequestBody Booking booking) {
-    return bookingService.createBooking(booking);
-  }
+	@PostMapping
+	public Booking createBooking(@RequestBody Booking booking) {
+		return bookingService.createBooking(booking);
+	}
 
-  @PutMapping(path = "{bookingId}")
-  public Booking updateBooking(@PathVariable("bookingId") Long bookingId, @RequestBody Booking booking) {
-    return bookingService.updateBooking(bookingId, booking);
-  }
+	@PutMapping(path = "{bookingId}")
+	public Booking updateBooking(@PathVariable("bookingId") Long bookingId, @RequestBody Booking booking) {
+		return bookingService.updateBooking(bookingId, booking);
+	}
 
-  @DeleteMapping(path = "{bookingId}")
-  public void deleteBooking(@PathVariable("bookingId") Long bookingId) {
-    bookingService.deleteBooking(bookingId);
-  }
+	@DeleteMapping(path = "{bookingId}")
+	public void deleteBooking(@PathVariable("bookingId") Long bookingId) {
+		bookingService.deleteBooking(bookingId);
+	}
 }
