@@ -1,6 +1,6 @@
 package it.barcaioli.webserver.trip;
 
-import java.util.Date;
+import java.time.*;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.barcaioli.webserver.boatsusage.BoatsUsage;
@@ -21,9 +19,8 @@ import it.barcaioli.webserver.booking.Booking;
 public class Trip {
 
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
-	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(pattern = "dd-MM-yyyy HH:mm", timezone = "Europe/Paris")
-	private Date dateTime;
+	private LocalDateTime dateTime;
 
 	// 1 Trip can have many Bookings
 	// mappedBy Trip class private field
@@ -44,7 +41,7 @@ public class Trip {
 	Trip() {
 	}
 
-	public Trip(Date dateTime) {
+	public Trip(LocalDateTime dateTime) {
 		super();
 		this.dateTime = dateTime;
 	}
@@ -53,11 +50,11 @@ public class Trip {
 		return id;
 	}
 
-	public Date getDateTime() {
+	public LocalDateTime getDateTime() {
 		return dateTime;
 	}
 
-	public void setDateTime(Date dateTime) {
+	public void setDateTime(LocalDateTime dateTime) {
 		this.dateTime = dateTime;
 	}
 

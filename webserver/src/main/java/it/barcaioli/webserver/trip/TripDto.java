@@ -1,20 +1,17 @@
 package it.barcaioli.webserver.trip;
 
-import java.util.Date;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class TripDto {
-  @Temporal(TemporalType.TIMESTAMP)
   @JsonFormat(pattern = "dd-MM-yyyy HH:mm", timezone = "Europe/Paris")
-  private Date dateTime;
+  private LocalDateTime dateTime;
 
-  public Date getDateTime() {
+  public LocalDateTime getDateTime() {
     return dateTime;
   }
 
-  public void setDateTime(Date dateTime) {
+  public void setDateTime(LocalDateTime dateTime) {
     this.dateTime = dateTime;
   }
 }

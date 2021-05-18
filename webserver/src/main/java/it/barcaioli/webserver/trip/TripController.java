@@ -1,6 +1,9 @@
 package it.barcaioli.webserver.trip;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import it.barcaioli.webserver.boatsusage.BoatsUsageService;
 import it.barcaioli.webserver.booking.Booking;
@@ -33,8 +37,17 @@ public class TripController {
 	}
 
 	@GetMapping
-	public Iterable<Trip> getTrips() {
-		return tripService.getTrips();
+	public Iterable<Trip> getTrips(@RequestParam(required = false, name = "date") String dateTimeString) {
+		if (dateTimeString == null) {
+			return tripService.getTrips();
+		} else {
+
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			var dateTime = LocalDate.parse(dateTimeString, formatter);
+
+			return tripService.getTrips().stream().filter(trip -> trip.getDateTime().toLocalDate().equals(dateTime))
+					.collect(Collectors.toList());
+		}
 	}
 
 	@GetMapping(path = "{tripId}")
