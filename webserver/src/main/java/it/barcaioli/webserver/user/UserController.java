@@ -27,7 +27,7 @@ public class UserController {
 		var user = new User();
 		user.setFirstName(userDto.getFirstName());
 		user.setLastName(userDto.getLastName());
-		user.setEmail(userDto.getEmail());
+		user.setEmail(userDto.getEmail().toLowerCase());
 		user.setPassword(userDto.getPassword());
 		user.setLicense(userDto.getLicense());
 		return user;

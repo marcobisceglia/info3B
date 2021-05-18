@@ -3,7 +3,10 @@ package it.barcaioli.webserver.user;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,15 +23,28 @@ import it.barcaioli.webserver.booking.Booking;
 public class User {
 
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
+
+	@Column(nullable = false)
 	private String firstName;
+
+	@Column(nullable = false)
 	private String lastName;
+
 	@NotBlank
+	@Column(nullable = false, unique = true)
 	private String email;
+
 	@NotBlank
 	@JsonProperty(access = Access.WRITE_ONLY)
+	@Column(nullable = false)
 	private String password;
+
+	@Column(nullable = false)
 	private String license;
 	private boolean loggedIn;
+
+	@Enumerated(EnumType.STRING)
+	private UserRole userRole;
 
 	// 1 User can have many Bookings
 	// mappedBy User class private field
@@ -110,5 +126,13 @@ public class User {
 
 	public void setBookings(List<Booking> bookings) {
 		this.bookings = bookings;
+	}
+
+	public UserRole getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
 	}
 }
