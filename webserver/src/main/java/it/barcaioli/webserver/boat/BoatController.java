@@ -21,6 +21,15 @@ public class BoatController {
 		this.boatService = boatService;
 	}
 
+	private Boat dtoToEntity(BoatDto boatDto) {
+		var boat = new Boat();
+
+		boat.setModel(boatDto.getModel());
+		boat.setSeats(boatDto.getSeats());
+
+		return boat;
+	}
+
 	@GetMapping
 	public Iterable<Boat> getBoats() {
 		return boatService.getBoats();
@@ -32,12 +41,14 @@ public class BoatController {
 	}
 
 	@PostMapping()
-	public Boat createBoat(@RequestBody Boat boat) {
+	public Boat createBoat(@RequestBody BoatDto boatDto) {
+		var boat = dtoToEntity(boatDto);
 		return boatService.createBoat(boat);
 	}
 
 	@PutMapping(path = "{boatId}")
-	public Boat updateBoat(@PathVariable("boatId") Long boatId, @RequestBody Boat boat) {
+	public Boat updateBoat(@PathVariable("boatId") Long boatId, @RequestBody BoatDto boatDto) {
+		var boat = dtoToEntity(boatDto);
 		return boatService.updateBoat(boatId, boat);
 	}
 

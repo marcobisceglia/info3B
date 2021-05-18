@@ -63,7 +63,7 @@ public class UserService {
 		User user = getUserByEmail(logginUser.getEmail());
 
 		if (user == null)
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User email not found");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User email not found");
 
 		if (BCrypt.checkpw(logginUser.getPassword(), user.getPassword())) {
 			if (user.isLoggedIn()) {
@@ -80,7 +80,7 @@ public class UserService {
 		User user = getUserByEmail(logginOutUser.getEmail());
 
 		if (user == null)
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User email not found");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User email not found");
 
 		if (user.isLoggedIn()) {
 			user.setLoggedIn(false);

@@ -1,5 +1,6 @@
 package it.barcaioli.webserver.trip;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,16 +10,26 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import it.barcaioli.webserver.boatsusage.BoatsUsageService;
+import it.barcaioli.webserver.booking.Booking;
 
 @RestController
 @RequestMapping(path = "trips")
 public class TripController {
 
 	private final TripService tripService;
+	private final BoatsUsageService boatUsageService;
 
 	@Autowired
-	public TripController(TripService tripService) {
+	public TripController(TripService tripService, BoatsUsageService boatUsageService) {
 		this.tripService = tripService;
+		this.boatUsageService = boatUsageService;
+	}
+
+	private Trip dtoToEntity(TripDto tripDto) {
+		var trip = new Trip();
+		trip.setDateTime(tripDto.getDateTime());
+		return trip;
 	}
 
 	@GetMapping
@@ -31,13 +42,25 @@ public class TripController {
 		return tripService.getTrip(tripId);
 	}
 
+	@GetMapping(path = "{tripId}/bookings")
+	public List<Booking> getUserBookings(@PathVariable Long tripId) {
+		return tripService.getTrip(tripId).getBookings();
+	}
+
+	@GetMapping(path = "{tripId}/remainingseats")
+	public Integer getRemainingSeats(@PathVariable Long tripId) {
+		return boatUsageService.getTotalRemainingSeats(tripId);
+	}
+
 	@PostMapping
-	public Trip createTrip(@RequestBody Trip trip) {
+	public Trip createTrip(@RequestBody TripDto tripDto) {
+		var trip = dtoToEntity(tripDto);
 		return tripService.createTrip(trip);
 	}
 
 	@PutMapping(path = "{tripId}")
-	public Trip updateTrip(@PathVariable("tripId") Long tripId, @RequestBody Trip trip) {
+	public Trip updateTrip(@PathVariable("tripId") Long tripId, @RequestBody TripDto tripDto) {
+		var trip = dtoToEntity(tripDto);
 		return tripService.updateTrip(tripId, trip);
 	}
 

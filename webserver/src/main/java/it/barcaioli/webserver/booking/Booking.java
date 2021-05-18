@@ -4,9 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import it.barcaioli.webserver.trip.Trip;
+import it.barcaioli.webserver.user.User;
 
 @Table(name = "Booking")
 @Entity
@@ -14,19 +16,20 @@ public class Booking {
 
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
 	private Integer numPeople;
-	private Long userId;
-	private Long tripId;
-	@JsonProperty(access = Access.READ_ONLY)
-	private Long boatId;
+
+	@ManyToOne // many bookings by a user
+	@JoinColumn(name = "userId")
+	private User user;
+
+	@ManyToOne // many bookings for a trip
+	@JoinColumn(name = "tripId")
+	private Trip trip;
 
 	Booking() {
 	}
 
-	public Booking(Integer numPeople, Long userId, Long tripId, Long boatId) {
+	public Booking(Integer numPeople) {
 		this.numPeople = numPeople;
-		this.userId = userId;
-		this.tripId = tripId;
-		this.boatId = boatId;
 	}
 
 	public Long getId() {
@@ -41,27 +44,19 @@ public class Booking {
 		this.numPeople = numPeople;
 	}
 
-	public Long getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public Long getTripId() {
-		return tripId;
+	public Trip getTrip() {
+		return trip;
 	}
 
-	public void setTripId(Long tripId) {
-		this.tripId = tripId;
-	}
-
-	public Long getBoatId() {
-		return boatId;
-	}
-
-	public void setBoatId(Long boatId) {
-		this.boatId = boatId;
+	public void setTrip(Trip trip) {
+		this.trip = trip;
 	}
 }

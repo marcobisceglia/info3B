@@ -28,7 +28,7 @@ public class TripService {
 		Optional<Trip> trip = tripRepository.findById(id);
 
 		if (!trip.isPresent())
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Trip doesn't exist");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trip doesn't exist");
 
 		return trip.get();
 	}

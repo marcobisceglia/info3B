@@ -9,16 +9,33 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import it.barcaioli.webserver.exceptions.FinishedSeats;
+import it.barcaioli.webserver.trip.TripService;
+import it.barcaioli.webserver.user.UserService;
 
 @RestController
 @RequestMapping(path = "bookings")
 public class BookingController {
 
 	private final BookingService bookingService;
+	private final UserService userService;
+	private final TripService tripService;
 
 	@Autowired
-	public BookingController(BookingService bookingService) {
+	public BookingController(BookingService bookingService, UserService userService, TripService tripService) {
 		this.bookingService = bookingService;
+		this.userService = userService;
+		this.tripService = tripService;
+	}
+
+	private Booking dtoToEntity(BookingDto bookingDto) {
+		var booking = new Booking();
+
+		booking.setNumPeople(bookingDto.getNumPeople());
+		booking.setUser(userService.getUser(bookingDto.getUserId()));
+		booking.setTrip(tripService.getTrip(bookingDto.getTripId()));
+
+		return booking;
 	}
 
 	@GetMapping
@@ -32,12 +49,14 @@ public class BookingController {
 	}
 
 	@PostMapping
-	public Booking createBooking(@RequestBody Booking booking) {
+	public Booking createBooking(@RequestBody BookingDto bookingDto) throws FinishedSeats {
+		var booking = dtoToEntity(bookingDto);
 		return bookingService.createBooking(booking);
 	}
 
 	@PutMapping(path = "{bookingId}")
-	public Booking updateBooking(@PathVariable("bookingId") Long bookingId, @RequestBody Booking booking) {
+	public Booking updateBooking(@PathVariable("bookingId") Long bookingId, @RequestBody BookingDto bookingDto) {
+		var booking = dtoToEntity(bookingDto);
 		return bookingService.updateBooking(bookingId, booking);
 	}
 

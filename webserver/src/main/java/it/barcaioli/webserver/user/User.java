@@ -1,13 +1,19 @@
 package it.barcaioli.webserver.user;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import it.barcaioli.webserver.booking.Booking;
 
 @Table(name = "`User`")
 @Entity
@@ -24,6 +30,14 @@ public class User {
 	private String license;
 	private boolean loggedIn;
 
+	// 1 User can have many Bookings
+	// mappedBy User class private field
+	// Each operation on the user will be propagated to the bookings
+	// Bookings are removed if user is removed
+	@JsonIgnore
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Booking> bookings;
+
 	User() {
 	}
 
@@ -35,6 +49,7 @@ public class User {
 		this.password = password;
 		this.license = license;
 		this.loggedIn = false;
+		this.bookings = new ArrayList<>();
 	}
 
 	public Long getId() {
@@ -87,5 +102,13 @@ public class User {
 
 	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
+	}
+
+	public List<Booking> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
 	}
 }
