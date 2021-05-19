@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import it.barcaioli.webserver.exceptions.FinishedSeats;
 import it.barcaioli.webserver.trip.TripService;
 import it.barcaioli.webserver.user.UserService;
 
@@ -49,7 +48,7 @@ public class BookingController {
 	}
 
 	@PostMapping
-	public Booking createBooking(@RequestBody BookingDto bookingDto) throws FinishedSeats {
+	public Booking createBooking(@RequestBody BookingDto bookingDto) {
 		var booking = dtoToEntity(bookingDto);
 		return bookingService.createBooking(booking);
 	}

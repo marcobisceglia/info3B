@@ -42,7 +42,7 @@ public class TripController {
 			return tripService.getTrips();
 		} else {
 
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			var formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 			var dateTime = LocalDate.parse(dateTimeString, formatter);
 
 			return tripService.getTrips().stream().filter(trip -> trip.getDateTime().toLocalDate().equals(dateTime))

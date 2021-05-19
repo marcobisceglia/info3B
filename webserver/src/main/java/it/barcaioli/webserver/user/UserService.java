@@ -2,7 +2,6 @@ package it.barcaioli.webserver.user;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -35,8 +34,7 @@ public class UserService {
 	}
 
 	private User getUserByEmail(String email) {
-		List<User> users = userRepository.findAll().stream().filter(user -> user.getEmail().equalsIgnoreCase(email))
-				.collect(Collectors.toList());
+		List<User> users = userRepository.findByEmail(email);
 
 		if (!users.isEmpty()) {
 			return users.get(0);
