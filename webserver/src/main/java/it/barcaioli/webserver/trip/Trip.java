@@ -11,7 +11,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import it.barcaioli.webserver.boatsusage.BoatsUsage;
 import it.barcaioli.webserver.booking.Booking;
 
 @Table(name = "Trip")
@@ -29,14 +28,6 @@ public class Trip {
 	@JsonIgnore
 	@OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Booking> bookings;
-
-	// 1 Trip can use many Boats
-	// mappedBy BoatsUsage class private field
-	// Each operation on the trip will be propagated to the boatsUsage
-	// BoatsUsage are removed if trip is removed
-	@JsonIgnore
-	@OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<BoatsUsage> boatsUsage;
 
 	Trip() {
 	}
@@ -64,13 +55,5 @@ public class Trip {
 
 	public void setBookings(List<Booking> bookings) {
 		this.bookings = bookings;
-	}
-
-	public List<BoatsUsage> getBoatsUsage() {
-		return boatsUsage;
-	}
-
-	public void setBoatsUsage(List<BoatsUsage> boatsUsage) {
-		this.boatsUsage = boatsUsage;
 	}
 }

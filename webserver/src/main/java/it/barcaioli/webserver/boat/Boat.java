@@ -1,31 +1,29 @@
 package it.barcaioli.webserver.boat;
 
+import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import it.barcaioli.webserver.boatsusage.BoatsUsage;
+import it.barcaioli.webserver.booking.Booking;
 
 @Table(name = "Boat")
 @Entity
 public class Boat implements Comparable<Boat> {
 
-	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	private String model;
 	private Integer seats;
 
-	// 1 Boat can be used many time (BoatsUsage)
-	// mappedBy a boat private field in BoatsUsage
-	// Each operation on the boat will be propagated to the boatsUsage
-	// BoatsUsage are removed if boat is removed
-	@JsonIgnore
-	@OneToMany(mappedBy = "boat", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<BoatsUsage> boatsUsage;
+	@ManyToMany(mappedBy = "boats", fetch = FetchType.LAZY)
+	private List<Booking> bookings = new ArrayList<>();
 
 	Boat() {
 	}
@@ -56,12 +54,12 @@ public class Boat implements Comparable<Boat> {
 		this.seats = seats;
 	}
 
-	public List<BoatsUsage> getBoatsUsage() {
-		return boatsUsage;
+	public List<Booking> getBookings() {
+		return bookings;
 	}
 
-	public void setBoatsUsage(List<BoatsUsage> boatsUsage) {
-		this.boatsUsage = boatsUsage;
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
 	}
 
 	@Override

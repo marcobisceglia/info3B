@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import it.barcaioli.webserver.boatsusage.BoatsUsageService;
 import it.barcaioli.webserver.booking.Booking;
 
 @RestController
@@ -22,12 +21,10 @@ import it.barcaioli.webserver.booking.Booking;
 public class TripController {
 
 	private final TripService tripService;
-	private final BoatsUsageService boatUsageService;
 
 	@Autowired
-	public TripController(TripService tripService, BoatsUsageService boatUsageService) {
+	public TripController(TripService tripService) {
 		this.tripService = tripService;
-		this.boatUsageService = boatUsageService;
 	}
 
 	private Trip dtoToEntity(TripDto tripDto) {
@@ -58,11 +55,6 @@ public class TripController {
 	@GetMapping(path = "{tripId}/bookings")
 	public List<Booking> getUserBookings(@PathVariable Long tripId) {
 		return tripService.getTrip(tripId).getBookings();
-	}
-
-	@GetMapping(path = "{tripId}/remainingseats")
-	public Integer getRemainingSeats(@PathVariable Long tripId) {
-		return boatUsageService.getTotalRemainingSeats(tripId);
 	}
 
 	@PostMapping

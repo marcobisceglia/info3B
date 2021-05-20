@@ -1,7 +1,10 @@
 package it.barcaioli.webserver.booking;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,21 +14,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import it.barcaioli.webserver.boat.Boat;
 import it.barcaioli.webserver.boat.BoatService;
-import it.barcaioli.webserver.boatsusage.BoatsUsage;
-import it.barcaioli.webserver.boatsusage.BoatsUsageService;
 
 @Service // More specific @Component
 public class BookingService {
 
 	private final BookingRepository bookingRepository;
-	private final BoatsUsageService boatsUsageService;
+
 	private final BoatService boatService;
 
 	@Autowired
-	public BookingService(BookingRepository bookingRepository, BoatService boatService,
-			BoatsUsageService boatsUsageService) {
+	public BookingService(BookingRepository bookingRepository, BoatService boatService) {
 		this.bookingRepository = bookingRepository;
-		this.boatsUsageService = boatsUsageService;
 		this.boatService = boatService;
 	}
 
@@ -44,9 +43,7 @@ public class BookingService {
 
 	private Booking getBookingByIds(Long userId, Long tripId) {
 
-		List<Booking> bookings = bookingRepository.findAll().stream()
-				.filter(booking -> booking.getUser().getId().equals(userId) && booking.getTrip().getId().equals(tripId))
-				.collect(Collectors.toList());
+		List<Booking> bookings = bookingRepository.findByUserIdAndTripId(userId, tripId);
 
 		if (!bookings.isEmpty())
 			return bookings.get(0);
@@ -56,7 +53,7 @@ public class BookingService {
 
 	public Booking createBooking(Booking booking) {
 
-		// controllo che la prenotazione non esista già
+		// controllo che la prenotazione per l'escursione non esista già per l'utente
 		var b = getBookingByIds(booking.getUser().getId(), booking.getTrip().getId());
 
 		if (b != null)
@@ -66,65 +63,6 @@ public class BookingService {
 		assignBoat(booking);
 
 		return bookingRepository.save(booking);
-	}
-
-	private void assignBoat(Booking booking) {
-		System.out.println("Algoritmo avviato");
-
-		var tripId = booking.getTrip().getId();
-		var numPeople = booking.getNumPeople();
-		var n = boatsUsageService.getTotalRemainingSeats(tripId);
-
-		if (n > 0) {
-			System.out.println(String.format("%d posti totali rimanenti per l'escursione", n));
-
-			// prendo tutte le barche disponibili, già filtrate per contenere il gruppo, sia
-			// quelle non utilizzate che quelle già
-			// utilizzate
-			List<Boat> usedBoatsWithEnoughSeats = boatsUsageService.getUsedBoatsWithEnoughSeats(tripId, numPeople);
-			List<Boat> notUsedBoatsWithEnoughSeats = boatsUsageService.getNotUsedBoatsWithEnoughSeats(tripId, numPeople);
-
-			if (!usedBoatsWithEnoughSeats.isEmpty()) {
-				// esiste una barca NON VUOTA in grado di contenere il gruppo
-				// ordinamento per numero di posto: prima le piccole poi le grandi
-				Collections.sort(usedBoatsWithEnoughSeats);
-				var chosenBoat = usedBoatsWithEnoughSeats.get(0); // la prima è la più piccola
-				System.out.println("Scelta barca non vuota");
-
-				// aggiorno campi tabella BoatUsage, in quanto barca era già presente
-				// (tabella boat e trip si dovrebbero aggiornare da sole?)
-				var boatUsage = boatsUsageService.getBoatsUsageByTripId(tripId).stream()
-						.filter(bu -> bu.getBoat().equals(chosenBoat)).collect(Collectors.toList()).get(0);
-				boatUsage.setAvailableSeats(boatUsage.getAvailableSeats() - numPeople);
-
-			} else if (!notUsedBoatsWithEnoughSeats.isEmpty()) {
-				// esiste una barca VUOTA in grado di contenere il gruppo
-				// ordinamento per numero di posto: prima le piccole poi le grandi
-				Collections.sort(notUsedBoatsWithEnoughSeats);
-				var chosenBoat = notUsedBoatsWithEnoughSeats.get(0); // la prima è la più piccola
-				System.out.println("Scelta barca vuota");
-
-				// creo riga tabella BoatUsage, in quanto barca non era già presente
-				// (tabella boat e trip si dovrebbero aggiornare da sole?)
-				var boatUsage = new BoatsUsage();
-				boatUsage.setBoat(chosenBoat);
-				boatUsage.setTrip(booking.getTrip());
-				boatUsage.setAvailableSeats(chosenBoat.getSeats() - numPeople);
-				boatsUsageService.createBoatsUsage(boatUsage);
-
-			} else {
-				throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED,
-						"Devo effettuare riallocazione, ma non ho ancora implementato");
-			}
-		} else {
-			var numBoats = boatService.getBoats().stream().count();
-			if (numBoats == 0) {
-				throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, "Non ci sono barche nel sistema!");
-			} else {
-				throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED,
-						String.format("OPS! Posti finiti nelle %d barche!", numBoats));
-			}
-		}
 	}
 
 	public Booking updateBooking(Long id, Booking booking) {
@@ -148,5 +86,108 @@ public class BookingService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No booking to delete");
 
 		bookingRepository.delete(bookingToDelete.get());
+	}
+
+	// Metodi aggiuntivi
+
+	// Posti barca occupati in un'escursione
+	public Integer getOccupiedSeatsByTripId(Long id) {
+		List<Booking> bookings = bookingRepository.findByTripId(id);
+		return bookings.stream().mapToInt(booking -> booking.getNumPeople()).sum();
+	}
+
+	// Posti barca rimanenti per un'escursione
+	public Integer getRemainingSeatsByTripId(Long id) {
+		// Somma di tutti i posti barca - posti occupati nell'escursione
+		return boatService.getTotalSeats() - getOccupiedSeatsByTripId(id);
+	}
+
+	// Mappa contenente tutte le barche utilizzate in un'escursione con la relativa
+	// disponibilità
+	public Map<Boat, Integer> getUsedBoatsByTripId(Long id) {
+
+		// mappa per tenere traccia dei posti rimanenti per ogni barca utilizzata
+		HashMap<Boat, Integer> mappa = new HashMap<>();
+
+		List<Booking> bookings = bookingRepository.findByTripId(id);
+
+		for (var booking : bookings) {
+			var boatss = booking.getBoats();
+			for (var boat : boatss) {
+				// se la mappa non contiene la barca la inserisco
+				if (!mappa.containsKey(boat)) {
+					mappa.put(boat, boat.getSeats() - booking.getNumPeople());
+				} else { // aggiorno disponibilità
+					mappa.put(boat, mappa.get(boat) - booking.getNumPeople());
+				}
+			}
+		}
+		return mappa;
+	}
+
+	private void assignBoat(Booking booking) {
+		System.out.println("Algoritmo avviato");
+
+		var tripId = booking.getTrip().getId();
+		var numPeople = booking.getNumPeople();
+		var n = getRemainingSeatsByTripId(tripId);
+
+		// se ci sono posti rimanenti continuo
+		// altrimenti o sono finiti i posti o non ci sono barche nel sistema
+		if (n > 0) {
+			System.out.println(String.format("%d posti totali rimanenti per l'escursione", n));
+		} else {
+			var numBoats = boatService.getBoats().stream().count();
+			if (numBoats == 0) {
+				throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, "Non ci sono barche nel sistema!");
+			} else {
+				throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED,
+						String.format("OPS! Le %d barche sono piene!", numBoats));
+			}
+		}
+
+		// barche già utilizzate nell'escursione
+		Map<Boat, Integer> usedBoatsMap = getUsedBoatsByTripId(booking.getTrip().getId());
+
+		// filtro le barche in modo di avere solo quelle in grado di contenere il gruppo
+		Map<Boat, Integer> usedBoatsWithEnoughSeatsMap = usedBoatsMap.entrySet().stream()
+				.filter(map -> map.getValue() >= numPeople).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+		// se esiste almeno una barca NON VUOTA in grado di contenere il gruppo
+		// altrimenti cerco tra le barche vuote
+		if (!usedBoatsWithEnoughSeatsMap.isEmpty()) {
+
+			// prendo le barche dalla mappa
+			List<Boat> usedBoatsWithEnoughSeats = new ArrayList<>();
+			usedBoatsWithEnoughSeatsMap.entrySet().stream().forEach(e -> usedBoatsWithEnoughSeats.add(e.getKey()));
+
+			// ordinamento per numero di posto: prima le piccole poi le grandi
+			Collections.sort(usedBoatsWithEnoughSeats);
+
+			var chosenBoat = usedBoatsWithEnoughSeats.get(0); // la prima è la più piccola
+			booking.addBoat(chosenBoat);
+			System.out.println("Scelta barca non vuota");
+
+		} else {
+			// barche vuote per l'escursione = tutte le barche - barche utilizzate
+			var emptyBoats = boatService.getBoats();
+			usedBoatsMap.entrySet().stream().forEach(e -> emptyBoats.remove(e.getKey()));
+
+			// se esiste una barca VUOTA in grado di contenere il gruppo
+			// altrimenti devo riallocare
+			if (!emptyBoats.isEmpty()) {
+
+				// ordinamento per numero di posto: prima le piccole poi le grandi
+				Collections.sort(emptyBoats);
+
+				var chosenBoat = emptyBoats.get(0); // la prima è la più piccola
+				booking.addBoat(chosenBoat);
+				System.out.println("Scelta barca vuota");
+
+			} else {
+				throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED,
+						"Devo effettuare riallocazione, ma non ho ancora implementato");
+			}
+		}
 	}
 }

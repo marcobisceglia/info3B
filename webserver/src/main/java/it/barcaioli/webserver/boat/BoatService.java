@@ -22,11 +22,6 @@ public class BoatService {
 		return boatRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
 	}
 
-	public Integer getTotalSeats() {
-		var boats = this.getBoats();
-		return boats.stream().mapToInt(boat -> boat.getSeats()).sum();
-	}
-
 	public Boat getBoat(Long id) {
 		Optional<Boat> boat = boatRepository.findById(id);
 
@@ -61,4 +56,13 @@ public class BoatService {
 
 		boatRepository.delete(boatToDelete.get());
 	}
+
+	// Metodi aggiuntivi
+
+	// Totale posti delle barche presenti
+	public Integer getTotalSeats() {
+		var boats = this.getBoats();
+		return boats.stream().mapToInt(boat -> boat.getSeats()).sum();
+	}
+
 }
