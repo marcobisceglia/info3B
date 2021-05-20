@@ -39,8 +39,8 @@ class EditBoatFragment(private val boat: Boat = Boat(), private val insert: Bool
 
         }else{
             this.binding.modelEditText.hint = boat.model
-            this.binding.nameEditText.hint = boat.name
-            this.binding.placesEditText.hint = boat.places
+            //this.binding.nameEditText.hint = boat.name
+            this.binding.seatsEditText.hint = boat.seats.toString()
             this.binding.buttonInsert.visibility = View.GONE
         }
 
@@ -90,13 +90,13 @@ class EditBoatFragment(private val boat: Boat = Boat(), private val insert: Bool
         } else {
             this.binding.nameEditText.text.toString()
         }
-        val places = if ( this.binding.placesEditText.text.toString().isEmpty()) {
-            this.binding.placesEditText.hint
+        val seats = if ( this.binding.seatsEditText.text.toString().isEmpty()) {
+            this.binding.seatsEditText.hint
         } else {
-            this.binding.placesEditText.text.toString()
+            this.binding.seatsEditText.text.toString()
         }
 
-        return if(model==null || name==null || places==null){
+        return if(model==null || name==null || seats==null){
             val builder: AlertDialog.Builder? = activity?.let {
                 AlertDialog.Builder(it)
             }
@@ -111,8 +111,8 @@ class EditBoatFragment(private val boat: Boat = Boat(), private val insert: Bool
             null
         }else{
             boat.model = model.toString()
-            boat.name = name.toString()
-            boat.places = places.toString()
+            //boat.name = name.toString()
+            boat.seats = seats.toString().toInt()
             boat
         }
     }

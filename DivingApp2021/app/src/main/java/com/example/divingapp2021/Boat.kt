@@ -1,17 +1,17 @@
 package com.example.divingapp2021
 
 open class Boat {
+    var id: Int? = null
     var icon: Int? = null
-    var name: String? = null
     var model: String? = null
-    var places : String? = null
+    var seats : Int? = null
 
 
     override fun equals(other: Any?): Boolean {
         return other is Boat &&
+                this.id == other.id &&
                 this.icon == other.icon &&
-                this.places == other.places &&
-                this.name == other.name &&
+                this.seats == other.seats &&
                 this.model == other.model
     }
 }

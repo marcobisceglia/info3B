@@ -72,19 +72,19 @@
         />
 
     <TextView
-        android:id="@+id/placesTextView"
+        android:id="@+id/seatsTextView"
         style="@style/TextBold15"
         android:textColor="@color/colorTextDefault"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Places"
+        android:text="Seats"
         android:layout_marginTop="20dp"
         android:layout_marginStart="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/modelEditText"/>
 
     <EditText
-        android:id="@+id/placesEditText"
+        android:id="@+id/seatsEditText"
         style="@style/TextBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
         tools:ignore="Autofill"
         android:layout_margin="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/placesTextView"
+        app:layout_constraintTop_toBottomOf="@+id/seatsTextView"
         />
 
     <Button
@@ -105,7 +105,7 @@
         android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/placesTextView"/>
+        app:layout_constraintTop_toBottomOf="@id/seatsTextView"/>
 
     <Button
         android:id="@+id/buttonInsert"
@@ -115,7 +115,7 @@
         android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/placesTextView"/>
+        app:layout_constraintTop_toBottomOf="@id/seatsTextView"/>
 
     <Button
         android:id="@+id/buttonModify"
@@ -125,6 +125,6 @@
         android:text="Confirm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/placesTextView" />
+        app:layout_constraintTop_toBottomOf="@id/seatsTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
