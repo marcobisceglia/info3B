@@ -35,9 +35,9 @@ open class BoatAdapter(
             MyRecyclerViewHolder<AdapterBoatItemBinding, Boat>(binding) {
 
         override fun bind(data: Boat) {
-            this.binding.nameTextView.text = data.name
+            //this.binding.nameTextView.text = data.name
             this.binding.modelTextView.text = data.model
-            this.binding.placesTextView.text = data.places
+            this.binding.seatsTextView.text = data.seats.toString()
             //
 
 
@@ -49,7 +49,7 @@ open class BoatAdapter(
 
     private class DiffItemCallback : DiffUtil.ItemCallback<Boat>() {
         override fun areItemsTheSame(oldItem: Boat, newItem: Boat): Boolean {
-            return oldItem.name.equals(newItem.name, true)
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Boat, newItem: Boat): Boolean {

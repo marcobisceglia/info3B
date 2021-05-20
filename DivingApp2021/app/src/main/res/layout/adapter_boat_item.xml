@@ -45,7 +45,7 @@
         android:layout_marginEnd="70dp"
         android:text="Value"
         android:textColor="@color/colorTextDefault"
-        app:layout_constraintBottom_toTopOf="@id/placesTextView"
+        app:layout_constraintBottom_toTopOf="@id/seatsTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,12 +56,12 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:textColor="@color/colorTextDefault"
-        android:text="Places:"
+        android:text="Seats:"
         app:layout_constraintTop_toBottomOf="@+id/modelTextView"
-        app:layout_constraintEnd_toStartOf="@id/placesTextView"
+        app:layout_constraintEnd_toStartOf="@id/seatsTextView"
         />
     <TextView
-        android:id="@+id/placesTextView"
+        android:id="@+id/seatsTextView"
         style="@style/TextRegular14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
