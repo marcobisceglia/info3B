@@ -55,6 +55,7 @@ class EditBoatFragment(private val boat: Boat = Boat(), private val insert: Bool
         this.binding.buttonModify.setOnClickListener {
             val boat = checkItem()
             if(boat!=null) {
+                //todo modifica solo il nome 
 
                 //TODO CONFERMA MODIFICHE ITEM AL DB
                     //i valori da inserire nel DB sono contenuti in boat

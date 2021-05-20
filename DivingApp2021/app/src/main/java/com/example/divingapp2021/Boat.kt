@@ -6,7 +6,6 @@ open class Boat {
     var model: String? = null
     var seats : Int? = null
 
-
     override fun equals(other: Any?): Boolean {
         return other is Boat &&
                 this.id == other.id &&

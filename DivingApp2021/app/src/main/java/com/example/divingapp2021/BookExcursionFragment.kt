@@ -5,18 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
+import com.example.divingapp2021.databinding.FragmentBookExcursionBinding
 import com.example.divingapp2021.databinding.FragmentHomeBinding
 import com.example.divingapp2021.databinding.FragmentUserBinding
 import com.example.mylibrary.ProjectFragment
+import com.google.android.material.datepicker.MaterialDatePicker
 
-class UserFragment : NavigationFragment<FragmentUserBinding>()  {
+class BookExcursionFragment : NavigationFragment<FragmentBookExcursionBinding>()  {
 
     override fun buildBinding(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): FragmentUserBinding {
-        return FragmentUserBinding.inflate(inflater, container, false)
+    ): FragmentBookExcursionBinding {
+        return FragmentBookExcursionBinding.inflate(inflater, container, false)
     }
 
     override fun onCreateView(
@@ -31,13 +33,9 @@ class UserFragment : NavigationFragment<FragmentUserBinding>()  {
        // setTitle("HOME")
         showBackButton(false)
 
-        this.binding.buttonBookExcursion.setOnClickListener {
-            FragmentHelper.addFragmentFromSide(
-                    requireActivity(),
-                    BookExcursionFragment(),
-                    R.id.mainFrameLayout
-            )
-        }
+        this.binding.buttonDate.setOnClickListener {
+
+                    }
         return rootview
     }
 
