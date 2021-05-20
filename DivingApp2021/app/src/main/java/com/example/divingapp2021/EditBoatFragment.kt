@@ -4,9 +4,18 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.os.Handler
+import android.os.Looper
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.beust.klaxon.Klaxon
 import com.example.divingapp2021.databinding.FragmentEditBoatBinding
+import okhttp3.*
+import java.io.IOException
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 
 
 class EditBoatFragment(private val boat: Boat = Boat(), private val insert: Boolean = false) : NavigationFragment<FragmentEditBoatBinding>(){
@@ -39,17 +48,14 @@ class EditBoatFragment(private val boat: Boat = Boat(), private val insert: Bool
 
         }else{
             this.binding.modelEditText.hint = boat.model
-            //this.binding.nameEditText.hint = boat.name
+            this.binding.nameEditText.hint = boat.id.toString()
             this.binding.seatsEditText.hint = boat.seats.toString()
             this.binding.buttonInsert.visibility = View.GONE
         }
 
         this.binding.buttonDelete.setOnClickListener {
-            //TODO ELIMINA BOAT DAL DB
-            FragmentHelper.popBackFragment(activity)
-            LocalBroadcastManager.getInstance(requireActivity())
-                    .sendBroadcast(Intent("UPDATE_BOAT"))
-
+            //DELETE BOAT
+            deleteBoat(boat.id)
         }
 
         this.binding.buttonModify.setOnClickListener {
@@ -57,22 +63,17 @@ class EditBoatFragment(private val boat: Boat = Boat(), private val insert: Bool
             if(boat!=null) {
                 //todo modifica solo il nome 
 
-                //TODO CONFERMA MODIFICHE ITEM AL DB
-                    //i valori da inserire nel DB sono contenuti in boat
-                FragmentHelper.popBackFragment(activity)
-                LocalBroadcastManager.getInstance(requireActivity())
-                        .sendBroadcast(Intent("UPDATE_BOAT"))
+                //MODIFY BOAT
+                modifyBoat(boat)
             }
         }
 
         this.binding.buttonInsert.setOnClickListener {
             val boat = checkItem()
             if(boat!=null) {
-                //TODO INSERIMENTO NUOVO ITEM AL DB
-                //i valori da inserire nel DB sono contenuti in boat
-                FragmentHelper.popBackFragment(activity)
-                LocalBroadcastManager.getInstance(requireActivity())
-                        .sendBroadcast(Intent("UPDATE_BOAT"))
+
+                //CREATE BOAT
+                createBoat(boat)
             }
         }
 
@@ -86,7 +87,7 @@ class EditBoatFragment(private val boat: Boat = Boat(), private val insert: Bool
         } else {
             this.binding.modelEditText.text.toString()
         } //se il testo non è nullo gli metto ciò che era hint
-        val name = if ( this.binding.nameEditText.text.toString().isEmpty()) {
+        val id = if ( this.binding.nameEditText.text.toString().isEmpty()) {
             this.binding.nameEditText.hint
         } else {
             this.binding.nameEditText.text.toString()
@@ -97,7 +98,7 @@ class EditBoatFragment(private val boat: Boat = Boat(), private val insert: Bool
             this.binding.seatsEditText.text.toString()
         }
 
-        return if(model==null || name==null || seats==null){
+        return if(model==null || id==null || seats==null){
             val builder: AlertDialog.Builder? = activity?.let {
                 AlertDialog.Builder(it)
             }
@@ -112,13 +113,88 @@ class EditBoatFragment(private val boat: Boat = Boat(), private val insert: Bool
             null
         }else{
             boat.model = model.toString()
-            //boat.name = name.toString()
+            boat.id = id.toString().toInt()
             boat.seats = seats.toString().toInt()
             boat
         }
     }
 
+    private val client = OkHttpClient()
 
+    //Call db to delete boat
+    fun deleteBoat(id: Int?){
+        val request = Request.Builder()
+            .url("http://10.0.2.2:8080/boats/" + id)
+            .delete()
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                println("Connection to webserver failed: " + e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                println("Delete successful.")
+
+                refreshBoats()
+            }
+        })
+    }
+
+    //Call db to modify boat
+    fun modifyBoat(boat: Boat){
+        val jsonBody = Klaxon().toJsonString(boat)
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+        val body = jsonBody.toRequestBody(mediaType)
+        val request = Request.Builder()
+            .url("http://10.0.2.2:8080/boats/" + boat.id)
+            .put(body)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                println("Connection to webserver failed: " + e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                println("Modified boat successfully.")
+
+                refreshBoats()
+            }
+        })
+    }
+
+    //Call db to create boat
+    fun createBoat(boat: Boat){
+        val jsonBody = Klaxon().toJsonString(boat)
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+        val body = jsonBody.toRequestBody(mediaType)
+        val request = Request.Builder()
+            .url("http://10.0.2.2:8080/boats/")
+            .post(body)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                println("Connection to webserver failed: " + e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                println("Created boat successfully.")
+
+                refreshBoats()
+            }
+        })
+    }
+
+    fun refreshBoats(){
+        val mainHandler = Handler(Looper.getMainLooper())
+        mainHandler.post {
+            FragmentHelper.popBackFragment(activity)
+            LocalBroadcastManager.getInstance(requireActivity())
+                .sendBroadcast(Intent("UPDATE_BOAT"))
+        }
+    }
 
 
     // :- ActionMode Callbacks

@@ -35,7 +35,7 @@ open class BoatAdapter(
             MyRecyclerViewHolder<AdapterBoatItemBinding, Boat>(binding) {
 
         override fun bind(data: Boat) {
-            //this.binding.nameTextView.text = data.name
+            this.binding.nameTextView.text = data.id.toString()
             this.binding.modelTextView.text = data.model
             this.binding.seatsTextView.text = data.seats.toString()
             //

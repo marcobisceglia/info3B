@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -75,9 +76,9 @@ class BoatFragment : NavigationFragment<FragmentBoatBinding>() {
 
 
     //Call db to get all boats and display them
-    fun getAndShowBoats(url: String){
+    fun getAndShowBoats(){
         val request = Request.Builder()
-            .url(url)
+            .url("http://10.0.2.2:8080/boats/")
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -94,7 +95,7 @@ class BoatFragment : NavigationFragment<FragmentBoatBinding>() {
                 val boats = Klaxon().parseArray<Boat>(json)
 
                 //gain access to uiThread and show boats
-                val mainHandler = Handler(requireContext().mainLooper)
+                val mainHandler = Handler(Looper.getMainLooper())
                 mainHandler.post {
                     adapter.submitList(boats)
                 }
@@ -104,7 +105,7 @@ class BoatFragment : NavigationFragment<FragmentBoatBinding>() {
     }
 
     private fun updateLayout() {
-        getAndShowBoats("http://10.0.2.2:8080/boats/")
+        getAndShowBoats()
     }
 
     private inner class ItemClickListener : View.OnClickListener {
