@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import it.barcaioli.webserver.booking.Booking;
 
 @Table(name = "Boat")
@@ -22,6 +24,7 @@ public class Boat implements Comparable<Boat> {
 	private String model;
 	private Integer seats;
 
+	@JsonIgnore
 	@ManyToMany(mappedBy = "boats", fetch = FetchType.LAZY)
 	private List<Booking> bookings = new ArrayList<>();
 

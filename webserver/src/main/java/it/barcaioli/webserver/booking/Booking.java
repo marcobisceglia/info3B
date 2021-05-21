@@ -13,7 +13,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.barcaioli.webserver.boat.Boat;
 import it.barcaioli.webserver.trip.Trip;
 import it.barcaioli.webserver.user.User;
@@ -36,7 +35,6 @@ public class Booking {
 	@JoinColumn(name = "tripId")
 	private Trip trip;
 
-	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinTable(name = "boats_bookings", joinColumns = {
 			@JoinColumn(name = "bookingId", referencedColumnName = "id", nullable = false, updatable = false) }, inverseJoinColumns = {

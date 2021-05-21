@@ -51,7 +51,7 @@ public class BookingService {
 			return null;
 	}
 
-	public Booking createBooking(Booking booking) {
+	public List<Boat> createBooking(Booking booking) {
 
 		// controllo che la prenotazione per l'escursione non esista già per l'utente
 		var b = getBookingByIds(booking.getUser().getId(), booking.getTrip().getId());
@@ -62,7 +62,7 @@ public class BookingService {
 		// algorithm that assing boat to the escursion
 		assignBoat(booking);
 
-		return bookingRepository.save(booking);
+		return bookingRepository.save(booking).getBoats();
 	}
 
 	public Booking updateBooking(Long id, Booking booking) {
