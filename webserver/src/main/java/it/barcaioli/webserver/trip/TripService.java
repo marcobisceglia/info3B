@@ -53,6 +53,9 @@ public class TripService {
 
 		var tripFound = tripToUpdate.get();
 
+		if (trip.getDateTime().isBefore(LocalDateTime.now()))
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Trip can't be done in the past");
+
 		tripFound.setDateTime(trip.getDateTime());
 		return tripRepository.save(tripFound);
 	}
