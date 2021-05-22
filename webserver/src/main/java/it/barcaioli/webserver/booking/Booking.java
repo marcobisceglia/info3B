@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import it.barcaioli.webserver.boat.Boat;
 import it.barcaioli.webserver.trip.Trip;
 import it.barcaioli.webserver.user.User;
@@ -21,14 +23,17 @@ public class Booking {
 
 	private Integer numPeople;
 
+	@JsonIgnore
 	@ManyToOne // many bookings by a user
 	@JoinColumn(name = "userId")
 	private User user;
 
+	@JsonIgnore
 	@ManyToOne // many bookings for a trip
 	@JoinColumn(name = "tripId")
 	private Trip trip;
 
+	@JsonIgnore
 	@ManyToOne // many bookings for a boat
 	@JoinColumn(name = "boatId")
 	private Boat boat;

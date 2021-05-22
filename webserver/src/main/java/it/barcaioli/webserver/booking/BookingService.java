@@ -79,20 +79,6 @@ public class BookingService {
 		return boats;
 	}
 
-	public Booking updateBooking(Long id, Booking booking) {
-		Optional<Booking> bookingToUpdate = bookingRepository.findById(id);
-
-		if (!bookingToUpdate.isPresent())
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No booking to update");
-
-		var bookingFound = bookingToUpdate.get();
-
-		bookingFound.setNumPeople(booking.getNumPeople());
-		bookingFound.setUser(booking.getUser());
-		bookingFound.setTrip(booking.getTrip());
-		return bookingRepository.save(bookingFound);
-	}
-
 	public void deleteBooking(Long id) {
 		Optional<Booking> bookingToDelete = bookingRepository.findById(id);
 

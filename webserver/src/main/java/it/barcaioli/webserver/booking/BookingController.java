@@ -1,12 +1,12 @@
 package it.barcaioli.webserver.booking;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,26 +39,33 @@ public class BookingController {
 		return booking;
 	}
 
+	private BookingDto entityToDto(Booking booking) {
+		var bookingDto = new BookingDto();
+
+		bookingDto.setId(booking.getId());
+		bookingDto.setNumPeople(booking.getNumPeople());
+		bookingDto.setTripId(booking.getTrip().getId());
+		bookingDto.setUserId(booking.getUser().getId());
+
+		return bookingDto;
+	}
+
 	@GetMapping
-	public Iterable<Booking> getBookings() {
-		return bookingService.getBookings();
+	public Iterable<BookingDto> getBookings() {
+		List<BookingDto> bookingsDto = new ArrayList<>();
+		bookingService.getBookings().forEach(b -> bookingsDto.add(entityToDto(b)));
+		return bookingsDto;
 	}
 
 	@GetMapping(path = "{bookingId}")
-	public Booking getBooking(@PathVariable Long bookingId) {
-		return bookingService.getBooking(bookingId);
+	public BookingDto getBooking(@PathVariable Long bookingId) {
+		return entityToDto(bookingService.getBooking(bookingId));
 	}
 
 	@PostMapping
 	public List<String> createBooking(@RequestBody BookingDto bookingDto) {
 		var booking = dtoToEntity(bookingDto);
 		return bookingService.createBooking(booking);
-	}
-
-	@PutMapping(path = "{bookingId}")
-	public Booking updateBooking(@PathVariable("bookingId") Long bookingId, @RequestBody BookingDto bookingDto) {
-		var booking = dtoToEntity(bookingDto);
-		return bookingService.updateBooking(bookingId, booking);
 	}
 
 	@DeleteMapping(path = "{bookingId}")
