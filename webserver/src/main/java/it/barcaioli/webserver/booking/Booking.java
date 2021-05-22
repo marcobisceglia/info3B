@@ -1,16 +1,10 @@
 package it.barcaioli.webserver.booking;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import it.barcaioli.webserver.boat.Boat;
@@ -35,11 +29,9 @@ public class Booking {
 	@JoinColumn(name = "tripId")
 	private Trip trip;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinTable(name = "boats_bookings", joinColumns = {
-			@JoinColumn(name = "bookingId", referencedColumnName = "id", nullable = false, updatable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "boatId", referencedColumnName = "id", nullable = false, updatable = false) })
-	private List<Boat> boats = new ArrayList<>();
+	@ManyToOne // many bookings for a boat
+	@JoinColumn(name = "boatId")
+	private Boat boat;
 
 	Booking() {
 	}
@@ -76,26 +68,17 @@ public class Booking {
 		this.trip = trip;
 	}
 
-	public List<Boat> getBoats() {
-		return boats;
+	public Boat getBoat() {
+		return boat;
 	}
 
-	public void setBoats(List<Boat> boats) {
-		this.boats = boats;
-	}
-
-	public void addBoat(Boat boat) {
-		this.boats.add(boat);
-	}
-
-	public void removeBoat(Boat boat) {
-		this.boats.remove(boat);
+	public void setBoat(Boat boat) {
+		this.boat = boat;
 	}
 
 	@Override
 	public String toString() {
-		return "Booking [boats=" + boats + ", id=" + id + ", numPeople=" + numPeople + ", trip=" + trip + ", user=" + user
+		return "Booking [boat=" + boat + ", id=" + id + ", numPeople=" + numPeople + ", trip=" + trip + ", user=" + user
 				+ "]";
 	}
-
 }

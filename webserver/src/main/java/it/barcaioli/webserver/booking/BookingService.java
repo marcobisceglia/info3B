@@ -18,8 +18,13 @@ import it.barcaioli.webserver.boat.BoatService;
 @Service // More specific @Component
 public class BookingService {
 
-	private final BookingRepository bookingRepository;
+	private static final String TOOSMALLGROUP = "FAIL. Posti non terminati, ma sparsi e il gruppo è troppo piccolo per essere diviso";
+	private static final String GROUPDIVISIONFAIL = "FAIL. Posti non terminati, ma sparsi. Anche dividendo il gruppo non è stato possibile allocare barche";
+	private static final String NOBOATS = "FAIL. Barche piene o assenti!";
+	private static final String EMPTYBOATFOUND = "SUCCESS. Scelta barca vuota";
+	private static final String USEDBOATFOUND = "SUCCESS. Scelta barca già in uso";
 
+	private final BookingRepository bookingRepository;
 	private final BoatService boatService;
 
 	@Autowired
@@ -51,18 +56,27 @@ public class BookingService {
 			return null;
 	}
 
-	public List<Boat> createBooking(Booking booking) {
+	public List<String> createBooking(Booking booking) {
 
 		// controllo che la prenotazione per l'escursione non esista già per l'utente
+		// NB: nel db lo stesso utente può comunque avere più righe per la stessa trip,
+		// in quanto può avere due gruppi separati su due barche diverse
 		var b = getBookingByIds(booking.getUser().getId(), booking.getTrip().getId());
 
 		if (b != null)
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Booking already exists");
 
-		// algorithm that assing boat to the escursion
-		assignBoat(booking);
+		// divided è true se la prenotazione necessita di 2 barche
+		var divided = assignBoats(booking);
 
-		return bookingRepository.save(booking).getBoats();
+		List<String> boats = new ArrayList<>();
+
+		if (divided.booleanValue())
+			boats.add(this.getBookings().get(this.getBookings().size() - 2).getBoat().getModel());
+
+		boats.add(this.getBookings().get(this.getBookings().size() - 1).getBoat().getModel());
+
+		return boats;
 	}
 
 	public Booking updateBooking(Long id, Booking booking) {
@@ -102,92 +116,214 @@ public class BookingService {
 		return boatService.getTotalSeats() - getOccupiedSeatsByTripId(id);
 	}
 
-	// Mappa contenente tutte le barche utilizzate in un'escursione con la relativa
-	// disponibilità
+	// Mappa per tenere traccia dei posti rimanenti per ogni barca utilizzata
+	// nell'escursione
 	public Map<Boat, Integer> getUsedBoatsByTripId(Long id) {
 
-		// mappa per tenere traccia dei posti rimanenti per ogni barca utilizzata
 		HashMap<Boat, Integer> mappa = new HashMap<>();
 
 		List<Booking> bookings = bookingRepository.findByTripId(id);
 
 		for (var booking : bookings) {
-			var boatss = booking.getBoats();
-			for (var boat : boatss) {
-				// se la mappa non contiene la barca la inserisco
-				if (!mappa.containsKey(boat)) {
-					mappa.put(boat, boat.getSeats() - booking.getNumPeople());
-				} else { // aggiorno disponibilità
-					mappa.put(boat, mappa.get(boat) - booking.getNumPeople());
-				}
+			var boat = booking.getBoat();
+			// se la mappa non contiene la barca la inserisco
+			// altrimenti aggiorno la disponibilità
+			if (!mappa.containsKey(boat)) {
+				mappa.put(boat, boat.getSeats() - booking.getNumPeople());
+			} else {
+				mappa.put(boat, mappa.get(boat) - booking.getNumPeople());
 			}
+
 		}
 		return mappa;
 	}
 
-	private void assignBoat(Booking booking) {
-		System.out.println("Algoritmo avviato");
+	// Ritorna la stessa mappa, ma solo con le barche con abbastanza posti rimanenti
+	// per contenere num
+	private Map<Boat, Integer> filterMap(Map<Boat, Integer> map, Integer num) {
+		return map.entrySet().stream().filter(m -> m.getValue() >= num)
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+	}
 
-		var tripId = booking.getTrip().getId();
-		var numPeople = booking.getNumPeople();
-		var n = getRemainingSeatsByTripId(tripId);
+	// Ritorna la lista di barche presenti nella mappa
+	private List<Boat> getBoatsFromMap(Map<Boat, Integer> map) {
+		List<Boat> list = new ArrayList<>();
+		map.entrySet().stream().forEach(e -> list.add(e.getKey()));
+		return list;
+	}
 
-		// se ci sono posti rimanenti continuo
-		// altrimenti o sono finiti i posti o non ci sono barche nel sistema
-		if (n > 0) {
-			System.out.println(String.format("%d posti totali rimanenti per l'escursione", n));
-		} else {
-			var numBoats = boatService.getBoats().stream().count();
-			if (numBoats == 0) {
-				throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, "Non ci sono barche nel sistema!");
-			} else {
-				throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED,
-						String.format("OPS! Le %d barche sono piene!", numBoats));
-			}
-		}
+	// Data una prenotazione, prende l'escursione a cui si riferisce e ritorna tutte
+	// le barche già utilizzate, ordinate per numero di posto e in grado di
+	// contenere il numero di persone indicato
+	private List<Boat> getUsedBoatsWithEnoughSeats(Booking booking, Integer numPeople) {
+		List<Boat> usedBoatsWithEnoughSeats = new ArrayList<>();
 
 		// barche già utilizzate nell'escursione
 		Map<Boat, Integer> usedBoatsMap = getUsedBoatsByTripId(booking.getTrip().getId());
 
 		// filtro le barche in modo di avere solo quelle in grado di contenere il gruppo
-		Map<Boat, Integer> usedBoatsWithEnoughSeatsMap = usedBoatsMap.entrySet().stream()
-				.filter(map -> map.getValue() >= numPeople).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+		Map<Boat, Integer> usedBoatsWithEnoughSeatsMap = filterMap(usedBoatsMap, numPeople);
 
-		// se esiste almeno una barca NON VUOTA in grado di contenere il gruppo
-		// altrimenti cerco tra le barche vuote
+		// se è vuota ritorna la lista vuota
 		if (!usedBoatsWithEnoughSeatsMap.isEmpty()) {
-
-			// prendo le barche dalla mappa
-			List<Boat> usedBoatsWithEnoughSeats = new ArrayList<>();
-			usedBoatsWithEnoughSeatsMap.entrySet().stream().forEach(e -> usedBoatsWithEnoughSeats.add(e.getKey()));
+			usedBoatsWithEnoughSeats = getBoatsFromMap(usedBoatsWithEnoughSeatsMap);
 
 			// ordinamento per numero di posto: prima le piccole poi le grandi
 			Collections.sort(usedBoatsWithEnoughSeats);
-
-			var chosenBoat = usedBoatsWithEnoughSeats.get(0); // la prima è la più piccola
-			booking.addBoat(chosenBoat);
-			System.out.println("Scelta barca non vuota");
-
-		} else {
-			// barche vuote per l'escursione = tutte le barche - barche utilizzate
-			var emptyBoats = boatService.getBoats();
-			usedBoatsMap.entrySet().stream().forEach(e -> emptyBoats.remove(e.getKey()));
-
-			// se esiste una barca VUOTA in grado di contenere il gruppo
-			// altrimenti devo riallocare
-			if (!emptyBoats.isEmpty()) {
-
-				// ordinamento per numero di posto: prima le piccole poi le grandi
-				Collections.sort(emptyBoats);
-
-				var chosenBoat = emptyBoats.get(0); // la prima è la più piccola
-				booking.addBoat(chosenBoat);
-				System.out.println("Scelta barca vuota");
-
-			} else {
-				throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED,
-						"Devo effettuare riallocazione, ma non ho ancora implementato");
-			}
 		}
+
+		return usedBoatsWithEnoughSeats;
+	}
+
+	// Ritorna tutte le barche non ancora utilizzate per l'escursione a cui si
+	// riferisce la prenotazione, con abbastanza posti rimanenti e ordinate per
+	// numero di posto
+	private List<Boat> getEmptyBoatsWithEnoughSeats(Booking booking, Integer numPeople) {
+
+		// barche vuote = tutte le barche - barche utilizzate
+		List<Boat> allBoats = boatService.getBoats();
+		var usedBoatsMap = getUsedBoatsByTripId(booking.getTrip().getId());
+		List<Boat> emptyBoats = new ArrayList<>();
+
+		usedBoatsMap.entrySet().stream().forEach(e -> allBoats.remove(e.getKey()));
+
+		if (!allBoats.isEmpty()) {
+
+			// filtro per numero di posto
+			emptyBoats = allBoats.stream().filter(boat -> boat.getSeats().compareTo(numPeople) >= 0)
+					.collect(Collectors.toList());
+
+			// ordinamento per numero di posto: prima le piccole poi le grandi
+			Collections.sort(emptyBoats);
+		}
+		return emptyBoats;
+	}
+
+	// Assegna una barca al gruppo per l'escursione, se possibile.
+	// Se una barca non basta, cerca di dividere il gruppo e assegnare due barche,
+	// se possibile.
+	// Ritorna true se il gruppo è stato diviso
+	private Boolean assignBoats(Booking booking) {
+		System.out.println("\nAlgoritmo prenotazione avviato. Utente " + booking.getUser().getId() + ". Escursione "
+				+ booking.getTrip().getId() + ". N persone: " + booking.getNumPeople());
+
+		var divided = false;
+		var tripId = booking.getTrip().getId();
+		var numPeople = booking.getNumPeople();
+		var n = getRemainingSeatsByTripId(tripId);
+
+		// se i posti sono finiti o non ci sono barche nel sistema segnalo errore
+		if (n > 0)
+			System.out.println(String.format("%d Posti totali rimanenti per l'escursione", n));
+		else {
+			System.out.println(NOBOATS);
+			throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, NOBOATS);
+		}
+
+		// cerco una barca NON VUOTA con abbastanza posti rimanenti per il gruppo
+		List<Boat> usedBoatsWithEnoughSeats = getUsedBoatsWithEnoughSeats(booking, numPeople);
+
+		// se esiste salvo la barca e termino la funzione
+		if (!usedBoatsWithEnoughSeats.isEmpty()) {
+			var chosenBoat = usedBoatsWithEnoughSeats.get(0); // la prima è la più piccola
+			booking.setBoat(chosenBoat);
+			bookingRepository.save(booking);
+			System.out.println(USEDBOATFOUND + ": " + chosenBoat.getModel() + " da " + chosenBoat.getSeats() + " posti");
+			return divided;
+		}
+
+		// cerco una barca VUOTA con abbastanza posti rimanenti per il gruppo
+		var emptyBoats = getEmptyBoatsWithEnoughSeats(booking, numPeople);
+
+		// se esiste salvo la barca e termino la funzione
+		if (!emptyBoats.isEmpty()) {
+			var chosenBoat = emptyBoats.get(0); // la prima è la più piccola
+			booking.setBoat(chosenBoat);
+			bookingRepository.save(booking);
+			System.out.println(EMPTYBOATFOUND + ": " + chosenBoat.getModel() + " da " + chosenBoat.getSeats() + " posti");
+			return divided;
+		}
+
+		System.out.println("Provo a dividere il gruppo e trovare 2 barche");
+
+		// il gruppo non può essere contenuto allo stato attuale delle barche
+		// quindi si prova a dividere il gruppo in due, ma solo se il gruppo è composto
+		// da almeno 4 persone
+		if (numPeople < 4) {
+			System.out.println(TOOSMALLGROUP);
+			throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, TOOSMALLGROUP);
+		}
+
+		Boat firstBoat;
+		Boat secondBoat;
+
+		// dimensioni dei due gruppi
+		Integer group2 = numPeople / 2;
+		Integer group1 = 0;
+		if (numPeople % 2 == 0)
+			group1 = group2;
+		else
+			group1 = numPeople / 2 + 1;
+
+		System.out.println("Gruppo 1: " + group1 + " persone\nGruppo 2: " + group2 + " persone");
+
+		// ci devono essere almeno due barche (vuote o non vuote) in grado di contenere
+		// i due gruppi. Si prendono tutte le barche in grado di contenere il gruppo 2,
+		// che in caso di gruppo dispari, è il gruppo più piccolo
+		List<Boat> allBoatsForGroups = new ArrayList<>();
+		allBoatsForGroups.addAll(getUsedBoatsWithEnoughSeats(booking, group2));
+		allBoatsForGroups.addAll(getEmptyBoatsWithEnoughSeats(booking, group2));
+
+		// se non ci sono due barche in grado di contenere il gruppo 2, allora
+		// sicuramente non c'è modo di mettere nemmeno il primo, quindi la funzione
+		// termina
+		if (allBoatsForGroups.size() < 2) {
+			System.out.println(GROUPDIVISIONFAIL);
+			throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, GROUPDIVISIONFAIL);
+		}
+
+		// se i gruppi sono uguali basta prendere le prime due barche più piccole
+		// altrimenti devo fare un ulteriore controllo, in quanto per il gruppo 1 ho
+		// bisogno di un posto aggiuntivo
+		if (group1.equals(group2)) {
+			firstBoat = allBoatsForGroups.get(0);
+			secondBoat = allBoatsForGroups.get(1);
+		} else {
+			secondBoat = allBoatsForGroups.get(0);
+			allBoatsForGroups.remove(secondBoat);
+
+			final Integer temp = group1;
+			allBoatsForGroups.stream().filter(boat -> boat.getSeats() >= temp).collect(Collectors.toList());
+
+			// se non esiste barca per contenere il gruppo 1 la funzione termina
+			if (allBoatsForGroups.isEmpty()) {
+				System.out.println(GROUPDIVISIONFAIL);
+				throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, GROUPDIVISIONFAIL);
+			}
+
+			firstBoat = allBoatsForGroups.get(0);
+		}
+
+		System.out.println(
+				"SUCCESS. Scelta barca " + firstBoat.getModel() + " da " + firstBoat.getSeats() + " posti per gruppo 1");
+		System.out.println(
+				"SUCCESS. Scelta barca " + secondBoat.getModel() + " da " + secondBoat.getSeats() + " posti per gruppo 2");
+
+		// creo due prenotazioni per lo stesso utente, con barche diverse e gruppi
+		// separati
+		booking.setBoat(firstBoat);
+		booking.setNumPeople(numPeople - group2);
+		bookingRepository.save(booking);
+
+		var secondBooking = new Booking();
+		secondBooking.setUser(booking.getUser());
+		secondBooking.setTrip(booking.getTrip());
+		secondBooking.setBoat(secondBoat);
+		secondBooking.setNumPeople(numPeople - group1);
+		bookingRepository.save(secondBooking);
+
+		divided = true;
+
+		return divided;
 	}
 }
