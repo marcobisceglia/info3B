@@ -44,7 +44,7 @@ public class BoatService {
 		var boatFound = boatToUpdate.get();
 
 		boatFound.setModel(boat.getModel());
-		boatFound.setSeats(boat.getSeats());
+		boatFound.setSeats(boatToUpdate.get().getSeats()); // limit update of seats
 		return boatRepository.save(boatFound);
 	}
 
