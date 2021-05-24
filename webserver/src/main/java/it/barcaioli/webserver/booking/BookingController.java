@@ -39,27 +39,16 @@ public class BookingController {
 		return booking;
 	}
 
-	private BookingDto entityToDto(Booking booking) {
-		var bookingDto = new BookingDto();
-
-		bookingDto.setId(booking.getId());
-		bookingDto.setNumPeople(booking.getNumPeople());
-		bookingDto.setTripId(booking.getTrip().getId());
-		bookingDto.setUserId(booking.getUser().getId());
-
-		return bookingDto;
-	}
-
 	@GetMapping
 	public Iterable<BookingDto> getBookings() {
 		List<BookingDto> bookingsDto = new ArrayList<>();
-		bookingService.getBookings().forEach(b -> bookingsDto.add(entityToDto(b)));
+		bookingService.getBookings().forEach(b -> bookingsDto.add(b.entityToDto()));
 		return bookingsDto;
 	}
 
 	@GetMapping(path = "{bookingId}")
 	public BookingDto getBooking(@PathVariable Long bookingId) {
-		return entityToDto(bookingService.getBooking(bookingId));
+		return bookingService.getBooking(bookingId).entityToDto();
 	}
 
 	@PostMapping

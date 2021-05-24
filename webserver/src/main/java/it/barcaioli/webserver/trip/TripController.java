@@ -2,6 +2,7 @@ package it.barcaioli.webserver.trip;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import it.barcaioli.webserver.boat.Boat;
 import it.barcaioli.webserver.booking.Booking;
+import it.barcaioli.webserver.booking.BookingDto;
 
 @RestController
 @RequestMapping(path = "trips")
@@ -53,8 +57,17 @@ public class TripController {
 	}
 
 	@GetMapping(path = "{tripId}/bookings")
-	public List<Booking> getUserBookings(@PathVariable Long tripId) {
-		return tripService.getTrip(tripId).getBookings();
+	public List<BookingDto> getTripBookings(@PathVariable Long tripId) {
+		List<BookingDto> bookingsDto = new ArrayList<>();
+		tripService.getTrip(tripId).getBookings().forEach(b -> bookingsDto.add(b.entityToDto()));
+		return bookingsDto;
+	}
+
+	@GetMapping(path = "{tripId}/boats")
+	public List<Boat> getTripBoats(@PathVariable Long tripId) {
+		List<Boat> boatsUsedByTrip = new ArrayList<>();
+		tripService.getTrip(tripId).getBookings().forEach(b -> boatsUsedByTrip.add(b.getBoat()));
+		return boatsUsedByTrip.stream().distinct().collect(Collectors.toList());
 	}
 
 	@PostMapping

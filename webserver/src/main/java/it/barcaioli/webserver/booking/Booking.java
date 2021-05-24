@@ -86,4 +86,15 @@ public class Booking {
 		return "Booking [boat=" + boat + ", id=" + id + ", numPeople=" + numPeople + ", trip=" + trip + ", user=" + user
 				+ "]";
 	}
+
+	public BookingDto entityToDto() {
+		var bookingDto = new BookingDto();
+
+		bookingDto.setId(this.getId());
+		bookingDto.setNumPeople(this.getNumPeople());
+		bookingDto.setTripId(this.getTrip().getId());
+		bookingDto.setUserId(this.getUser().getId());
+
+		return bookingDto;
+	}
 }
