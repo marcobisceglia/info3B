@@ -70,9 +70,10 @@ public class UserController {
 	}
 
 	@PostMapping(path = "logout")
-	public void logout(@Valid @RequestBody UserDto userDto) {
+	public String logout(@Valid @RequestBody UserDto userDto) {
 		var user = dtoToEntity(userDto);
 		userService.logout(user);
+		return "Ok";
 	}
 
 	@DeleteMapping(path = "{userId}")

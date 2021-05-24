@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import it.barcaioli.webserver.boat.Boat;
 import it.barcaioli.webserver.boat.BoatService;
+import it.barcaioli.webserver.user.UserService;
 
 @Service // More specific @Component
 public class BookingService {
@@ -26,11 +27,13 @@ public class BookingService {
 
 	private final BookingRepository bookingRepository;
 	private final BoatService boatService;
+	private final UserService userService;
 
 	@Autowired
-	public BookingService(BookingRepository bookingRepository, BoatService boatService) {
+	public BookingService(BookingRepository bookingRepository, BoatService boatService, UserService userService) {
 		this.bookingRepository = bookingRepository;
 		this.boatService = boatService;
+		this.userService = userService;
 	}
 
 	public List<Booking> getBookings() {
@@ -65,6 +68,13 @@ public class BookingService {
 
 		if (b != null)
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Booking already exists");
+
+		// booking can be done only if user is logged in
+		var loggedIn = userService.getUser(booking.getUser().getId()).isLoggedIn();
+
+		if (!loggedIn) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User must be logged in to book a trip");
+		}
 
 		// divided è true se la prenotazione necessita di 2 barche
 		var divided = assignBoats(booking);
