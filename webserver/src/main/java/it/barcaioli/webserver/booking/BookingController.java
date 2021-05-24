@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.barcaioli.webserver.boat.Boat;
 import it.barcaioli.webserver.trip.TripService;
 import it.barcaioli.webserver.user.UserService;
 
@@ -52,7 +53,7 @@ public class BookingController {
 	}
 
 	@PostMapping
-	public List<String> createBooking(@RequestBody BookingDto bookingDto) {
+	public List<Boat> createBooking(@RequestBody BookingDto bookingDto) {
 		var booking = dtoToEntity(bookingDto);
 		return bookingService.createBooking(booking);
 	}

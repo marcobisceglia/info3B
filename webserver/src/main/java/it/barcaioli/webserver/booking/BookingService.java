@@ -56,7 +56,7 @@ public class BookingService {
 			return null;
 	}
 
-	public List<String> createBooking(Booking booking) {
+	public List<Boat> createBooking(Booking booking) {
 
 		// controllo che la prenotazione per l'escursione non esista già per l'utente
 		// NB: nel db lo stesso utente può comunque avere più righe per la stessa trip,
@@ -69,12 +69,12 @@ public class BookingService {
 		// divided è true se la prenotazione necessita di 2 barche
 		var divided = assignBoats(booking);
 
-		List<String> boats = new ArrayList<>();
+		List<Boat> boats = new ArrayList<>();
 
 		if (divided.booleanValue())
-			boats.add(this.getBookings().get(this.getBookings().size() - 2).getBoat().getModel());
+			boats.add(this.getBookings().get(this.getBookings().size() - 2).getBoat());
 
-		boats.add(this.getBookings().get(this.getBookings().size() - 1).getBoat().getModel());
+		boats.add(this.getBookings().get(this.getBookings().size() - 1).getBoat());
 
 		return boats;
 	}

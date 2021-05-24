@@ -78,7 +78,7 @@ public class UserService {
 		}
 	}
 
-	public User logout(User logginOutUser) {
+	public void logout(User logginOutUser) {
 		var user = getUserByEmail(logginOutUser.getEmail());
 
 		if (user == null)
@@ -86,7 +86,7 @@ public class UserService {
 
 		if (user.isLoggedIn()) {
 			user.setLoggedIn(false);
-			return userRepository.save(user);
+			userRepository.save(user);
 		} else {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User is not logged in");
 		}
