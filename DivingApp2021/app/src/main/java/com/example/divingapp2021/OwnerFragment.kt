@@ -26,7 +26,7 @@ class OwnerFragment : NavigationFragment<FragmentOwnerBinding>()  {
             isFocusable = true
         }
         setTitle("Owner")
-        showBackButton(false)
+        showBackButton(true)
 
         this.binding.buttonBoat.setOnClickListener {
             FragmentHelper.addFragmentFromSide(

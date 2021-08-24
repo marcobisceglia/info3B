@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,9 +48,9 @@ class EditBoatFragment(private val boat: Boat = Boat(), private val insert: Bool
             this.binding.buttonDelete.visibility = View.GONE
 
         }else{
-            this.binding.modelEditText.hint = boat.model
-            this.binding.nameEditText.hint = boat.id.toString()
+            this.binding.modelEditText.hint = boat.model.toString()
             this.binding.seatsEditText.hint = boat.seats.toString()
+            this.binding.seatsEditText.isEnabled = false
             this.binding.buttonInsert.visibility = View.GONE
         }
 
@@ -59,9 +60,9 @@ class EditBoatFragment(private val boat: Boat = Boat(), private val insert: Bool
         }
 
         this.binding.buttonModify.setOnClickListener {
-            val boat = checkItem()
+
+            val boat = checkItemModify()
             if(boat!=null) {
-                //todo modifica solo il nome 
 
                 //MODIFY BOAT
                 modifyBoat(boat)
@@ -81,24 +82,11 @@ class EditBoatFragment(private val boat: Boat = Boat(), private val insert: Bool
     }
 
     private fun checkItem():Boat?{
-        val boat = Boat()
-        val model = if ( this.binding.modelEditText.text.toString().isEmpty()) {
-            this.binding.modelEditText.hint
-        } else {
-            this.binding.modelEditText.text.toString()
-        } //se il testo non è nullo gli metto ciò che era hint
-        val id = if ( this.binding.nameEditText.text.toString().isEmpty()) {
-            this.binding.nameEditText.hint
-        } else {
-            this.binding.nameEditText.text.toString()
-        }
-        val seats = if ( this.binding.seatsEditText.text.toString().isEmpty()) {
-            this.binding.seatsEditText.hint
-        } else {
-            this.binding.seatsEditText.text.toString()
-        }
+        val model = this.binding.modelEditText.text.toString()
+        val seats = this.binding.seatsEditText.text.toString()
+        val seatsAsNumber = seats.toIntOrNull()
 
-        return if(model==null || id==null || seats==null){
+        return if(model.isEmpty() || seats.isEmpty()){
             val builder: AlertDialog.Builder? = activity?.let {
                 AlertDialog.Builder(it)
             }
@@ -111,13 +99,36 @@ class EditBoatFragment(private val boat: Boat = Boat(), private val insert: Bool
                 create()?.show()
             }
             null
-        }else{
-            boat.model = model.toString()
-            boat.id = id.toString().toInt()
-            boat.seats = seats.toString().toInt()
+        }else if(seatsAsNumber == null){
+            val builder: AlertDialog.Builder? = activity?.let {
+                AlertDialog.Builder(it)
+            }
+            builder?.apply {
+                setMessage("Error")
+                setTitle("Seats must be a number")
+                setPositiveButton("OK",  DialogInterface.OnClickListener { dialog, id ->
+                    // User clicked OK button
+                })
+                create()?.show()
+            }
+            null
+        }else
+        {
+            boat.model = model
+            boat.seats = seatsAsNumber
             boat
         }
     }
+
+    private fun checkItemModify():Boat?{
+        if(this.binding.modelEditText.text.toString().isNotEmpty()) {
+            boat.model = this.binding.modelEditText.text.toString()
+        }else{
+            boat.model = this.binding.modelEditText.hint.toString()
+       }
+        return boat
+    }
+
 
     private val client = OkHttpClient()
 

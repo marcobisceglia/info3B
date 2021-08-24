@@ -35,10 +35,8 @@ open class BoatAdapter(
             MyRecyclerViewHolder<AdapterBoatItemBinding, Boat>(binding) {
 
         override fun bind(data: Boat) {
-            this.binding.nameTextView.text = data.id.toString()
             this.binding.modelTextView.text = data.model
             this.binding.seatsTextView.text = data.seats.toString()
-            //
 
 
             this.binding.root.setTag(R.id.tag_item_item, data)
