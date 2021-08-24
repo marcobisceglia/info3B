@@ -1,16 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/BoxContainerDefault"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
 
-    <Button
-        android:id="@+id/buttonDate"
+    <DatePicker
+        android:id="@+id/date_Picker"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"
+        />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose Date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></Button>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:indeterminate="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_marginTop="20dp"
+        app:indicatorColor="@color/colorGrey70"/>
+
+    <LinearLayout
+        android:id="@+id/tripFound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+       >
+
+        <TextView
+            style="@style/TextMedium18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Escursioni disponibili"
+            android:textColor="@color/colorTextDefault" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/triRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        <TextView
+            style="@style/TextMedium18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Inserire il numero di divers"
+            android:textColor="@color/colorTextDefault"
+            />
+        <EditText
+            android:id="@+id/diversEditText"
+            style="@style/TextBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="textNoSuggestions"
+            android:layout_margin="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/modelTextView"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/EditButton"
+            android:layout_gravity="center"
+            android:text="Book"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/noTripFound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            style="@style/TextMedium18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center"
+            android:text="Non ci sono escursioni disponibili"
+            android:textColor="@color/colorTextDefault" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/dive"
+           />
+    </LinearLayout>
+
+</LinearLayout>
