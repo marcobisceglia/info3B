@@ -1,15 +1,26 @@
 package com.example.divingapp2021
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.beust.klaxon.Klaxon
 import com.example.divingapp2021.databinding.FragmentHomeBinding
 import com.example.mylibrary.ProjectFragment
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.IOException
 
-class HomeFragment : NavigationFragment<FragmentHomeBinding>(), LoginFragment.NoticeDialogListener  {
+//class HomeFragment : NavigationFragment<FragmentHomeBinding>(), LoginFragment.NoticeDialogListener  {
+class HomeFragment : NavigationFragment<FragmentHomeBinding>()  {
+    private val client = OkHttpClient()
 
     override fun buildBinding(
         inflater: LayoutInflater,
@@ -32,11 +43,11 @@ class HomeFragment : NavigationFragment<FragmentHomeBinding>(), LoginFragment.No
         showBackButton(false)
 
         this.binding.buttonLogin.setOnClickListener {
-
+                getUser(this.binding.username.text.toString(), this.binding.password.text.toString())
                 // Create an instance of the dialog fragment and show it
-                val dialog = LoginFragment()
-                dialog.listener = this
-                dialog.show(requireActivity().supportFragmentManager, "NoticeDialogFragment")
+              //  val dialog = LoginFragment()
+             //   dialog.listener = this
+           //     dialog.show(requireActivity().supportFragmentManager, "NoticeDialogFragment")
 
             /*
             if(isOwner()){
@@ -54,24 +65,47 @@ class HomeFragment : NavigationFragment<FragmentHomeBinding>(), LoginFragment.No
         return user=="GG" && psw=="GG"
     }
 
+    //Call db to get all boats and display them
+    private fun getUser(user: String, psw: String){
+        val u = User()
+        u.email = "email1@email.com"
+        u.password =  "password"
+        val jsonBody = Klaxon().toJsonString(u)
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+        val body = jsonBody.toRequestBody(mediaType)
+        val request = Request.Builder()
+                .url("http://10.0.2.2:8080/users/login/")
+                .post(body)
+                .build()
 
-    // The dialog fragment receives a reference to this Activity through the
-    // Fragment.onAttach() callback, which it uses to call the following methods
-    // defined by the NoticeDialogFragment.NoticeDialogListener interface
 
-    override fun onDialogPositiveClick(user: String, psw: String) {
-        if(isOwner(user, psw)) {
-            FragmentHelper.addFragmentFromSide(
-                    requireActivity(),
-                    OwnerFragment(),
-                    R.id.mainFrameLayout
-            )
-        }else{
-            FragmentHelper.addFragmentFromSide(
-                    requireActivity(),
-                    UserFragment(),
-                    R.id.mainFrameLayout
-            )
-        }
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                println("Connection to webserver failed: " + e)
+                //binding.noUserFound.visibility = View.VISIBLE
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val json = response.body!!.string()
+
+                println("Successfully connected to webserver")
+                println(json)
+
+                if(response.code == 200){
+                    val userlogged = Klaxon().parse<User>(json)
+                    if(userlogged!=null){
+                        activity?.runOnUiThread {
+                            FragmentHelper.addFragmentFromSide(
+                                    requireActivity(),
+                                    UserFragment(userlogged),
+                                    R.id.mainFrameLayout
+                            )
+                        } 
+                    }
+                }else{
+
+                }
+            }
+        })
     }
 }

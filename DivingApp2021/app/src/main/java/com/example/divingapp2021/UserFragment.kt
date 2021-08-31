@@ -9,7 +9,7 @@ import com.example.divingapp2021.databinding.FragmentHomeBinding
 import com.example.divingapp2021.databinding.FragmentUserBinding
 import com.example.mylibrary.ProjectFragment
 
-class UserFragment : NavigationFragment<FragmentUserBinding>()  {
+class UserFragment(val userLogged: User) : NavigationFragment<FragmentUserBinding>()  {
 
     override fun buildBinding(
         inflater: LayoutInflater,
@@ -34,7 +34,7 @@ class UserFragment : NavigationFragment<FragmentUserBinding>()  {
         this.binding.buttonBookExcursion.setOnClickListener {
             FragmentHelper.addFragmentFromSide(
                     requireActivity(),
-                    BookExcursionFragment(),
+                    BookExcursionFragment(userLogged),
                     R.id.mainFrameLayout
             )
         }

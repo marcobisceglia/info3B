@@ -34,4 +34,52 @@
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif"
         android:hint="password"/>
+
+    <LinearLayout
+        android:id="@+id/noUserFound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            style="@style/TextMedium18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center"
+            android:text="User email not found"
+            android:textColor="@color/colorTextDefault" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/dive"
+            />
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/pswNotCorrect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            style="@style/TextMedium18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center"
+            android:text="Password not correct"
+            android:textColor="@color/colorTextDefault" />
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/dive"
+            />
+    </LinearLayout>
 </LinearLayout>

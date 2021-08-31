@@ -10,10 +10,15 @@ import android.view.ViewGroup
 import android.widget.EditText
 
 import androidx.fragment.app.DialogFragment
+import com.beust.klaxon.Klaxon
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.IOException
 
 
 class LoginFragment : DialogFragment() {
-
+    private val client = OkHttpClient()
     // Use this instance of the interface to deliver action events
     lateinit var listener: NoticeDialogListener
 
@@ -41,14 +46,17 @@ class LoginFragment : DialogFragment() {
                             DialogInterface.OnClickListener { dialog, id ->
                                 // sign in the user ...
                                 // Send the positive button event back to the host activity
+                               // getUser(user.text.toString(),psw.text.toString() )
+                                //listener.onDialogPositiveClick(user = user.text.toString(), psw = )
 
-                                listener.onDialogPositiveClick(user = user.text.toString(), psw = psw.text.toString())
-                            })
+                             })
                     .setNegativeButton("cancel",
                             DialogInterface.OnClickListener { dialog, id ->
-                                getDialog()?.cancel()
+                              //  getDialog()?.cancel()
                             })
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
+
+
 }
