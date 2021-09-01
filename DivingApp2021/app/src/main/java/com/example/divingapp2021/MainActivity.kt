@@ -33,7 +33,7 @@ class MainActivity : ProjectActivity<ActivityMainBinding>(), FragmentManager.OnB
             setDisplayShowHomeEnabled(true)
         }
 
-        binding.toolbar.title="MAIN"
+        binding.toolbar.title="DivingApp 2021"
 
     }
 
@@ -86,7 +86,8 @@ class MainActivity : ProjectActivity<ActivityMainBinding>(), FragmentManager.OnB
                 println(json)
 
                 if(response.code == 200){
-                   //TODO ALERT PER LOGOUT
+                    val dialog = MessageDialog(MessageDialog.DIALOG_MODE.LOGOUT)
+                    dialog.show(supportFragmentManager, "Logout")
                 }
             }
         })

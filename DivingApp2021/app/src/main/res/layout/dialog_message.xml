@@ -9,17 +9,16 @@
         android:layout_height="64dp"
         android:background="@color/colorGrey20"
         android:scaleType="center"
-        android:text="Booking Dialog"
+        android:text="Message Dialog"
         style="@style/TextBold22"
-        android:textColor="@color/black"
         android:gravity="center" />
-
     <LinearLayout
-        android:id="@+id/normalLayout"
+        android:id="@+id/pswNotCorrectLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:visibility="visible">
 
         <TextView
             style="@style/TextMedium18"
@@ -27,33 +26,31 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center"
-            android:text="You booked an excursion!"
+            android:text="Password not correct"
             android:textColor="@color/colorTextDefault" />
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/dive"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/noUserFoundLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:visibility="visible">
+
         <TextView
             style="@style/TextMedium18"
-            android:id="@+id/dateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center"
-            android:text="Date: "
-            android:textColor="@color/colorTextDefault" />
-        <TextView
-            style="@style/TextMedium18"
-            android:id="@+id/diversTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_gravity="center"
-            android:text="N. divers: "
-            android:textColor="@color/colorTextDefault" />
-        <TextView
-            style="@style/TextMedium18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_gravity="center"
-            android:text="Good Dive!"
+            android:text="User email not found"
             android:textColor="@color/colorTextDefault" />
         <ImageView
             android:id="@+id/imageView"
@@ -65,11 +62,12 @@
             />
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/boatsFullLayout"
+        android:id="@+id/logoutLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:visibility="visible">
 
         <TextView
             style="@style/TextMedium18"
@@ -77,8 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center"
-            android:textAlignment="center"
-            android:text="The Boats are full \n Select another time or date"
+            android:text="User logout"
             android:textColor="@color/colorTextDefault" />
         <ImageView
             android:layout_width="70dp"
@@ -89,11 +86,12 @@
             />
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/bookExistLayout"
+        android:id="@+id/numErrorLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:visibility="visible">
 
         <TextView
             style="@style/TextMedium18"
@@ -101,10 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:textAlignment="center"
-            android:text="Booking already exist. Go to the section 'My excursions' and edit o delete it."
+            android:text="Number of divers must be a integer"
             android:textColor="@color/colorTextDefault" />
         <ImageView
             android:layout_width="70dp"

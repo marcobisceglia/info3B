@@ -18,6 +18,7 @@ import java.io.IOException
 
 
 class LoginFragment : DialogFragment() {
+    //TODO DELETE
     private val client = OkHttpClient()
     // Use this instance of the interface to deliver action events
     lateinit var listener: NoticeDialogListener

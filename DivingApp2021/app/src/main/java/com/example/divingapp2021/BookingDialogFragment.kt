@@ -56,8 +56,8 @@ class BookingDialogFragment : DialogFragment() {
                 bookExist.visibility = View.GONE
                 boatsFull.visibility = View.GONE
                 //set param
-                rootview.findViewById<TextView>(R.id.dateTextView).text = date
-                rootview.findViewById<TextView>(R.id.diversTextView).text = divers
+                rootview.findViewById<TextView>(R.id.dateTextView).text = "Date: " + date
+                rootview.findViewById<TextView>(R.id.diversTextView).text = "N. divers: " + divers
             }
 
 

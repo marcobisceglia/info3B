@@ -9,10 +9,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="@color/colorBlue70"
         android:scaleType="center"
         android:text="Sigin to book an excursion"
         style="@style/TextBold18"
+        android:textColor="@color/black"
         android:gravity="center" />
 
     <EditText
@@ -20,9 +20,9 @@
         android:inputType="textEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginBottom="4dp"
         android:hint="username" />
     <EditText
@@ -30,8 +30,8 @@
         android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:fontFamily="sans-serif"
         android:hint="password"/>
 
@@ -43,60 +43,34 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="10dp"
         />
-
-    <LinearLayout
-        android:id="@+id/noUserFound"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:visibility="gone">
-
-        <TextView
-            style="@style/TextMedium18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_gravity="center"
-            android:text="User email not found"
-            android:textColor="@color/colorTextDefault" />
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:contentDescription="@null"
-            android:src="@drawable/dive"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/pswNotCorrect"
+        android:scaleType="center"
+        android:text="If you don't have a profile"
+        style="@style/TextRegular14"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_marginTop="20dp"/>
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:scaleType="center"
+        android:text="SignUp!"
+        style="@style/TextBold18"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_marginTop="5dp"/>
+
+    <ImageView
+        android:id="@+id/iv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:visibility="gone">
-
-        <TextView
-            style="@style/TextMedium18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_gravity="center"
-            android:text="Password not correct"
-            android:textColor="@color/colorTextDefault" />
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:contentDescription="@null"
-            android:src="@drawable/dive"
-            />
-    </LinearLayout>
-
-
-
-
+        android:layout_gravity="center"
+        android:src="@drawable/super_power"
+        android:visibility="visible"
+        />
 </LinearLayout>

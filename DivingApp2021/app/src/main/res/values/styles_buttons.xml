@@ -5,8 +5,8 @@
         <item name="android:drawablePadding">25dp</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">@color/colorGrey20</item>
-        <item name="android:background">@color/colorGrey60</item>
+        <item name="android:textColor">@color/colorGrey0</item>
+        <item name="android:background">@drawable/homepage_button_grey</item>
         <item name="backgroundTint">@null</item>
         <item name="android:stateListAnimator">@null</item>
     </style>

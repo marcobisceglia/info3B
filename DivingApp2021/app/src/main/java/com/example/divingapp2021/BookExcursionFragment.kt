@@ -48,7 +48,7 @@ class BookExcursionFragment() : NavigationFragment<FragmentBookExcursionBinding>
             isClickable = true
             isFocusable = true
         }
-        setTitle("BOOK EXCURSION")
+        setTitle("Book an excursion")
         showBackButton(true)
 
         this.binding.triRecyclerView.adapter = adapter
@@ -74,7 +74,8 @@ class BookExcursionFragment() : NavigationFragment<FragmentBookExcursionBinding>
             val diversAsNumber = divers.toIntOrNull()
 
             if(diversAsNumber == null){
-                //TODO DIALOG DI ERRORE
+                val dialog = MessageDialog(MessageDialog.DIALOG_MODE.DIVERS_NOT_NUMBER)
+                dialog.show(requireActivity().supportFragmentManager, "not a number")
             }else{
                 bookExcursion(diversAsNumber)
             }
@@ -87,7 +88,7 @@ class BookExcursionFragment() : NavigationFragment<FragmentBookExcursionBinding>
         override fun onClick(v: View) {
             val item = v.getTag(R.id.tag_item_item) as Trip
             if(choosenTrip == null || choosenTrip!=item){
-                v.setBackgroundColor(Color.BLUE)
+                v.setBackgroundColor(resources.getColor(R.color.colorGrey60))
                 choosenTripView?.setBackgroundColor(resources.getColor(R.color.listItemBackground))
 
                 //select new trip

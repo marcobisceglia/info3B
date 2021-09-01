@@ -39,37 +39,24 @@ class HomeFragment : NavigationFragment<FragmentHomeBinding>()  {
             isClickable = true
             isFocusable = true
         }
-       // setTitle("HOME")
+
         showBackButton(false)
 
         this.binding.buttonLogin.setOnClickListener {
                 getUser(this.binding.username.text.toString(), this.binding.password.text.toString())
-                // Create an instance of the dialog fragment and show it
-              //  val dialog = LoginFragment()
-             //   dialog.listener = this
-           //     dialog.show(requireActivity().supportFragmentManager, "NoticeDialogFragment")
-
-            /*
-            if(isOwner()){
-                FragmentHelper.addFragmentFromSide(
-                        requireActivity(),
-                        OwnerFragment(),
-                        R.id.mainFrameLayout
-                )
-            }*/
         }
         return rootview
     }
 
-    private fun isOwner(user: String?, psw: String?):Boolean{
-        return user=="email1@email.com" && psw=="password" //TODO USANDO USER ROLE 
+    private fun isOwner(user: User):Boolean{
+       return user.userRole==User.ROLE.ADMIN
     }
 
     //Call db to get all boats and display them
     private fun getUser(user: String, psw: String){
         val u = User()
-        u.email = "email1@email.com"
-        u.password =  "password"
+        u.email = user
+        u.password =  psw
         val jsonBody = Klaxon().toJsonString(u)
         val mediaType = "application/json; charset=utf-8".toMediaType()
         val body = jsonBody.toRequestBody(mediaType)
@@ -96,7 +83,7 @@ class HomeFragment : NavigationFragment<FragmentHomeBinding>()  {
                     if(userlogged!=null){
                         MyProperties.instance!!.userLogged = userlogged
                         activity?.runOnUiThread {
-                            if(isOwner(u.email, u.password)){
+                            if(isOwner(u)){
                                 FragmentHelper.addFragmentFromSide(
                                         requireActivity(),
                                         OwnerFragment(),
@@ -111,8 +98,14 @@ class HomeFragment : NavigationFragment<FragmentHomeBinding>()  {
                             }
                         } 
                     }
-                }else{
-                    //TODO ERROR LOGIN
+                }else if(response.code == 401) {
+                    //psw not correct
+                    val dialog = MessageDialog(MessageDialog.DIALOG_MODE.PSW_NOT_CORRECT)
+                    dialog.show(requireActivity().supportFragmentManager, "Psw not correct")
+                }else if(response.code == 404){
+                    //user email not found
+                    val dialog = MessageDialog(MessageDialog.DIALOG_MODE.USER_NOT_FOUND)
+                    dialog.show(requireActivity().supportFragmentManager, "User not found")
                 }
             }
         })
