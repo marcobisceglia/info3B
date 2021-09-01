@@ -14,6 +14,7 @@
         style="@style/BoxContainerDefault"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
+        android:paddingTop="20dp"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
@@ -21,6 +22,8 @@
     <Button
         android:id="@+id/buttonInsert"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight=".10"
+        style="@style/StyleButtonGrey"
         android:text="Insert Boat" />
 </LinearLayout>

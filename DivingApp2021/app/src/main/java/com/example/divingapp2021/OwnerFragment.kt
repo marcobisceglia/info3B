@@ -25,7 +25,7 @@ class OwnerFragment : NavigationFragment<FragmentOwnerBinding>()  {
             isClickable = true
             isFocusable = true
         }
-        setTitle("Owner")
+        setTitle("Owner Section")
         showBackButton(true)
 
         this.binding.buttonBoat.setOnClickListener {

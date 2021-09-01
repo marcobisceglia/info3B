@@ -100,17 +100,8 @@ class EditBoatFragment(private val boat: Boat = Boat(), private val insert: Bool
             }
             null
         }else if(seatsAsNumber == null){
-            val builder: AlertDialog.Builder? = activity?.let {
-                AlertDialog.Builder(it)
-            }
-            builder?.apply {
-                setMessage("Error")
-                setTitle("Seats must be a number")
-                setPositiveButton("OK",  DialogInterface.OnClickListener { dialog, id ->
-                    // User clicked OK button
-                })
-                create()?.show()
-            }
+            val dialog = MessageDialog(MessageDialog.DIALOG_MODE.SEATS_NOT_NUMBER)
+            dialog.show(requireActivity().supportFragmentManager, "Number seats not correct")
             null
         }else
         {
@@ -146,7 +137,7 @@ class EditBoatFragment(private val boat: Boat = Boat(), private val insert: Bool
 
             override fun onResponse(call: Call, response: Response) {
                 println("Delete successful.")
-
+                //TODO NON PUOI ELIMINARE UNA BARCA IN USO
                 refreshBoats()
             }
         })
@@ -207,68 +198,4 @@ class EditBoatFragment(private val boat: Boat = Boat(), private val insert: Bool
         }
     }
 
-
-    // :- ActionMode Callbacks
-/*
-    override fun onCreateActionMode(
-            mode: androidx.appcompat.view.ActionMode?,
-            menu: Menu?
-    ): Boolean {
-        mode?.menuInflater?.inflate(R.menu.menu_toolbar_edit, menu)
-
-        return true
-    }
-
-    override fun onPrepareActionMode(
-            mode: androidx.appcompat.view.ActionMode?,
-            menu: Menu?
-    ): Boolean {
-        (activity as AppCompatActivity?)?.supportActionBar?.hide()
-        return false
-    }
-
-    override fun onActionItemClicked(
-            mode: androidx.appcompat.view.ActionMode?,
-            item: MenuItem?
-    ): Boolean {
-        selectedActionMenuItem = item
-
-        when (item?.itemId) {
-            R.id.confirmAction -> {
-                /*   configurationService.setRelay(selectedRelay, relaysAdapterDetail.currentList)
-
-                configurationViewModel.updateRelays(relaysAdapterDetail.currentList as List<AccordionItem>)
-
-                mode?.finish()
-
-                EpicApplicationUsageTracker.sendEvent("relay_" + getTitle(), "tap", "save")
-
-                FragmentHelper.popBackFragment(activity)*/
-            }
-        }
-
-        return false
-    }
-
-    override fun onDestroyActionMode(mode: androidx.appcompat.view.ActionMode?) {
-        if (selectedActionMenuItem?.itemId != R.id.confirmAction) {
-            if (selectedActionMenuItem?.itemId != R.id.confirmAction) {
-                /*DialogHelper.showDialog(requireContext(),
-                        getString(R.string.dialog_discard_changes_title),
-                        getString(R.string.dialog_discard_changes_message),
-                        {
-                            EpicApplicationUsageTracker.sendEvent("relay_" + getTitle(), "tap", "cancel")
-
-                            FragmentHelper.popBackFragment(activity)
-                        },
-                        {
-                            startSupportActionMode(getTitle(), this)
-                        })*/
-            }
-        }
-
-        selectedActionMenuItem = null
-        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
-    }
-*/
 }

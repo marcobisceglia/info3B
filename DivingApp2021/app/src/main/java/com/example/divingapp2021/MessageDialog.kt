@@ -16,7 +16,8 @@ class MessageDialog(val mode: DIALOG_MODE) : DialogFragment() {
         LOGOUT,
         PSW_NOT_CORRECT,
         USER_NOT_FOUND,
-        DIVERS_NOT_NUMBER
+        DIVERS_NOT_NUMBER,
+        SEATS_NOT_NUMBER
     }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -29,27 +30,38 @@ class MessageDialog(val mode: DIALOG_MODE) : DialogFragment() {
             val noUser = rootview.findViewById<LinearLayout>(R.id.noUserFoundLayout)
             val logout = rootview.findViewById<LinearLayout>(R.id.logoutLayout)
             val numError = rootview.findViewById<LinearLayout>(R.id.numErrorLayout)
+            val numSeats = rootview.findViewById<LinearLayout>(R.id.numErrorBoatsLayout)
 
             if(mode ==DIALOG_MODE.LOGOUT){
                 logout.visibility = View.VISIBLE
                 pswNotCorrect.visibility = View.GONE
                 noUser.visibility = View.GONE
                 numError.visibility = View.GONE
+                numSeats.visibility = View.GONE
             }else if(mode ==DIALOG_MODE.PSW_NOT_CORRECT){
                 logout.visibility = View.GONE
                 pswNotCorrect.visibility = View.VISIBLE
                 noUser.visibility = View.GONE
                 numError.visibility = View.GONE
+                numSeats.visibility = View.GONE
             }else if(mode ==DIALOG_MODE.USER_NOT_FOUND){
                 logout.visibility = View.GONE
                 pswNotCorrect.visibility = View.GONE
                 noUser.visibility = View.VISIBLE
                 numError.visibility = View.GONE
+                numSeats.visibility = View.GONE
             }else if(mode ==DIALOG_MODE.DIVERS_NOT_NUMBER){
                 logout.visibility = View.GONE
                 pswNotCorrect.visibility = View.GONE
                 noUser.visibility = View.GONE
                 numError.visibility = View.VISIBLE
+                numSeats.visibility = View.GONE
+            }else if(mode ==DIALOG_MODE.SEATS_NOT_NUMBER){
+                logout.visibility = View.GONE
+                pswNotCorrect.visibility = View.GONE
+                noUser.visibility = View.GONE
+                numError.visibility = View.GONE
+                numSeats.visibility = View.VISIBLE
             }
 
            // Inflate and set the layout for the dialog

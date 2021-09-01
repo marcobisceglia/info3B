@@ -49,7 +49,8 @@ class HomeFragment : NavigationFragment<FragmentHomeBinding>()  {
     }
 
     private fun isOwner(user: User):Boolean{
-       return user.userRole==User.ROLE.ADMIN
+       //return user.userRole==User.ROLE.ADMIN //TODO ADMIN SECTION
+        return true
     }
 
     //Call db to get all boats and display them

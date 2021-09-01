@@ -37,11 +37,9 @@ open class BoatAdapter(
         override fun bind(data: Boat) {
             this.binding.modelTextView.text = data.model
             this.binding.seatsTextView.text = data.seats.toString()
-
-
+            
             this.binding.root.setTag(R.id.tag_item_item, data)
             this.binding.root.setTag(R.id.tag_item_position_absolute, this.adapterPosition)
-            // this.binding.root.setTag(R.id.tag_item_position_owner, this.layoutPosition) TODO DA CAPIRE
         }
     }
 

@@ -24,20 +24,20 @@
                     android:textColor="@color/colorTextDefault" />
                 <Button
                     android:id="@+id/buttonBookExcursion"
-                    style="@style/HomePageButtonGrey"
+                    style="@style/StyleButtonGrey"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Book Excursion"/>
                 <Button
                     android:id="@+id/buttoMyExcursion"
-                    style="@style/HomePageButtonGrey"
+                    style="@style/StyleButtonGrey"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="My Excursion" />
                 <Button
                     android:id="@+id/buttoMyProfile"
-                    style="@style/HomePageButtonGrey"
+                    style="@style/StyleButtonGrey"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
