@@ -61,8 +61,8 @@ class HomeFragment : NavigationFragment<FragmentHomeBinding>()  {
         return rootview
     }
 
-    private fun isOwner(user: String, psw: String):Boolean{ //TODO
-        return user=="GG" && psw=="GG"
+    private fun isOwner(user: String?, psw: String?):Boolean{
+        return user=="email1@email.com" && psw=="password" //TODO USANDO USER ROLE 
     }
 
     //Call db to get all boats and display them
@@ -94,16 +94,25 @@ class HomeFragment : NavigationFragment<FragmentHomeBinding>()  {
                 if(response.code == 200){
                     val userlogged = Klaxon().parse<User>(json)
                     if(userlogged!=null){
+                        MyProperties.instance!!.userLogged = userlogged
                         activity?.runOnUiThread {
-                            FragmentHelper.addFragmentFromSide(
-                                    requireActivity(),
-                                    UserFragment(userlogged),
-                                    R.id.mainFrameLayout
-                            )
+                            if(isOwner(u.email, u.password)){
+                                FragmentHelper.addFragmentFromSide(
+                                        requireActivity(),
+                                        OwnerFragment(),
+                                        R.id.mainFrameLayout
+                                )
+                            }else{
+                                FragmentHelper.addFragmentFromSide(
+                                        requireActivity(),
+                                        UserFragment(),
+                                        R.id.mainFrameLayout
+                                )
+                            }
                         } 
                     }
                 }else{
-
+                    //TODO ERROR LOGIN
                 }
             }
         })

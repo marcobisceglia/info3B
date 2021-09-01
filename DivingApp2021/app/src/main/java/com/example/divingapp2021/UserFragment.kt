@@ -9,7 +9,7 @@ import com.example.divingapp2021.databinding.FragmentHomeBinding
 import com.example.divingapp2021.databinding.FragmentUserBinding
 import com.example.mylibrary.ProjectFragment
 
-class UserFragment(val userLogged: User) : NavigationFragment<FragmentUserBinding>()  {
+class UserFragment() : NavigationFragment<FragmentUserBinding>()  {
 
     override fun buildBinding(
         inflater: LayoutInflater,
@@ -28,13 +28,13 @@ class UserFragment(val userLogged: User) : NavigationFragment<FragmentUserBindin
             isClickable = true
             isFocusable = true
         }
-       // setTitle("HOME")
-        showBackButton(false)
+        setTitle("Hi Buddy!")
+        showBackButton(true)
 
         this.binding.buttonBookExcursion.setOnClickListener {
             FragmentHelper.addFragmentFromSide(
                     requireActivity(),
-                    BookExcursionFragment(userLogged),
+                    BookExcursionFragment(),
                     R.id.mainFrameLayout
             )
         }
