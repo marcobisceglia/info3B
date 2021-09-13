@@ -16,7 +16,7 @@ Nella seconda iterazione si è deciso di implementare i seguenti casi d'uso:
 
 Seguono una descrizione testuale di questi casi e i diagrammi dei componenti e di deployment.
 
-\section{UC1: Prenotazioni}
+\subsection{UC1: Prenotazioni}
 \emph{Breve descrizione}: L'utente, dopo essersi loggato, può effettuare la prenotazione per una delle escursioni organizzate dal proprietario. Gli è possibile prenotare un posto non solo per sé stesso ma anche per altre persone, indicando il numero di partecipanti totale. Oltre alla creazione di una prenotazione, l'utente deve poter visualizzare le prenotazioni effettuate ed eventualmente modificarle o eliminarle.
 Il caso d'uso Prenotazioni è suddiviso in 4 casi d'uso concreti:
 
@@ -36,7 +36,7 @@ Il caso d'uso Prenotazioni è suddiviso in 4 casi d'uso concreti:
     \item Il sistema mostra la pagina iniziale che comprende i bottoni Visualizza e Nuova Prenotazione con cui l'utente può gestire le sue prenotazioni.
 \end{enumerate}
 
-\subsection{UC1.1 Visualizzazione prenotazioni}
+\subsubsection{UC1.1 Visualizzazione prenotazioni}
 \noindent \emph{Breve descrizione}: L'utente visualizza le prenotazioni effettuate e i relativi dati.\medbreak
 \noindent \emph{Attori coinvolti}: Utente, Sistema.\medbreak
 \noindent \emph{Trigger}: L'utente clicca il bottone Visualizza.\medbreak
@@ -57,7 +57,7 @@ Il caso d'uso Prenotazioni è suddiviso in 4 casi d'uso concreti:
     \item Per ogni item dell'elenco l'utente può cliccare su Modifica prenotazione o Elimina prenotazione
 \end{enumerate}
 
-\subsection{UC1.2 Nuova prenotazione}
+\subsubsection{UC1.2 Nuova prenotazione}
 \noindent \emph{Breve descrizione}: L'utente effettua una nuova prenotazione per un'escursione organizzata dal proprietario.\medbreak
 \noindent \emph{Attori coinvolti}: Utente, Sistema.\medbreak
 \noindent \emph{Trigger}: L'utente clicca il bottone Nuova prenotazione.\medbreak
@@ -71,7 +71,7 @@ Il caso d'uso Prenotazioni è suddiviso in 4 casi d'uso concreti:
     \item Il sistema mostra la prenotazione effettuata all'interno della pagina di visualizzazione delle prenotazioni.
 \end{enumerate}
 
-\subsection{UC1.3 Modifica prenotazione}
+\subsubsection{UC1.3 Modifica prenotazione}
 \noindent \emph{Breve descrizione}: L'utente si trova sulla pagina di visualizzazione delle prenotazioni e clicca sul bottone Modifica di una di queste. Tale modifica può essere effettuata per aumentare o ridurre il numero di persone legate alla prenotazione (possibile fino a 3gg prima dell'escursione).\medbreak
 \noindent \emph{Attori coinvolti}: Utente, Sistema.\medbreak
 \noindent \emph{Trigger}: L'utente clicca su un bottone Modifica prenotazione.\medbreak
@@ -85,7 +85,7 @@ Il caso d'uso Prenotazioni è suddiviso in 4 casi d'uso concreti:
     \item Il sistema mostra la prenotazione aggiornata all'interno della pagina di visualizzazione delle prenotazioni.
 \end{enumerate}
 
-\subsection{UC1.4 Elimina prenotazione}
+\subsubsection{UC1.4 Elimina prenotazione}
 \noindent \emph{Breve descrizione}: L'utente si trova sulla pagina di visualizzazione delle prenotazioni e clicca sul bottone Elimina di una di queste. Dopo aver confermato la scelta, la prenotazione viene eliminata definitivamente.\medbreak
 \noindent \emph{Attori coinvolti}: Utente, Sistema.\medbreak
 \noindent \emph{Trigger}: L'utente clicca su un bottone Elimina prenotazione.\medbreak
@@ -99,7 +99,7 @@ Il caso d'uso Prenotazioni è suddiviso in 4 casi d'uso concreti:
     \item In caso di conferma il sistema mostra la pagina di visualizzazione delle prenotazioni senza la prenotazione appena eliminata.
 \end{enumerate}
 
-\section{UC2: Algoritmo barche ed escursioni}
+\subsection{UC2: Algoritmo barche ed escursioni}
 \noindent \emph{Breve descrizione}: L'utente ha richiesto di effettuare una prenotazione specificando l'escursione e il numero di persone nel proprio gruppo. Il sistema deve allocare in modo ottimale sulle barche i posti appena richiesti e quelli di altri utenti già prenotati. Lo scopo dell'algoritmo è quello di minimizzare il numero di barche impiegate per l'escursione, così da ridurre i costi del proprietario, e cercare di non separare i gruppi.\medbreak
 \noindent \emph{Attori coinvolti}: Utente, Sistema.\medbreak
 \noindent \emph{Trigger}: L'utente conferma la richiesta di prenotazione.\medbreak
@@ -127,7 +127,7 @@ I casi d’uso scelti in questa prima iterazione vengono rappresentati sottoform
     \caption{Diagramma dei componenti UML.}\label{fig:componentDiagram2}
 \end{figure}
 
-\section{UML Class Diagram per Interfacce}
+\subsection{UML Class Diagram per interfacce}
 Il diagramma in Figura ~\ref{fig:ClassDiagramInterfaces2} serve a rappresentare le interfacce del sistema e le
 loro interazioni.
 
@@ -137,7 +137,7 @@ loro interazioni.
     \caption{Diagramma delle classi per interfacce UML.}\label{fig:ClassDiagramInterfaces2}
 \end{figure}
 
-\section{UML Class diagram per tipi di dato}
+\subsection{UML Class Diagram per tipi di dato}
 Il tipo Booking è stato già esplicitato nell'iterazione precedente nel Class diagram per tipi di dato.
 Viene riportato di seguito in Figura ~\ref{fig:BookingType}.
 
@@ -147,7 +147,7 @@ Viene riportato di seguito in Figura ~\ref{fig:BookingType}.
     \caption{Tipo di dato Booking}\label{fig:BookingType}
 \end{figure}
 
-\section{UML Deployment diagram}
+\subsection{UML Deployment diagram}
 I componenti descritti precedentemente vengono istanziati nel Deployment diagram.
 In Figura ~\ref{fig:DeploymentDiagram2} vengono mostrati i componenti contenuti nei seguenti nodi:
 \begin{itemize}
