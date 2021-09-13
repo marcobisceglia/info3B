@@ -1,6 +1,6 @@
-\chapter{Iterazione 2}
+\section{Iterazione 2}
 
-\section{Introduzione}
+\subsection{Introduzione}
 Nella seconda iterazione si è deciso di implementare i seguenti casi d'uso:
 
 \begin{itemize}
@@ -118,12 +118,12 @@ Il caso d'uso Prenotazioni è suddiviso in 4 casi d'uso concreti:
     \item Viene mandata una conferma di prenotazione all'utente.
 \end{enumerate}
 
-\section{UML Component Diagram}
+\subsection{UML Component Diagram}
 I casi d’uso scelti in questa prima iterazione vengono rappresentati sottoforma di componenti nel diagramma in Figura Figura~\ref{fig:componentDiagram2}. Come per l'iterazione precedente, si è scelto di suddividire i casi d’uso in componenti boundary, control e data.
 
-\begin{figure}[!ht]
+\begin{figure}[htbp]
+    \includegraphics[width=\textwidth]{iterazione1/ComponentDiagram_v3.png}
     \centering
-    \includegraphics[width=\textwidth]{ComponentDiagram2_v1.png}
     \caption{Diagramma dei componenti UML.}\label{fig:componentDiagram2}
 \end{figure}
 
@@ -131,9 +131,9 @@ I casi d’uso scelti in questa prima iterazione vengono rappresentati sottoform
 Il diagramma in Figura ~\ref{fig:ClassDiagramInterfaces2} serve a rappresentare le interfacce del sistema e le
 loro interazioni.
 
-\begin{figure}[!ht]
+\begin{figure}[htbp]
+    \includegraphics[scale=0.7]{iterazione2/ClassDiagramInterfaces_v1.png}
     \centering
-    \includegraphics{ClassDiagramInterfaces2_v1.png}
     \caption{Diagramma delle classi per interfacce UML.}\label{fig:ClassDiagramInterfaces2}
 \end{figure}
 
@@ -141,9 +141,9 @@ loro interazioni.
 Il tipo Booking è stato già esplicitato nell'iterazione precedente nel Class diagram per tipi di dato.
 Viene riportato di seguito in Figura ~\ref{fig:BookingType}.
 
-\begin{figure}[!ht]
-    \centering
+\begin{figure}[htbp]
     \includegraphics[scale=0.4]{booking.png}
+    \centering
     \caption{Tipo di dato Booking}\label{fig:BookingType}
 \end{figure}
 
@@ -156,8 +156,8 @@ In Figura ~\ref{fig:DeploymentDiagram2} vengono mostrati i componenti contenuti 
     \item Database funge da storage dei dati.
 \end{itemize}
 
-\begin{figure}[!ht]
+\begin{figure}[htbp]
+    \includegraphics[width=\textwidth]{iterazione2/DeploymentDiagram_v1.png}
     \centering
-    \includegraphics[width=\textwidth]{DeploymentDiagram2_v1.png}
     \caption{Deployment diagram UML.}\label{fig:DeploymentDiagram2}
 \end{figure}
