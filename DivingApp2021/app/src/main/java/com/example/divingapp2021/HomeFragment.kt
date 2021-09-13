@@ -84,7 +84,7 @@ class HomeFragment : NavigationFragment<FragmentHomeBinding>()  {
                     if(userlogged!=null){
                         MyProperties.instance!!.userLogged = userlogged
                         activity?.runOnUiThread {
-                            if(isOwner(u)){
+                            if(isOwner(userlogged)){
                                 FragmentHelper.addFragmentFromSide(
                                         requireActivity(),
                                         OwnerFragment(),
