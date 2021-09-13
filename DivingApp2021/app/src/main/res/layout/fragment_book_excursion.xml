@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Escursioni disponibili"
+            android:text="excursions available"
             android:textColor="@color/colorTextDefault" />
 
        <LinearLayout
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Inserire il numero di divers"
+            android:text="Enter the number of divers"
             android:textColor="@color/colorTextDefault"
             />
         <EditText
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center"
-            android:text="Non ci sono escursioni disponibili"
+            android:text="There aren't excursions available"
             android:textColor="@color/colorTextDefault" />
         <ImageView
             android:id="@+id/imageView"
