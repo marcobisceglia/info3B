@@ -1,16 +1,16 @@
 \section{Iterazione 0}
 \subsection{Introduzione e panoramica del sistema}
-Il sistema che verrà implementato in questo progetto di studio si occuperà della gestione di un centro di immersioni, noto anche come \emph{diving center} o \emph{dive center}. Un centro di immersione è una struttura che fornisce supporto, attrezzatura e corsi per la pratica delle attività subacque. Un centro di immersione fornisce principalmente tre tipi di servizi:
+Il sistema che verrà implementato in questo progetto di studio si occuperà della gestione di un centro di immersioni, noto anche come \emph{diving center} o \emph{dive center}. Un centro di immersione è una struttura che fornisce supporto, attrezzatura e corsi per la pratica delle attività subacquee. Un centro di immersione fornisce principalmente tre tipi di servizi:
 \begin{itemize}
     \item Immersioni guidate.
     \item Noleggio attrezzatura.
     \item Scuola di immersione.
 \end{itemize}
-Per immersione guidata si intende un'immersione effettuata in gruppo o singolarmente insieme a guide subacquee addestrate, esperte e a conoscenza dei punti di immersione più importanti ed interessanti. Questa soluzione è ottimale quando ci si vuole immergere in luoghi non conosciuti o in parchi marini protetti per cui è necessaria un'autorizzazione e una guida. Inoltre il centro diving offre i servizi di accompagnamento e assistenza, di trasposto con imbarcazioni o gommoni, che permettono l'entrata e l'uscita dall'acqua con praticità e comfort.
+Per immersione guidata si intende un'immersione effettuata in gruppo o singolarmente insieme a guide subacquee addestrate, esperte e a conoscenza dei punti di immersione più importanti ed interessanti. Questa soluzione è ottimale quando ci si vuole immergere in luoghi non conosciuti o in parchi marini protetti per cui è necessaria un'autorizzazione e una guida. Inoltre, il centro diving offre i servizi di accompagnamento e assistenza, di trasposto con imbarcazioni o gommoni, che permettono l'entrata e l'uscita dall'acqua con praticità e comfort.
 \\
-Il focus del nostro progetto sarà la gestione e l'organizzazione efficiente delle immersioni guidate e la gestione del noleggio attrezzatura, non verrà incluso l'insegnamento della pratica subacquea.
+Il focus del nostro progetto sarà la gestione e l'organizzazione efficiente delle immersioni guidate e la gestione del noleggio attrezzatura; non verrà incluso l'insegnamento della pratica subacquea.
 \\
-Un centro di immersione ha una disponibilità limitata di barche e guide per cui ha la possibilità di effettuare un numero limitato di escursioni durante una giornata. Il sistema che verrà sviluppato si occuperà di organizzare al meglio l'allocazione delle risorse disponibili affinchè un numero maggiore di persone possa parteciparvi. Spesso le persone che vogliono partecipare a questo tipo di escursioni si trovano in gruppo, per cui è necessario ottimizzare l'allocazione delle risorse disponibili, che in questo caso costituiscono i posti disponibili in barca, con il vincolo di mantenere intatti i gruppi.
+Un centro di immersione ha una disponibilità limitata di barche e guide per cui ha la possibilità di effettuare un numero limitato di escursioni durante una giornata. Il sistema che verrà sviluppato si occuperà di organizzare al meglio l'allocazione delle risorse disponibili affinché un numero maggiore di persone possa parteciparvi. Spesso le persone che vogliono partecipare a questo tipo di escursioni si trovano in gruppo, per cui è necessario ottimizzare l'allocazione delle risorse disponibili, che in questo caso costituiscono i posti disponibili in barca, con il vincolo di mantenere il più possibile intatti i gruppi.
 \\
 Il sistema implementato rappresenterà un centro di immersione: si occuperà della gestione delle risorse (barche, escursioni, attrezzatura disponibile) e della gestione delle prenotazioni delle escursioni da parte degli utenti.
 \subsection{Requisiti funzionali e analisi dei casi d'uso}
@@ -19,25 +19,118 @@ In questa sezione verranno introdotti i requisiti funzionali del sistema attrave
 \\Lo schema UML dei casi d'uso viene riportato in Figura~\ref{fig:casiduso}.
 
 \begin{figure}[htbp]
-    \includegraphics[width=\textwidth]{iterazione0/useCases_v5.png}
+    \includegraphics[width=\textwidth]{iterazione0/useCases_v6.png}
     \centering
     \caption{Diagramma UML dei casi d'uso}\label{fig:casiduso}
 \end{figure}
 
+Al fine di procedere ad uno sviluppo efficiente, è stato deciso di dividere le specifiche funzionali in tre code di priorità: alta, media e bassa. Nella coda ad alta priorità si troveranno i casi d'uso indispensabili al corretto funzionamento dell'applicazione, nella coda a media priorità saranno inserti i casi d'uso riguardanti le funzionalità aggiuntive e nella coda a bassa priorità le funzionalità non strettamente necessarie e che verranno implementate in versioni future.
+
+\clearpage
+\subsubsection{Coda ad alta priorità}
+
+\begin{table}[htbp]
+ \centering
+ \begin{tabular}{|c | c|} 
+ \hline
+ Codice & Titolo \\ [0.5ex] 
+ \hline\hline
+UC1 & Gestione barche (visualizzazione, inserimento, modifica, elimina) \\
+\hline
+UC2 & Gestione escursioni (visualizzazione, inserimento, modifica, elimina) \\
+\hline
+UC3 & Registrazione utente \\
+\hline
+UC4 & Login utente \\
+\hline
+UC5 & Logout utente \\
+\hline
+UC6 & Gestione prenotazioni (visualizzazione, inserimento) \\
+\hline
+UC7 & Algoritmo gestione barche ed escursioni \\
+\hline
+\end{tabular}
+\caption{Casi d'uso con priorità alta}
+\label{Casi d'uso con priorità alta}
+\end{table}
+
+\subsubsection{Coda a media priorità}
+
+\begin{table}[htbp]
+ \centering
+ \begin{tabular}{|c | c|} 
+ \hline
+ Codice & Titolo \\ [0.5ex] 
+ \hline\hline
+UC8 & Visualizzazione allocazione barche \\
+\hline
+UC9 & Gestione attrezzatura (visualizzazione, inserimento, modifica, elimina) \\
+\hline
+UC10 & Noleggio attrezzatura \\
+\hline
+UC11 & Algoritmo attrezzatura \\
+\hline
+\end{tabular}
+\caption{Casi d'uso con priorità media}
+\label{Casi d'uso con priorità media}
+\end{table}
+
+\subsubsection{Coda a bassa priorità}
+
+\begin{table}[htbp]
+ \centering
+ \begin{tabular}{|c | c|} 
+ \hline
+ Codice & Titolo \\ [0.5ex] 
+ \hline\hline
+UC12 & Visualizzazione dati utente \\
+\hline
+UC13 & Modifica dati utente \\
+\hline
+UC14 & Visualizzazione prenotazioni effettuate \\
+\hline
+UC15 & Visualizzazione noleggi effettuati \\
+\hline
+\end{tabular}
+\caption{Casi d'uso con priorità bassa}
+\label{Casi d'uso con priorità bassa}
+\end{table}
+
+\clearpage
+
 \subsection{Requisiti non funzionali}
 Il progetto verrà sviluppato tenendo in considerazione anche alcuni requisiti non funzionali, quali la manutenibilità, l'efficienza e l'usabilità.
-Il requisito di manutenibilità verrà rispettato mediante l'implementazione di tutte le risorse persistenti ovvero barche, orari e date escursioni, attrezzatura. In questo modo anche se dovessero cambiare nel futuro alcune condizioni sarà facile per il proprietario rifletterle all'interno del software.
-Il requisito dell'efficienza è l'obiettivo del progetto, ovvero l'allocazione ottimale delle risorse disponibili, i posti presenti nelle barche.
+\subsubsection{Manutenibilità}
+Il requisito di manutenibilità verrà rispettato mediante l'implementazione di tutte le risorse persistenti, ovvero barche, orari e date delle escursioni, attrezzatura. In questo modo, anche se in futuro dovessero cambiare alcune condizioni, sarebbe facile per il proprietario rifletterle all'interno del software.
+\subsubsection{Efficienza}
+Il requisito dell'efficienza è anche l'obiettivo primario del progetto, ovvero l'allocazione ottimale delle risorse disponibili: i posti presenti nelle barche.
+\subsubsection{Usabilità}
 L'usabilità è garantita dalla decisione di sviluppare il programma attraverso un applicazione Android, di facile utilizzo sia per gli utenti che per il proprietario. In base alla topologia (Figura~\ref{fig:topologia}) è possibile notare che il database verrà ospitato da un hosting online e quindi sarà sempre possibile, mediante cellulare, accedere a tutte le funzionalità dell'applicazione.
 
 \newpage
 
 \subsection{Topologia del sistema}
-La topologia  del sistema mostrata in Figura~\ref{fig:topologia} evidenzia come sia gli utenti che il proprietario accedono alla piattaforma tramite app Android.
-\\Questa mette a disposizione un set di API REST con cui è possibile accedere alle funzionalità dell'applicazione che salverà i dati su un database online.
+La topologia del sistema mostrata in Figura~\ref{fig:topologia}, evidenzia il requisito non funzionale dell'usabilità: sia gli utenti che il proprietario possono accedere al servizio tramite l'applicazione. Il WebServer espone un set di API mediante HTTP/REST con cui è possibile accedere alle funzionalità dell'applicazione. Infine, il WebServer è collegato ad un database relazionale.
+
+Questo progetto è stato sviluppato utilizzando un’architettura Three-tier, ovvero un’architettura hardware di tipo multi-tier. Essa prevede la suddivisione dell’applicazione in tre diversi moduli, i quali risiedono su macchine separate, dedicati rispettivamente a:
+\begin{itemize}
+    \item Presentation, interfaccia utente
+    \item Application, logica funzionale
+    \item Data, gestione dei dati persistenti.
+\end{itemize}
+
+È possibile visualizzare questa divisione in Figura \ref{fig:topologia}.
+
+\subsection{Design pattern MVP}
+Il sistema e i suoi componenti verranno sviluppati utilizzando il design pattern architetturale Model View Presenter (MVP), una derivazione del Model View Controller (MVC). MVP è composto da tre elementi: \begin{itemize}
+    \item Model, che definisce i dati da visualizzare e modificare, può essere visto come un'interfaccia responsabile di accedere alle API connesse con il database. 
+    \item View, che visualizza i dati e notifica le azioni dell’utente. Solitamente non presenta nessuna logica applicativa, ma ha una funzione solo visuale. 
+    \item Presenter, che funziona come man-in-the-middle tra la View e il Model, prendendo i dati dal Model e formattandoli per la View.
+\end{itemize}
+A differenza del MVC, la View non è direttamente collegata al Model. L'interazione può avvenire solo tramite il Presenter. Questo permette uno sviluppo indipendente dei tre livelli. Tale separazione è visibile anche nelle componenti software, come si vede in Figura \ref{fig:componentDiagram}.
 
 \begin{figure}[htbp]
-    \includegraphics[width=\textwidth]{/iterazione0/Topologia_v2.png}
+    \includegraphics[width=\textwidth]{/iterazione0/topologia_v3.png}
     \centering
     \caption{Topologia del sistema.}\label{fig:topologia}
 \end{figure}
