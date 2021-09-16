@@ -1,6 +1,7 @@
 package it.barcaioli.webserver.booking;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,7 @@ public class BookingService {
 
 	private static final String TOOSMALLGROUP = "FAIL. Posti non terminati, ma sparsi e il gruppo è troppo piccolo per essere diviso";
 	private static final String GROUPDIVISIONFAIL = "FAIL. Posti non terminati, ma sparsi. Anche dividendo il gruppo non è stato possibile allocare barche";
-	private static final String NOBOATS = "FAIL. Barche piene o assenti!";
+	private static final String NOSEATS = "FAIL. Posti terminati!";
 	private static final String EMPTYBOATFOUND = "SUCCESS. Scelta barca vuota";
 	private static final String USEDBOATFOUND = "SUCCESS. Scelta barca già in uso";
 
@@ -76,17 +77,7 @@ public class BookingService {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User must be logged in to book a trip");
 		}
 
-		// divided è true se la prenotazione necessita di 2 barche
-		var divided = assignBoats(booking);
-
-		List<Boat> boats = new ArrayList<>();
-
-		if (divided.booleanValue())
-			boats.add(this.getBookings().get(this.getBookings().size() - 2).getBoat());
-
-		boats.add(this.getBookings().get(this.getBookings().size() - 1).getBoat());
-
-		return boats;
+		return assignBoats(booking);
 	}
 
 	public void deleteBooking(Long id) {
@@ -199,11 +190,10 @@ public class BookingService {
 	// Se una barca non basta, cerca di dividere il gruppo e assegnare due barche,
 	// se possibile.
 	// Ritorna true se il gruppo è stato diviso
-	private Boolean assignBoats(Booking booking) {
+	private List<Boat> assignBoats(Booking booking) {
 		System.out.println("\nAlgoritmo prenotazione avviato. Utente " + booking.getUser().getId() + ". Escursione "
 				+ booking.getTrip().getId() + ". N persone: " + booking.getNumPeople());
 
-		var divided = false;
 		var tripId = booking.getTrip().getId();
 		var numPeople = booking.getNumPeople();
 		var n = getRemainingSeatsByTripId(tripId);
@@ -212,8 +202,8 @@ public class BookingService {
 		if (n > 0)
 			System.out.println(String.format("%d Posti totali rimanenti per l'escursione", n));
 		else {
-			System.out.println(NOBOATS);
-			throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, NOBOATS);
+			System.out.println(NOSEATS);
+			throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, NOSEATS);
 		}
 
 		// cerco una barca NON VUOTA con abbastanza posti rimanenti per il gruppo
@@ -225,7 +215,7 @@ public class BookingService {
 			booking.setBoat(chosenBoat);
 			bookingRepository.save(booking);
 			System.out.println(USEDBOATFOUND + ": " + chosenBoat.getModel() + " da " + chosenBoat.getSeats() + " posti");
-			return divided;
+			return new ArrayList<>(Arrays.asList(chosenBoat));
 		}
 
 		// cerco una barca VUOTA con abbastanza posti rimanenti per il gruppo
@@ -237,7 +227,7 @@ public class BookingService {
 			booking.setBoat(chosenBoat);
 			bookingRepository.save(booking);
 			System.out.println(EMPTYBOATFOUND + ": " + chosenBoat.getModel() + " da " + chosenBoat.getSeats() + " posti");
-			return divided;
+			return new ArrayList<>(Arrays.asList(chosenBoat));
 		}
 
 		System.out.println("Provo a dividere il gruppo e trovare 2 barche");
@@ -318,8 +308,11 @@ public class BookingService {
 		secondBooking.setNumPeople(numPeople - group1);
 		bookingRepository.save(secondBooking);
 
-		divided = true;
+		List<Boat> boats = new ArrayList<>();
 
-		return divided;
+		boats.add(this.getBookings().get(this.getBookings().size() - 2).getBoat());
+		boats.add(this.getBookings().get(this.getBookings().size() - 1).getBoat());
+
+		return boats;
 	}
 }
