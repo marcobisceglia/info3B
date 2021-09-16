@@ -70,34 +70,34 @@ print("Creating boats...")
 for boat in boats:
   payload = json.dumps(boat)
   response = requests.request("POST", "http://localhost:8080/boats", headers=headers, data=payload)
-  print(response.text)
+  print(response.json()["model"] + " " + str(response.json()["seats"]) + " posti")
 
 print("\nCreating trips...")
 for trip in trips:
   payload = json.dumps(trip)
   response = requests.request("POST", "http://localhost:8080/trips", headers=headers, data=payload)
-  print(response.text)
+  print(response.json()["dateTime"])
 
 print("\nCreating users...")
 for user in users:
   payload = json.dumps(user)
   response = requests.request("POST", "http://localhost:8080/users/signup", headers=headers, data=payload)
-  print(response.text)
+  print(response.json()["firstName"])
 
 print("\nLogging users...")
 for user in users:
   payload = json.dumps({"email": user["email"], "password": user["password"]})
   response = requests.request("POST", "http://localhost:8080/users/login", headers=headers, data=payload)
-  print(response.text)
+  print(response.json()["loggedIn"])
 
 print("\nBooking trips...")
 for booking in bookings:
   payload = json.dumps(booking)
   response = requests.request("POST", "http://localhost:8080/bookings", headers=headers, data=payload)
-  print(response.text)
-
-print("\nLogging out users...")
-for user in users:
-  payload = json.dumps({"email": user["email"], "password": user["password"]})
-  response = requests.request("POST", "http://localhost:8080/users/logout", headers=headers, data=payload)
-  print(response.text)
+  print(response.json())
+  
+# print("\nLogging out users...")
+# for user in users:
+#   payload = json.dumps({"email": user["email"], "password": user["password"]})
+#   response = requests.request("POST", "http://localhost:8080/users/logout", headers=headers, data=payload)
+#   print(response.text)
