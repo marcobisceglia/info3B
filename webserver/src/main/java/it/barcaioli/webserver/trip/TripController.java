@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import it.barcaioli.webserver.boat.BoatInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,9 +65,27 @@ public class TripController {
 	}
 
 	@GetMapping(path = "{tripId}/boats")
-	public List<Boat> getTripBoats(@PathVariable Long tripId) {
-		List<Boat> boatsUsedByTrip = new ArrayList<>();
-		tripService.getTrip(tripId).getBookings().forEach(b -> boatsUsedByTrip.add(b.getBoat()));
+	public List<BoatInstance> getTripBoats(@PathVariable Long tripId) {
+		List<BoatInstance> boatsUsedByTrip = new ArrayList<>();
+		List<String> modelliBarcheUsate = new ArrayList<>();
+		tripService.getTrip(tripId).getBookings().forEach( b -> {
+					String modelloBarca = b.getBoat().getModel();
+					if (!modelliBarcheUsate.contains(modelloBarca)){
+						modelliBarcheUsate.add(modelloBarca);
+						BoatInstance temp = new BoatInstance();
+						temp.setModel(b.getBoat().getModel());
+						temp.setSeats(b.getBoat().getSeats());
+						temp.setRemainingSeats(temp.getSeats()-b.getNumPeople());
+						boatsUsedByTrip.add(temp);
+					}else{
+						boatsUsedByTrip.forEach(usedBoat -> {
+							if (usedBoat.getModel().equals(b.getBoat().getModel())){
+								usedBoat.setRemainingSeats(usedBoat.getRemainingSeats()-b.getNumPeople());
+							}
+						});
+					}
+				}
+		);
 		return boatsUsedByTrip.stream().distinct().collect(Collectors.toList());
 	}
 
