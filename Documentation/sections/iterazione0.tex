@@ -31,9 +31,9 @@ Al fine di procedere ad uno sviluppo efficiente, è stato deciso di dividere le 
 
 \begin{table}[htbp]
  \centering
- \begin{tabular}{|c | c|} 
+ \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash} m{4em}| >{\raggedright\arraybackslash}X |} 
  \hline
- Codice & Titolo \\ [0.5ex] 
+ \textbf{Codice} & \textbf{Titolo} \\ [0.5ex]
  \hline\hline
 UC1 & Gestione barche (visualizzazione, inserimento, modifica, elimina) \\
 \hline
@@ -49,7 +49,7 @@ UC6 & Gestione prenotazioni (visualizzazione, inserimento) \\
 \hline
 UC7 & Algoritmo gestione barche ed escursioni \\
 \hline
-\end{tabular}
+\end{tabularx}
 \caption{Casi d'uso con priorità alta}
 \label{Casi d'uso con priorità alta}
 \end{table}
@@ -58,10 +58,9 @@ UC7 & Algoritmo gestione barche ed escursioni \\
 
 \begin{table}[htbp]
  \centering
- \begin{tabular}{|c | c|} 
+ \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash} m{4em}| >{\raggedright\arraybackslash}X |} 
  \hline
- Codice & Titolo \\ [0.5ex] 
- \hline\hline
+ \textbf{Codice} & \textbf{Titolo} \\ [0.5ex] \hline\hline
 UC8 & Visualizzazione allocazione barche \\
 \hline
 UC9 & Gestione attrezzatura (visualizzazione, inserimento, modifica, elimina) \\
@@ -70,7 +69,7 @@ UC10 & Noleggio attrezzatura \\
 \hline
 UC11 & Algoritmo attrezzatura \\
 \hline
-\end{tabular}
+\end{tabularx}
 \caption{Casi d'uso con priorità media}
 \label{Casi d'uso con priorità media}
 \end{table}
@@ -79,10 +78,9 @@ UC11 & Algoritmo attrezzatura \\
 
 \begin{table}[htbp]
  \centering
- \begin{tabular}{|c | c|} 
+ \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash} m{4em}| >{\raggedright\arraybackslash}X |} 
  \hline
- Codice & Titolo \\ [0.5ex] 
- \hline\hline
+ \textbf{Codice} & \textbf{Titolo} \\ [0.5ex] \hline\hline
 UC12 & Visualizzazione dati utente \\
 \hline
 UC13 & Modifica dati utente \\
@@ -91,7 +89,7 @@ UC14 & Visualizzazione prenotazioni effettuate \\
 \hline
 UC15 & Visualizzazione noleggi effettuati \\
 \hline
-\end{tabular}
+\end{tabularx}
 \caption{Casi d'uso con priorità bassa}
 \label{Casi d'uso con priorità bassa}
 \end{table}
@@ -112,7 +110,7 @@ L'usabilità è garantita dalla decisione di sviluppare il programma attraverso 
 \subsection{Topologia del sistema}
 La topologia del sistema mostrata in Figura~\ref{fig:topologia}, evidenzia il requisito non funzionale dell'usabilità: sia gli utenti che il proprietario possono accedere al servizio tramite l'applicazione. Il WebServer espone un set di API mediante HTTP/REST con cui è possibile accedere alle funzionalità dell'applicazione. Infine, il WebServer è collegato ad un database relazionale.
 
-Questo progetto è stato sviluppato utilizzando un’architettura Three-tier, ovvero un’architettura hardware di tipo multi-tier. Essa prevede la suddivisione dell’applicazione in tre diversi moduli, i quali risiedono su macchine separate, dedicati rispettivamente a:
+Questo progetto è stato sviluppato utilizzando un’architettura \textit{Three-tier}, ovvero un’architettura hardware di tipo multi-tier. Essa prevede la suddivisione dell’applicazione in tre diversi moduli, i quali risiedono su macchine separate, dedicati rispettivamente a:
 \begin{itemize}
     \item Presentation, interfaccia utente
     \item Application, logica funzionale
@@ -122,15 +120,75 @@ Questo progetto è stato sviluppato utilizzando un’architettura Three-tier, ov
 È possibile visualizzare questa divisione in Figura \ref{fig:topologia}.
 
 \subsection{Design pattern MVP}
-Il sistema e i suoi componenti verranno sviluppati utilizzando il design pattern architetturale Model View Presenter (MVP), una derivazione del Model View Controller (MVC). MVP è composto da tre elementi: \begin{itemize}
-    \item Model, che definisce i dati da visualizzare e modificare, può essere visto come un'interfaccia responsabile di accedere alle API connesse con il database. 
+Il sistema e i suoi componenti verranno sviluppati utilizzando il design pattern architetturale Model View Presenter (MVP), una derivazione del Model View Controller (MVC). MVP è composto da tre layer: \begin{itemize}
+    \item Model, che definisce i dati da dell'applicazione e può essere visto come un'interfaccia responsabile di accedere alle API connesse con il database. 
     \item View, che visualizza i dati e notifica le azioni dell’utente. Solitamente non presenta nessuna logica applicativa, ma ha una funzione solo visuale. 
-    \item Presenter, che funziona come man-in-the-middle tra la View e il Model, prendendo i dati dal Model e formattandoli per la View.
+    \item Presenter, che contiene la logica applicativa. Funziona come man-in-the-middle tra la View e il Model, prendendo i dati dal Model e formattandoli per la View.
 \end{itemize}
-A differenza del MVC, la View non è direttamente collegata al Model. L'interazione può avvenire solo tramite il Presenter. Questo permette uno sviluppo indipendente dei tre livelli. Tale separazione è visibile anche nelle componenti software, come si vede in Figura \ref{fig:componentDiagram}.
+A differenza del MVC, la View non è direttamente collegata al Model; l'interazione può avvenire solo tramite il Presenter. Questo permette uno sviluppo indipendente dei tre livelli. Tale separazione è visibile anche nelle componenti software, come si vede in Figura \ref{fig:componentDiagram}.
 
+\begin{figure}[htbp]
+    \includegraphics[width=\textwidth]{/iterazione0/MVP.png}
+    \centering
+    \caption{Model View Presenter}\label{fig:MVP}
+\end{figure}
 \begin{figure}[htbp]
     \includegraphics[width=\textwidth]{/iterazione0/topologia_v3.png}
     \centering
-    \caption{Topologia del sistema.}\label{fig:topologia}
+    \caption{Topologia del sistema}\label{fig:topologia}
 \end{figure}
+
+\clearpage
+\subsection{Toolchain e tecnologie}
+
+\subsubsection{Elenco completo}
+
+\begin{table}[htbp]
+ \centering
+ \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}X | >{\raggedright\arraybackslash}X |} 
+ \hline
+ \textbf{Tool/Tecnologia} & \textbf{Utilizzo} \\ [0.5ex]
+ \hline\hline
+Visual Studio Code & IDE per sviluppo back-end \\
+\hline
+Spring Boot & Java Framework per realizzazione back-end\\
+\hline
+Android Studio & IDE per sviluppo front-end \\
+\hline
+Kotlin & Linguaggio di programmazione per realizzazione front-end \\
+\hline
+Git e GitHub & Software e piattaforma per versionamento e condivisione di codice e documentazione \\
+\hline
+Google Drive & Cloud Storage per condivisione di documenti e immagini \\
+\hline
+Trello & Software gestionale per schedulazione attività tra i componenti del team per sviluppo agile\\
+\hline
+Jupyter Notebook con Python & Ambiente per testare l'algoritmo centrale del progetto\\
+\hline
+Canva & Tool di progettazione grafica per presentazione dell'applicazione \\
+\hline
+Draw.io & Tool per realizzazione grafici e diagrammi UML \\
+\hline
+Language Support for Java(TM) by Red Hat & Estensione di Visual Studio Code per analisi statica del codice a back-end \\
+\hline
+Postman & Piattaforma per test dinamico e documentazione delle API \\
+\hline
+JUnit 5 & Framework per Unit Testing \\
+\hline
+Overleaf & Software per la stesura e formattazione della documentazione in linguaggio LaTeX \\
+\hline
+\end{tabularx}
+\caption{Toolchain e tecnologie}
+\label{Toolchain e tecnologie}
+\end{table}
+
+\subsubsection{Tecnologie per analisi statica} \label{analisi-statica}
+
+Per l'analisi statica del codice a backend è stata utilizzata l'estensione \textit{Language Support for Java(TM) by Red Hat} fornita
+dall'IDE \textit{Visual Studio Code}.
+Questa permette di seguire le regole di formattazione standard di Java e avere una migliore leggibilità del codice, mantenendone
+alta la qualità.
+
+\subsubsection{Tecnologie per analisi dinamica}
+Per l'analisi dinamica del codice è stato utilizzato \textit{Postman}, software che permette sia di richiamare le API realizzate a back-end, sia di testarle realizzando test dinamici.
+\clearpage
